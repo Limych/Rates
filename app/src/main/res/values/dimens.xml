@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="widget_background_rounds">8dp</dimen>
+    <dimen name="widget_margin">6dp</dimen>
+    <dimen name="widget_text_margin">3dp</dimen>
+    <dimen name="widget_group_title_margin">2dp</dimen>
+    <dimen name="widget_group_divider_size">6dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="rates_config_row_height">60dp</dimen>
+    <dimen name="rates_config_items_horizontal_margin">12dp</dimen>
+    <dimen name="rates_config_items_horizontal_margin_short">6dp</dimen>
+</resources>

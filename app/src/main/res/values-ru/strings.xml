@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Курсы рубля</string>
+    <string name="configure">Настройки</string>
+    <string name="add_widget">Добавить виджет</string>
+    <string name="title_official">ЦБ РФ:</string>
+    <string name="title_stock">Биржа:</string>
+    <string name="title_forex">Форекс:</string>
+    <string name="action_settings">Настройки</string>
+    <string name="column_title_bid_last">Котировка</string>
+    <string name="column_title_change">Изменение</string>
+    <string name="column_title_currency">Валюта</string>
+    <string name="text_updated">Обновлено:</string>
+    <string name="text_updated_short">Обн:</string>
+</resources>

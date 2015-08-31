@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_background">#66212121</color>
+
+    <color name="group_caption">#FFCCCCFF</color>
+    <color name="currency_title">#FFBDBDBD</color>
+    <color name="update_timestamp">#FF9E9E9E</color>
+
+    <color name="change_red">#FFF15B3F</color>
+    <color name="change_green">#FF69BD45</color>
+    <color name="change_none">#FFFFFFFF</color>
+</resources>

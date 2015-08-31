@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Material">
+        <item name="android:divider">@drawable/separator</item>
+    </style>
+
+    <style name="AppWidget" parent="android:Widget.Material">
+        <item name="android:textSize">14sp</item>
+        <item name="android:colorBackground">@color/widget_background</item>
+    </style>
+
+</resources>

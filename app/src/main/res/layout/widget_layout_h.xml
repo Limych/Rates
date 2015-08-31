@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/widget_background"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    style="@style/AppWidget"
+    android:padding="@dimen/widget_margin"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rates"
+        android:orientation="horizontal"
+        android:adjustViewBounds="true"
+        android:divider="@drawable/separator"
+        android:showDividers="middle" >
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_updated"
+        android:id="@+id/update_timestamp"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/widget_text_margin"
+        style="@style/AppWidget.Small"
+        android:textColor="@color/update_timestamp" />
+
+</LinearLayout>
