@@ -22,6 +22,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import ru.khrolenok.exchangerates.ui.WidgetProvider;
+
 /**
  * Created by Limych on 08.07.2015.
  */
@@ -36,7 +38,7 @@ public class ExRatesDownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(Settings.LOG_TAG, "Service started");
+        Log.d(Settings.TAG, "Service started");
 
         final DownloadRatesTask task = new DownloadRatesTask();
         task.execute(Settings.Rates.sourceUrl);
@@ -99,20 +101,13 @@ public class ExRatesDownloadService extends Service {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-//            if(result != null) {
-//                Toast.makeText(context, "Exchange rates download error: " + result,
-//                        Toast.LENGTH_LONG).show();
-//            } else {
-//                Toast.makeText(context, "Exchange rates updated",
-//                        Toast.LENGTH_SHORT).show();
-//            }
 
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context,
-                    ExRatesWidgetProvider.class));
+                    WidgetProvider.class));
             for (int appWidgetId : appWidgetIds) {
                 appWidgetManager.updateAppWidget(appWidgetId,
-                        ExRatesWidgetProvider.buildLayout(context, appWidgetManager, appWidgetId));
+                        WidgetProvider.buildLayout(context, appWidgetManager, appWidgetId));
             }
         }
     }

@@ -1,46 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    style="@style/AppWidget"
-    android:orientation="horizontal">
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:orientation="horizontal"
+			  android:theme="@style/AppWidget">
 
-    <TextView
-        android:id="@+id/currency_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/currency_none"
-        android:layout_marginEnd="@dimen/widget_text_margin"
-        android:layout_marginRight="@dimen/widget_text_margin"
-        android:layout_weight="0"
-        android:textColor="@color/currency_title" />
+	<TextView
+		android:id="@+id/itemSymbol"
+		style="@style/AppWidget.Body"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/widget_horizontal_text_margin"
+		android:layout_marginRight="@dimen/widget_horizontal_text_margin"
+		android:layout_weight="0"
+		android:text="@string/currency_none"
+		android:textColor="@color/currency_title"/>
 
-    <TextView
-        android:id="@+id/currency_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12.3456"
-        android:layout_gravity="end"
-        android:layout_weight="1"
-        android:maxLines="1"
-        android:singleLine="true" />
+	<TextView
+		android:id="@+id/itemPrice"
+		style="@style/AppWidget.Body"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="end"
+		android:layout_weight="1"
+		android:maxLines="1"
+		android:singleLine="true"
+		android:text="12.3456"/>
 
-    <TextView
-        android:id="@+id/currency_change_direction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/change_none"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0"
-        android:textAlignment="center" />
+	<TextView
+		android:id="@+id/itemChangeDirection"
+		style="@style/AppWidget.Body"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_weight="0"
+		android:text="@string/change_direction_none"
+		android:textAlignment="center"/>
 
-    <TextView
-        android:id="@+id/currency_change"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+1.2345"
-        android:layout_gravity="center_horizontal"
-        style="@style/AppWidget.Small"
-        android:layout_weight="0" />
+	<TextView
+		android:id="@+id/itemChange"
+		style="@style/AppWidget.Small"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_weight="0"
+		android:text="+1.2345"/>
 
 </LinearLayout>

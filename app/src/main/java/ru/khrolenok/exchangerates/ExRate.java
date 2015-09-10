@@ -5,49 +5,49 @@ import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.text.format.DateUtils;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Limych on 15.08.2015.
  */
 public class ExRate {
 
-    public String rateCode;
+    public int rate_id;
+    public String groupCode;
+    public String goodCode;
+    public String currencyCode;
+    public int faceValue;
     public double initialBid;
     public double lastBid;
     public Date updateTS;
+    public double value = 0;
 
     public boolean isCompactTitleMode;
     public boolean isShortFormat;
 
     public ExRateViewsBounds viewsBounds;
 
-    public ExRate(String rateCode) {
-        this.rateCode = rateCode;
-        viewsBounds = new ExRateViewsBounds();
-    }
-
-    public ExRate(String rateCode, JSONArray rateData) {
-        this.rateCode = rateCode;
+    public ExRate(JSONArray rateData) {
         viewsBounds = new ExRateViewsBounds();
 
         try {
+            groupCode = rateData.getString(Settings.Rates.Columns.GROUP);
+            goodCode = rateData.getString(Settings.Rates.Columns.GOOD);
+            currencyCode = rateData.getString(Settings.Rates.Columns.CURRENCY);
+            faceValue = rateData.getInt(Settings.Rates.Columns.FACE_VALUE);
             initialBid = rateData.getDouble(Settings.Rates.Columns.INITIAL_BID);
             lastBid = rateData.getDouble(Settings.Rates.Columns.LAST_BID);
-            updateTS = new Date(rateData.getLong(Settings.Rates.Columns.TIMESTAMP));
+            updateTS = new Date(rateData.getLong(Settings.Rates.Columns.TIMESTAMP) * 1000);
         } catch (JSONException ignored) {
         }
+
+        rate_id = (groupCode + goodCode + currencyCode).hashCode();
     }
 
     public boolean isEmpty(){
@@ -66,12 +66,8 @@ public class ExRate {
         return Math.abs(bidChange() * 100 / initialBid) < changesThreshold;
     }
 
-    public boolean hasBidGrowth(){
-        return bidChange() > 0;
-    }
-
     public String getTitle() {
-        String title = this.rateCode.substring(0, 3);
+        String title = this.goodCode;
         if( isCompactTitleMode ){
             switch (title){
                 case "USD": title = "$"; break;
@@ -157,52 +153,62 @@ public class ExRate {
         return viewsBounds;
     }
 
-    public RemoteViews buildRemoteViews(Context context, boolean isShowChange, boolean invertColors){
+    public RemoteViews buildWidgetViews(Context context, boolean isShowChange, boolean invertColors){
         int color = R.color.change_none;
         final int colorUp = ( !invertColors ? R.color.change_green : R.color.change_red);
         final int colorDown = ( !invertColors ? R.color.change_red : R.color.change_green );
 
         RemoteViews ratesItem = new RemoteViews(context.getPackageName(), R.layout.widget_layout_item);
 
-        ratesItem.setInt(R.id.currency_title, "setMinWidth", viewsBounds.titleWidth);
-        ratesItem.setInt(R.id.currency_rate, "setMinWidth", viewsBounds.bidWidth);
+        ratesItem.setInt(R.id.itemSymbol, "setMinWidth", viewsBounds.titleWidth);
+        ratesItem.setInt(R.id.itemPrice, "setMinWidth", viewsBounds.bidWidth);
 
         int[] textSizeAttr = new int[] { android.R.attr.textSize };
         TypedArray a = context.obtainStyledAttributes(R.style.AppWidget, textSizeAttr);
         final int textSize = a.getDimensionPixelSize(0, -1);
         a.recycle();
         if(textSize > 0) {
-            ratesItem.setInt(R.id.currency_change_direction, "setMinWidth", textSize);
+            ratesItem.setInt(R.id.itemChangeDirection, "setMinWidth", textSize);
         }
 
-        ratesItem.setInt(R.id.currency_change, "setMinWidth", ( isShowChange
+        ratesItem.setInt(R.id.itemChange, "setMinWidth", (isShowChange
                 ? viewsBounds.changeWidth
-                : 0 ));
+                : 0));
 
-        ratesItem.setTextViewText(R.id.currency_title, getTitle());
+        ratesItem.setTextViewText(R.id.itemSymbol, getTitle());
 
         if( isEmpty() ){
-            ratesItem.setTextViewText(R.id.currency_rate, context.getString(R.string.rate_none));
-            ratesItem.setTextViewText(R.id.currency_change_direction, context.getString(R.string.change_none));
-            ratesItem.setTextViewText(R.id.currency_change, "");
+            ratesItem.setTextViewText(R.id.itemPrice, context.getString(R.string.rate_none));
+            ratesItem.setTextViewText(R.id.itemChangeDirection, context.getString(R.string.change_direction_none));
+            ratesItem.setTextViewText(R.id.itemChange, "");
         }else{
-            ratesItem.setTextViewText(R.id.currency_rate, getLastBidFormatted());
+            ratesItem.setTextViewText(R.id.itemPrice, getLastBidFormatted());
             if( hasBidChange() ){
-                ratesItem.setTextViewText(R.id.currency_change_direction, context.getString(R.string.change_none));
-            }else if( hasBidGrowth() ) {
-                ratesItem.setTextViewText(R.id.currency_change_direction, context.getString(R.string.change_up));
+                ratesItem.setTextViewText(R.id.itemChangeDirection, context.getString(R.string.change_direction_none));
+            }else if( bidChange() > 0 ) {
+                ratesItem.setTextViewText(R.id.itemChangeDirection, context.getString(R.string.change_direction_up));
                 color = colorUp;
             }else{
-                ratesItem.setTextViewText(R.id.currency_change_direction, context.getString(R.string.change_down));
+                ratesItem.setTextViewText(R.id.itemChangeDirection, context.getString(R.string.change_direction_down));
                 color = colorDown;
             }
-            ratesItem.setTextViewText(R.id.currency_change, ( isShowChange ? getChangeFormatted() : "" ));
+            ratesItem.setTextViewText(R.id.itemChange, ( isShowChange ? getChangeFormatted() : "" ));
         }
-        ratesItem.setTextColor(R.id.currency_rate, context.getResources().getColor(color));
-        ratesItem.setTextColor(R.id.currency_change_direction, context.getResources().getColor(color));
-        ratesItem.setTextColor(R.id.currency_change, context.getResources().getColor(color));
+        ratesItem.setTextColor(R.id.itemPrice, context.getResources().getColor(color));
+        ratesItem.setTextColor(R.id.itemChangeDirection, context.getResources().getColor(color));
+        ratesItem.setTextColor(R.id.itemChange, context.getResources().getColor(color));
 
         return ratesItem;
+    }
+
+    static String format(double rate){
+        if( rate == 0 ){
+            return "0";
+        } else {
+            final DecimalFormat df = new DecimalFormat("0.00");
+
+            return df.format(rate);
+        }
     }
 }
 
@@ -258,113 +264,3 @@ class ExRateViewsBounds {
     }
 }
 
-class ExRatesGroup {
-    public String caption;
-    public List<ExRate> exRates;
-
-    public boolean isCompactTitleMode;
-    public boolean isShortFormat;
-
-    public ExRateViewsBounds viewsBounds;
-
-    public ExRatesGroup(String caption) {
-        this.caption = caption;
-        viewsBounds = new ExRateViewsBounds();
-        exRates = new ArrayList<ExRate>();
-    }
-
-    public ExRatesGroup(String caption, String ratesType, List<String> ratesList, JSONObject ratesJson) {
-        this.caption = caption;
-        viewsBounds = new ExRateViewsBounds();
-        exRates = new ArrayList<ExRate>();
-
-        for (String rate : ratesList) {
-            JSONArray ratesArray = null;
-            try {
-                ratesArray = ratesJson.getJSONArray(rate);
-            } catch (JSONException e) {
-                continue;
-            }
-            try {
-                if (!ratesArray.getString(Settings.Rates.Columns.CROSS_TYPE).equals(ratesType)) {
-                    continue;
-                }
-            } catch (JSONException e) {
-                continue;
-            }
-
-            add(new ExRate(rate, ratesArray));
-        }
-    }
-
-    public void add(ExRate exRate){
-        if( exRate != null ) {
-            viewsBounds.updateMaxBounds(exRate.viewsBounds);
-            exRate.viewsBounds = viewsBounds;
-            exRates.add(exRate);
-        }
-    }
-
-    public Date getUpdateTS(){
-        Date updateTS = null;
-        for (ExRate exRate : exRates) {
-            final Date rateTS = exRate.getUpdateTS();
-            updateTS = ( updateTS == null || rateTS.after(updateTS)
-                    ? rateTS
-                    : updateTS );
-        }
-        return updateTS;
-    }
-
-    public ExRateViewsBounds calcViewsBounds(int mainFontSize, int changeFontSize){
-//        Log.v(Settings.LOG_TAG, "ExRatesGroup.calcViewsBounds(" + mainFontSize + ", " + changeFontSize + ")");
-
-        for (ExRate exRate : exRates) {
-            exRate.isCompactTitleMode = isCompactTitleMode;
-            exRate.isShortFormat = isShortFormat;
-
-            exRate.calcViewsBounds(mainFontSize, changeFontSize);
-            viewsBounds.updateMaxBounds(exRate, mainFontSize, changeFontSize);
-        }
-
-        return viewsBounds;
-    }
-
-    public ExRateViewsBounds calcViewsBounds(Context context){
-        int mainFontSize, changeFontSize;
-        final int[] textSizeAttr = new int[] { android.R.attr.textSize };
-        TypedArray a = context.obtainStyledAttributes(R.style.AppWidget, textSizeAttr);
-        mainFontSize = a.getDimensionPixelSize(0, -1);
-        a.recycle();
-        a = context.obtainStyledAttributes(R.style.AppWidget_Small, textSizeAttr);
-        changeFontSize = a.getDimensionPixelSize(0, -1);
-        a.recycle();
-        final float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
-        if( mainFontSize <= 0 ) {
-            mainFontSize = (int) (14 * scaledDensity);
-        }
-        if( changeFontSize <= 0 ) {
-            changeFontSize = (int) (9 * scaledDensity);
-        }
-
-        return calcViewsBounds(mainFontSize, changeFontSize);
-    }
-
-    public RemoteViews buildRemoteViews(Context context, boolean isShowChange, boolean invertColors){
-        Log.v(Settings.LOG_TAG, "ExRatesGroup.buildRemoteViews(…)");
-
-        RemoteViews ratesGroup = new RemoteViews(context.getPackageName(), R.layout.widget_layout_group);
-        ratesGroup.removeAllViews(R.id.table_rates);
-        ratesGroup.setTextViewText(R.id.group_caption, caption);
-
-        for (ExRate exRate : exRates) {
-            exRate.isCompactTitleMode = isCompactTitleMode;
-            exRate.isShortFormat = isShortFormat;
-
-            ratesGroup.addView(R.id.table_rates,
-                    exRate.buildRemoteViews(context, isShowChange, invertColors));
-        }
-
-        return ratesGroup;
-    }
-}

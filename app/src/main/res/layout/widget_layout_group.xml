@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    style="@style/AppWidget" >
+			  android:layout_width="wrap_content"
+			  android:layout_height="wrap_content"
+			  android:orientation="vertical"
+			  android:theme="@style/AppWidget">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/group_caption"
-        android:text="@string/title_none"
-        android:layout_marginBottom="@dimen/widget_group_title_margin"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textColor="@color/group_caption" />
+	<TextView
+		android:id="@+id/group_caption"
+		style="@style/AppWidget.Base"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/widget_group_title_margin"
+		android:maxLines="1"
+		android:singleLine="true"
+		android:text="@string/title_none"
+		android:textColor="@color/group_caption"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:id="@+id/table_rates">
+	<LinearLayout
+		android:id="@+id/table_rates"
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:orientation="vertical">
 
-    </LinearLayout>
+	</LinearLayout>
 
 </LinearLayout>

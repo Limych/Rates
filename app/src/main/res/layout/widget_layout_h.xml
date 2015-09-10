@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/widget_background"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    style="@style/AppWidget"
-    android:padding="@dimen/widget_margin"
-    android:orientation="vertical">
+	android:id="@+id/widget"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/widget_background"
+	android:gravity="center"
+	android:orientation="vertical"
+	android:padding="@dimen/widget_margin"
+	android:theme="@style/AppWidget">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rates"
-        android:orientation="horizontal"
-        android:adjustViewBounds="true"
-        android:divider="@drawable/separator"
-        android:showDividers="middle" >
+	<LinearLayout
+		android:id="@+id/rates"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:adjustViewBounds="true"
+		android:divider="@drawable/separator"
+		android:orientation="horizontal"
+		android:showDividers="middle">
 
-    </LinearLayout>
+	</LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_updated"
-        android:id="@+id/update_timestamp"
-        android:layout_gravity="end"
-        android:layout_marginTop="@dimen/widget_text_margin"
-        style="@style/AppWidget.Small"
-        android:textColor="@color/update_timestamp" />
+	<TextView
+		android:id="@+id/updateTimestamp"
+		style="@style/AppWidget.Small"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="end"
+		android:layout_marginTop="@dimen/widget_group_title_margin"
+		android:gravity="end"
+		android:text="@string/text_updated"
+		android:textColor="@color/update_timestamp"/>
 
 </LinearLayout>

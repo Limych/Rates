@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ru.khrolenok.exchangerates.OrderPreference
-        />
+    <PreferenceCategory
+        android:title="@string/pref_title_widget">
+
+        <CheckBoxPreference
+            android:key="invert_colors"
+            android:title="@string/pref_title_invert_colors"
+            android:defaultValue="false"
+            android:summaryOff="@string/pref_desc_normal_colors"
+            android:summaryOn="@string/pref_desc_invert_colors" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

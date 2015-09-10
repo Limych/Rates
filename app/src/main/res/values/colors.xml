@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Material colors -->
+    <color name="material_gray_50">#FAFAFA</color>
+    <color name="material_gray_100">#F5F5F5</color>
+    <color name="material_gray_200">#EEEEEE</color>
+
+    <color name="material_red_500">#F44336</color>
+
+    <color name="material_green_100">#C8E6C9</color>
+    <color name="material_green_500">#4CAF50</color>
+
+
+
+    <!-- Application colors -->
+    <color name="primary">#3F51B5</color>
+    <color name="primary_dark">#303F9F</color>
+    <color name="primary_light">#C5CAE9</color>
+    <color name="accent">#607D8B</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">@android:color/white</color>
+    <color name="divider">#B6B6B6</color>
+    <color name="background">@android:color/background_light</color>
+    <color name="text_shadow">#7F000000</color>
+
+    <color name="list_background_even">@color/material_gray_50</color>
+
+
+
+    <!-- Widget colors -->
     <color name="widget_background">#66212121</color>
 
     <color name="group_caption">#FFCCCCFF</color>

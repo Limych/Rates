@@ -1,153 +1,186 @@
 package ru.khrolenok.exchangerates;
 
 import android.content.ContentProvider;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.MatrixCursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
-import java.util.HashMap;
+import java.util.List;
+
+import trikita.log.Log;
 
 public class ExRatesProvider extends ContentProvider {
-    public static final String PROVIDER_NAME = Settings.APP_ID + ".provider";
-    public static final String URL = "content://" + PROVIDER_NAME + "/rates";
-    public static final Uri CONTENT_URI = Uri.parse(URL);
+    public static final String AUTHORITY = Settings.APP_ID + ".provider";
+    public static final String EXRATES_TABLE = "exrates";
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + EXRATES_TABLE);
 
-    private static final UriMatcher uriMatcher;
+    public static final int EXRATES = 1;
+    public static final int EXRATES_GROUPS = EXRATES;
+    public static final int EXRATES_CURRENCIES = 2;
+    public static final int EXRATES_GOODS = 3;
+    public static final int EXRATES_RATES = 4;
+    
+    private ExRatesDBHandler exRatesDB;
+
+    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "rates", 1);
-    }
-
-    private static HashMap<String, String> values;
-    public static class Columns {
-        public static final String ID = "_id";
-        public static final String CROSS_KEY = "cross_key";
-        public static final String CROSS_TYPE = "cross_type";
-        public static final String TIMESTAMP = "timestamp";
-        public static final String FACE_VALUE = "face_value";
-        public static final String INITIAL_BID = "initial_bid";
-        public static final String LAST_BID = "last_bid";
+        uriMatcher.addURI(AUTHORITY, EXRATES_TABLE, EXRATES_GROUPS);
+        uriMatcher.addURI(AUTHORITY, EXRATES_TABLE + "/*", EXRATES_CURRENCIES);
+        uriMatcher.addURI(AUTHORITY, EXRATES_TABLE + "/*/*", EXRATES_GOODS);
+        uriMatcher.addURI(AUTHORITY, EXRATES_TABLE + "/*/*/*", EXRATES_RATES);
     }
 
     @Override
     public boolean onCreate() {
-        Context context = getContext();
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        db = dbHelper.getWritableDatabase();
-        if (db != null) {
-            return true;
-        }
+        exRatesDB = new ExRatesDBHandler(getContext(), null, null, 1);
         return false;
     }
 
     @Override
-    public String getType(Uri uri) {
-        switch (uriMatcher.match(uri)) {
-        case 1:
-            return "vnd.android.cursor.dir/rates";
-
-        default:
-            throw new IllegalArgumentException("Unsupported URI: " + uri);
-        }
-    }
-
-    @Override
     public Uri insert(Uri uri, ContentValues values) {
-        long rowID = db.insert(TABLE_NAME, "", values);
-        if (rowID > 0) {
-            Uri _uri = ContentUris.withAppendedId(CONTENT_URI, rowID);
-            getContext().getContentResolver().notifyChange(_uri, null);
-            return _uri;
-        }
-        throw new SQLException("Failed to add a record into " + uri);
-    }
+        final SQLiteDatabase sqlDB = exRatesDB.getWritableDatabase();
 
-    @Override
-    public synchronized Cursor query(Uri uri, String[] projection, String selection,
-                        String[] selectionArgs, String sortOrder) {
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        qb.setTables(TABLE_NAME);
-
+        long id = 0;
         switch (uriMatcher.match(uri)) {
-            case 1:
-                qb.setProjectionMap(values);
+            case EXRATES:
+                id = sqlDB.insert(ExRatesDBHandler.TABLE_EXRATES,
+                        null, values);
                 break;
             default:
-                throw new IllegalArgumentException("Unknown URI " + uri);
-        }
-        if (sortOrder == null || sortOrder == "") {
-            sortOrder = Columns.CROSS_KEY;
-        }
-        Cursor c = qb.query(db, projection, selection, selectionArgs, null,
-                null, sortOrder);
-        c.setNotificationUri(getContext().getContentResolver(), uri);
-        return c;
-    }
-
-    @Override
-    public int update(Uri uri, ContentValues values, String selection,
-                      String[] selectionArgs) {
-        int count = 0;
-        switch (uriMatcher.match(uri)) {
-            case 1:
-                count = db.update(TABLE_NAME, values, selection, selectionArgs);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown URI " + uri);
+                throw new IllegalArgumentException("Unknown URI: " + uri);
         }
         getContext().getContentResolver().notifyChange(uri, null);
-        return count;
+        return Uri.parse(EXRATES_TABLE + "/" + id);
+    }
+
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+                        String sortOrder) {
+        final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(ExRatesDBHandler.TABLE_EXRATES);
+
+        final List<String> segments = uri.getPathSegments();
+        final String segment_group = segments.get(1);
+        final String segment_currency = segments.get(2);
+        final String segment_good = segments.get(3);
+
+        switch (uriMatcher.match(uri)) {
+            case EXRATES_GROUPS:
+                break;
+            case EXRATES_CURRENCIES:
+                queryBuilder.appendWhere(exRatesDB.COLUMN_GROUP + "=" + segment_group);
+                break;
+            case EXRATES_GOODS:
+                queryBuilder.appendWhere(exRatesDB.COLUMN_GROUP + "=" + segment_group);
+                queryBuilder.appendWhere(exRatesDB.COLUMN_CURRENCY + "=" + segment_currency);
+                break;
+            case EXRATES_RATES:
+                queryBuilder.appendWhere(exRatesDB.COLUMN_GROUP + "=" + segment_group);
+                queryBuilder.appendWhere(exRatesDB.COLUMN_CURRENCY + "=" + segment_currency);
+                queryBuilder.appendWhere(exRatesDB.COLUMN_GOOD + "=" + segment_good);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI");
+        }
+
+        Cursor cursor = queryBuilder.query(exRatesDB.getReadableDatabase(),
+                projection, selection, selectionArgs, null, null, sortOrder);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
+    }
+
+    @Override
+    public String getType(Uri uri) {
+        return null;
+    }
+
+    @Override
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        final SQLiteDatabase sqlDB = exRatesDB.getWritableDatabase();
+        int rowsUpdated = 0;
+
+        switch (uriMatcher.match(uri)) {
+            case EXRATES:
+                rowsUpdated = sqlDB.update(exRatesDB.TABLE_EXRATES,
+                        values,
+                        selection,
+                        selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return rowsUpdated;
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        int count = 0;
+        final SQLiteDatabase sqlDB = exRatesDB.getWritableDatabase();
+        int rowsDeleted = 0;
+
         switch (uriMatcher.match(uri)) {
-            case 1:
-                count = db.delete(TABLE_NAME, selection, selectionArgs);
+            case EXRATES:
+                rowsDeleted = sqlDB.delete(exRatesDB.TABLE_EXRATES,
+                        selection,
+                        selectionArgs);
                 break;
             default:
-                throw new IllegalArgumentException("Unknown URI " + uri);
+                throw new IllegalArgumentException("Unknown URI: " + uri);
         }
+
         getContext().getContentResolver().notifyChange(uri, null);
-        return count;
+        return rowsDeleted;
     }
 
-    private SQLiteDatabase db;
-    protected static final String DATABASE_NAME = "exchange_rates";
-    protected static final String TABLE_NAME = "rates";
-    protected static final int DATABASE_VERSION = 1;
-    protected static final String CREATE_DB_TABLE = " CREATE TABLE " + TABLE_NAME
-            + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + Columns.CROSS_KEY + " TEXT NOT NULL UNIQUE,"
-            + Columns.CROSS_TYPE + " TEXT NOT NULL,"
-            + Columns.TIMESTAMP + " NUMERIC,"
-            + Columns.FACE_VALUE + " INTEGER,"
-            + Columns.INITIAL_BID + " INTEGER,"
-            + Columns.LAST_BID + " INTEGER);";
 
-    private static class DatabaseHelper extends SQLiteOpenHelper {
-        DatabaseHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+    private class ExRatesDBHandler extends SQLiteOpenHelper {
+        private static final int DATABASE_VERSION = 1;
+        private static final String DATABASE_NAME = "exratesDB.db";
+
+        public static final String TABLE_EXRATES = "exrates";
+
+        public static final String COLUMN_GROUP = "group";
+        public static final String COLUMN_CURRENCY = "currency";
+        public static final String COLUMN_GOOD = "good";
+        public static final String COLUMN_TIMESTAMP = "timestamp";
+        public static final String COLUMN_FACE_VALUE = "face_value";
+        public static final String COLUMN_BID_INIT = "bid_init";
+        public static final String COLUMN_BID_HIGH = "bid_high";
+        public static final String COLUMN_BID_LOW = "bid_low";
+        public static final String COLUMN_BID_LAST = "bid_last";
+
+        public ExRatesDBHandler(Context context, String name,
+                           SQLiteDatabase.CursorFactory factory, int version) {
+            super(context, DATABASE_NAME, factory, DATABASE_VERSION);
         }
+
+        private static final String DATABASE_CREATE =
+                "CREATE TABLE if NOT EXISTS " + TABLE_EXRATES + " (" +
+                        COLUMN_GROUP + " TEXT," +
+                        COLUMN_CURRENCY + " TEXT," +
+                        COLUMN_GOOD + " TEXT," +
+                        " UNIQUE (" + COLUMN_GROUP +", " + COLUMN_CURRENCY + ", " + COLUMN_GOOD + "))";
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(CREATE_DB_TABLE);
+            Log.w(DATABASE_CREATE);
+            db.execSQL(DATABASE_CREATE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+            Log.w("Upgrading database from version " + oldVersion + " to "
+                    + newVersion + ", which will destroy all old data");
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXRATES);
             onCreate(db);
         }
     }
+
 }

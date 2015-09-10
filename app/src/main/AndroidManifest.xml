@@ -1,48 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.khrolenok.exchangerates" >
+	package="ru.khrolenok.exchangerates">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <!--<meta-data-->
-            <!--android:name="com.google.android.gms.version"-->
-            <!--android:value="@integer/google_play_services_version" />-->
+	<application
+		android:name=".ExRatesApplication"
+		android:allowBackup="true"
+		android:icon="@mipmap/ic_launcher"
+		android:label="@string/app_name"
+		android:logo="@mipmap/ic_launcher"
+		android:theme="@style/AppTheme">
 
-        <service android:name=".ExRatesDownloadService" />
+		<!-- <meta-data -->
+		<!-- android:name="com.google.android.gms.version" -->
+		<!-- android:value="@integer/google_play_services_version" /> -->
 
-        <receiver android:name=".ExRatesWidgetProvider" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
+		<activity
+			android:name=".ui.MainActivity"
+			android:label="@string/app_name">
+			<!--<intent-filter>-->
+				<!--<action android:name="android.intent.action.MAIN" />-->
 
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
-        </receiver>
+				<!--<category android:name="android.intent.category.LAUNCHER" />-->
+			<!--</intent-filter>-->
+		</activity>
 
-        <!--
-        provider
-            android:name=".ExchangeRatesProvider"
-            android:authorities="ru.khrolenok.exchangerates.provider"
-            android:enabled="true"
-            android:exported="false" >
-        </provider
-        -->
-        <!--<activity-->
-            <!--android:name=".ExRatesActivity"-->
-            <!--android:label="@string/title_activity_exchange" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+		<service android:name=".ExRatesDownloadService" />
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
-    </application>
+		<receiver android:name=".ui.WidgetProvider">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+
+			<meta-data
+				android:name="android.appwidget.provider"
+				android:resource="@xml/widget_info" />
+		</receiver>
+
+		<!--
+		provider
+			android:name=".ExchangeRatesProvider"
+			android:authorities="ru.khrolenok.exchangerates.provider"
+			android:enabled="true"
+			android:exported="false" >
+		</provider
+		-->
+
+		<activity
+			android:name=".ui.SettingsActivity"
+			android:label="@string/action_settings"
+			android:parentActivityName=".ui.MainActivity" />
+	</application>
 
 </manifest>

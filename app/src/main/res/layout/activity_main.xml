@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015. Andrey “Limych” Khrolenok
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<android.support.v4.widget.DrawerLayout
+	android:id="@+id/drawer_layout"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context="ru.khrolenok.exchangerates.ui.MainActivity"
+	tools:ignore="MissingPrefix">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<include
+			android:id="@+id/toolbar_actionbar"
+			style="@style/AppTheme.HeaderBar"
+			layout="@layout/toolbar_actionbar"/>
+
+		<ru.khrolenok.exchangerates.ui.widget.DrawShadowFrameLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_below="@+id/toolbar_actionbar"
+			android:clipChildren="false"
+			app:shadowDrawable="@drawable/header_shadow">
+
+			<FrameLayout
+				android:id="@+id/content_frame"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"/>
+
+		</ru.khrolenok.exchangerates.ui.widget.DrawShadowFrameLayout>
+
+		<com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+			android:id="@+id/pbLoadingQuotes"
+			android:layout_width="50dp"
+			android:layout_height="50dp"
+			android:layout_centerInParent="true"
+			android:background="@color/accent"
+			android:visibility="gone"/>
+
+		<TextView
+			android:id="@+id/tvNoInternet"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="@string/no_internet_connection"
+			android:textSize="20sp"
+			android:visibility="gone"/>
+
+	</RelativeLayout>
+
+	<ListView
+		android:id="@+id/left_drawer"
+		android:layout_width="240dp"
+		android:layout_height="match_parent"
+		android:layout_gravity="start"
+		android:background="@color/primary_light"
+		android:choiceMode="singleChoice"
+		android:divider="@android:color/transparent"
+		android:dividerHeight="0dp"
+		android:drawSelectorOnTop="true"
+		android:paddingBottom="30dp"
+		android:stackFromBottom="true"/>
+
+</android.support.v4.widget.DrawerLayout>

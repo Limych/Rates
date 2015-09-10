@@ -2,13 +2,161 @@
     <string name="app_name">Курсы рубля</string>
     <string name="configure">Настройки</string>
     <string name="add_widget">Добавить виджет</string>
-    <string name="title_official">ЦБ РФ:</string>
-    <string name="title_stock">Биржа:</string>
-    <string name="title_forex">Форекс:</string>
+    <string name="title_official">ЦБ РФ</string>
+    <string name="title_stock">Биржа</string>
+    <string name="title_forex">Форекс</string>
     <string name="action_settings">Настройки</string>
     <string name="column_title_bid_last">Котировка</string>
     <string name="column_title_change">Изменение</string>
     <string name="column_title_currency">Валюта</string>
     <string name="text_updated">Обновлено:</string>
-    <string name="text_updated_short">Обн:</string>
+    <string name="pref_title_widget">Виджет</string>
+    <string name="pref_title_invert_colors">Цвета цен наоборот</string>
+    <string name="pref_desc_normal_colors">Зелёный для роста цен. Красный для падения цен</string>
+    <string name="pref_desc_invert_colors">Красный для роста цен. Зелёный для падения цен</string>
+
+
+
+    <!-- Currency names-->
+    <string-array name="stockNames">
+        <item>AED — Дирхам ОАЭ</item>
+        <item>AFN — Афгани</item>
+        <item>ALL — Албанский лек</item>
+        <item>AMD — Армянский драм</item>
+        <item>ANG — Антильский гульден</item>
+        <item>ARS — Аргентинское песо</item>
+        <item>AUD — Австралийский доллар</item>
+        <item>AZN — Азербайджанский манат</item>
+        <item>BAM — Конвертируемая марка</item>
+        <item>BBD — Барбадосский доллар</item>
+        <item>BDT — Бангладешская така</item>
+        <item>BGN — Болгарский лев</item>
+        <item>BHD — Бахрейнский динар</item>
+        <item>BIF — Бурундийский франк</item>
+        <item>BND — Брунейский доллар</item>
+        <item>BOB — Боливиано</item>
+        <item>BRL — Бразильский реал</item>
+        <item>BSD — Багамский доллар</item>
+        <item>BTC — Биткойн</item>
+        <item>BWP — Ботсванская пула</item>
+        <item>BYR — Белорусский рубль</item>
+        <item>BZD — Белизский доллар</item>
+        <item>CAD — Канадский доллар</item>
+        <item>CHF — Швейцарский франк</item>
+        <item>CLP — Чилийское песо</item>
+        <item>CNY — Китайский юань</item>
+        <item>COP — Колумбийское песо</item>
+        <item>CRC — Костариканский колон</item>
+        <item>CUP — Кубинское песо</item>
+        <item>CVE — Эскудо Кабо-Верде</item>
+        <item>CZK — Чешская крона</item>
+        <item>DJF — Франк Джибути</item>
+        <item>DKK — Датская крона</item>
+        <item>DOP — Доминиканское песо</item>
+        <item>DZD — Алжирский динар</item>
+        <item>EGP — Египетский фунт</item>
+        <item>ETB — Эфиопский быр</item>
+        <item>EUR — Евро</item>
+        <item>FJD — Доллар Фиджи</item>
+        <item>GBP — Британский фунт</item>
+        <item>GEL — Грузинский лари</item>
+        <item>GHS — Ганский седи</item>
+        <item>GMD — Гамбийский даласи</item>
+        <item>GNF — Гвинейский франк</item>
+        <item>GTQ — Гватемальский кетсаль</item>
+        <item>HKD — Гонконгский доллар</item>
+        <item>HNL — Гондурасская лемпира</item>
+        <item>HRK — Хорватская куна</item>
+        <item>HTG — Гаитянский гурд</item>
+        <item>HUF — Венгерский форинт</item>
+        <item>IDR — Индонезийская рупия</item>
+        <item>ILS — Израильский шекель</item>
+        <item>INR — Индийская рупия</item>
+        <item>IQD — Иракский динар</item>
+        <item>IRR — Иранский риал</item>
+        <item>ISK — Исландская крона</item>
+        <item>JMD — Ямайский доллар</item>
+        <item>JOD — Иорданский динар</item>
+        <item>JPY — Японская иена</item>
+        <item>KES — Кенийский шиллинг</item>
+        <item>KHR — Камбоджийский риель</item>
+        <item>KMF — Франк Комор</item>
+        <item>KRW — Южнокорейская вона</item>
+        <item>KWD — Кувейтский динар</item>
+        <item>KYD — Доллар Каймановых островов</item>
+        <item>KZT — Казахстанский тенге</item>
+        <item>LAK — Лаосский кип</item>
+        <item>LBP — Ливанский фунт</item>
+        <item>LKR — Шри-Ланкийская рупия</item>
+        <item>LSL — Лоти Лесото</item>
+        <item>LTC — Лайткоин</item>
+        <item>LTL — Литовский лит</item>
+        <item>LYD — Ливийский динар</item>
+        <item>MAD — Марокканский дирхам</item>
+        <item>MDL — Молдавский лей</item>
+        <item>MGA — Малагасийский ариари</item>
+        <item>MKD — Македонский денар</item>
+        <item>MMK — Мьянманский кьят</item>
+        <item>MOP — Патака Макао</item>
+        <item>MRO — Мавританская угия</item>
+        <item>MUR — Маврикийская рупия</item>
+        <item>MVR — Мальдивская руфия</item>
+        <item>MWK — Малавийская квача</item>
+        <item>MXN — Мексиканское песо</item>
+        <item>MYR — Малазийский ринггит</item>
+        <item>MZN — Мозамбикский метикал</item>
+        <item>NAD — Доллар Намибии</item>
+        <item>NGN — Нигерийская найра</item>
+        <item>NIO — Никарагуанская кордоба</item>
+        <item>NOK — Норвежская крона</item>
+        <item>NPR — Непальская рупия</item>
+        <item>NZD — Новозеландский доллар</item>
+        <item>OMR — Оманский риал</item>
+        <item>PAB — Панамский бальбоа</item>
+        <item>PEN — Перуанский новый соль</item>
+        <item>PGK — Кина Папуа-Новой Гвинеи</item>
+        <item>PHP — Филиппинское песо</item>
+        <item>PKR — Пакистанская рупия</item>
+        <item>PLN — Польский злотый</item>
+        <item>PYG — Парагвайский гуарани</item>
+        <item>QAR — Катарский риал</item>
+        <item>RON — Румынский лей</item>
+        <item>RSD — Сербский динар</item>
+        <item>RUB,RUR — Российский рубль</item>
+        <item>RWF — Руандийский франк</item>
+        <item>SAR — Саудовский риял</item>
+        <item>SCR — Сейшельская рупия</item>
+        <item>SDG — Суданский фунт</item>
+        <item>SEK — Шведская крона</item>
+        <item>SGD — Сингапурский доллар</item>
+        <item>SOS — Сомалийский шиллинг</item>
+        <item>STD — Добра Сан-Томе и Принсипи</item>
+        <item>SVC — Сальвадорский колон</item>
+        <item>SYP — Сирийский фунт</item>
+        <item>SZL — Свазилендский лилангени</item>
+        <item>THB — Тайский бат</item>
+        <item>TND — Тунисский динар</item>
+        <item>TRY — Турецкая лира</item>
+        <item>TTD — Доллар Тринидада и Тобаго</item>
+        <item>TWD — Тайваньский доллар</item>
+        <item>TZS — Танзанийский шиллинг</item>
+        <item>UAH — Украинская гривна</item>
+        <item>UGX — Угандийский шиллинг</item>
+        <item>USD — Доллар США</item>
+        <item>UYU — Уругвайское песо</item>
+        <item>UZS — Узбекский сум</item>
+        <item>VEF — Венесуэльский боливар</item>
+        <item>VND — Вьетнамский донг</item>
+        <item>VUV — Вануатский вату</item>
+        <item>XAF — Франк КФА BEAC</item>
+        <item>XCD — Восточно-карибский доллар</item>
+        <item>XOF — Франк КФА BCEAO</item>
+        <item>XPF — Французский тихоокеанский франк</item>
+        <item>YER — Йеменский риал</item>
+        <item>ZAR — Южноафриканский рэнд</item>
+        <item>ZMK — Замбийская квача</item>
+    </string-array>
+    <string name="error_in_expression">Ошибка в выражении</string>
+    <string name="no_internet_connection">Нет соединения с интернет</string>
+    <string name="text_loading">Загрузка данных…</string>
 </resources>
