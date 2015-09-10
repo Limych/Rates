@@ -27,6 +27,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 
 import org.json.JSONException;
@@ -54,7 +56,15 @@ public class MainFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_main, container, false);
+		final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+		final AdRequest adRequest = new AdRequest.Builder()
+				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+				.build();
+		final AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+		mAdView.loadAd(adRequest);
+
+		return rootView;
 	}
 
 	@Override
@@ -74,7 +84,7 @@ public class MainFragment extends Fragment {
 			final SharedPreferences prefs = getActivity().getSharedPreferences(Settings.PREFS_NAME,
 					Context.MODE_PRIVATE);
 
-			List<String> ratesList = null;
+			List<String> ratesList;
 			try{
 				ratesList = Arrays.asList(prefs.getString(Settings.Display.ratesList,
 						Settings.Display.ratesListDefault).split("\\s*,\\s*"));
@@ -82,7 +92,7 @@ public class MainFragment extends Fragment {
 				return;
 			}
 
-			JSONObject ratesJson = null;
+			JSONObject ratesJson;
 			try{
 				ratesJson = new JSONObject(prefs.getString(Settings.Rates.ratesKey, ""));
 			} catch( JSONException ignored ){

@@ -60,10 +60,6 @@
 	<!-- Widget styles -->
 
 	<style name="AppWidget.Base" parent="AppTheme.Base">
-		<item name="android:shadowColor">@color/text_shadow</item>
-		<item name="android:shadowDx">1</item>
-		<item name="android:shadowDy">1</item>
-		<item name="android:shadowRadius">2</item>
 		<item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
 	</style>
 
@@ -73,9 +69,13 @@
 
 	<style name="AppWidget.Body" parent="AppWidget.Base">
 		<item name="android:textSize">13sp</item>
+		<item name="android:shadowColor">@color/text_shadow</item>
+		<item name="android:shadowDx">1</item>
+		<item name="android:shadowDy">1</item>
+		<item name="android:shadowRadius">2</item>
 	</style>
 
-	<style name="AppWidget.Small" parent="AppWidget">
+	<style name="AppWidget.Small" parent="AppWidget.Body">
 		<item name="android:textSize">10sp</item>
 	</style>
 
