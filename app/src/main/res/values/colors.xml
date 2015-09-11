@@ -38,6 +38,7 @@
 
 
     <!-- Widget colors -->
+    <color name="widget_text">@android:color/primary_text_dark</color>
     <color name="widget_background">#66212121</color>
 
     <color name="group_caption">#FFCCCCFF</color>

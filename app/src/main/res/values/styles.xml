@@ -85,6 +85,7 @@
 	</style>
 
 	<style name="AppWidget.Body" parent="AppWidget.Base">
+		<item name="android:textColor">@color/widget_text</item>
 		<item name="android:textSize">13sp</item>
 		<item name="android:shadowColor">@color/text_shadow</item>
 		<item name="android:shadowDx">1</item>
