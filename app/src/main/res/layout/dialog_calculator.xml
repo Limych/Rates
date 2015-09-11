@@ -43,7 +43,7 @@
 
 	</android.support.v7.widget.CardView>
 
-	<ru.khrolenok.exchangerates.ui.layout.CalculatorNumericPadLayout
+	<com.khrolenok.rates.ui.layout.CalculatorNumericPadLayout
 		android:id="@+id/pad"
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent"
@@ -155,7 +155,7 @@
 			android:contentDescription="@string/desc_del"
 			android:src="@drawable/ic_check"/>
 
-	</ru.khrolenok.exchangerates.ui.layout.CalculatorNumericPadLayout>
+	</com.khrolenok.rates.ui.layout.CalculatorNumericPadLayout>
 
 	<TextView
 		android:id="@+id/resultTextView"

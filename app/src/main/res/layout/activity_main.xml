@@ -23,7 +23,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:theme="@style/AppTheme"
-	tools:context="ru.khrolenok.exchangerates.ui.MainActivity"
+	tools:context="com.khrolenok.rates.ui.MainActivity"
 	tools:ignore="MissingPrefix">
 
 	<RelativeLayout
@@ -35,7 +35,7 @@
 			style="@style/AppTheme.HeaderBar"
 			layout="@layout/toolbar_actionbar"/>
 
-		<ru.khrolenok.exchangerates.ui.widget.DrawShadowFrameLayout
+		<com.khrolenok.rates.ui.widget.DrawShadowFrameLayout
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:layout_below="@+id/toolbar_actionbar"
@@ -47,7 +47,7 @@
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"/>
 
-		</ru.khrolenok.exchangerates.ui.widget.DrawShadowFrameLayout>
+		</com.khrolenok.rates.ui.widget.DrawShadowFrameLayout>
 
 		<com.gc.materialdesign.views.ProgressBarCircularIndeterminate
 			android:id="@+id/pbLoadingQuotes"

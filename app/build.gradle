@@ -4,7 +4,7 @@ android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
     defaultConfig {
-        applicationId "ru.khrolenok.exchangerates"
+        applicationId "com.khrolenok.rates"
         minSdkVersion 17
         targetSdkVersion 22
         versionName version

@@ -23,7 +23,7 @@
 	android:layout_height="wrap_content"
 	android:theme="@style/AppTheme.Widget.ListItem"
 	app:cardCornerRadius="4dp"
-	tools:context="ru.khrolenok.exchangerates.ui.MainActivity">
+	tools:context="com.khrolenok.rates.ui.MainActivity">
 
 	<LinearLayout
 		android:layout_width="match_parent"
