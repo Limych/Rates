@@ -1,19 +1,44 @@
+<!--
+  ~ Copyright (c) 2015 Andrey “Limych” Khrolenok
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <resources>
     <string name="app_name">Курсы рубля</string>
-    <string name="configure">Настройки</string>
-    <string name="add_widget">Добавить виджет</string>
     <string name="title_official">ЦБ РФ</string>
     <string name="title_stock">Биржа</string>
     <string name="title_forex">Форекс</string>
     <string name="action_settings">Настройки</string>
-    <string name="column_title_bid_last">Котировка</string>
-    <string name="column_title_change">Изменение</string>
-    <string name="column_title_currency">Валюта</string>
     <string name="text_updated">Обновлено:</string>
     <string name="pref_title_widget">Виджет</string>
     <string name="pref_title_invert_colors">Цвета цен наоборот</string>
     <string name="pref_desc_normal_colors">Зелёный для роста цен. Красный для падения цен</string>
     <string name="pref_desc_invert_colors">Красный для роста цен. Зелёный для падения цен</string>
+    <string name="error_in_expression">Ошибка в выражении</string>
+    <string name="no_internet_connection">Нет соединения с интернет</string>
+    <string name="text_loading">Загрузка данных…</string>
+    <string name="desc_add">Плюс</string>
+    <string name="desc_del">Удалить</string>
+    <string name="desc_div">Разделить</string>
+    <string name="desc_mul">Умножить</string>
+    <string name="desc_paren">Левая/Правая скобки</string>
+    <string name="desc_perc">Проценты</string>
+    <string name="desc_sub">Минус</string>
+    <string name="pref_title_debug">Отладка</string>
+    <string name="pref_title_device_id">ID устройства</string>
+    <string name="pref_title_presentation">Представление данных</string>
+    <string name="action_opinions">Обратная связь</string>
 
 
 
@@ -156,17 +181,4 @@
         <item>ZAR — Южноафриканский рэнд</item>
         <item>ZMK — Замбийская квача</item>
     </string-array>
-    <string name="error_in_expression">Ошибка в выражении</string>
-    <string name="no_internet_connection">Нет соединения с интернет</string>
-    <string name="text_loading">Загрузка данных…</string>
-    <string name="desc_add">Плюс</string>
-    <string name="desc_del">Удалить</string>
-    <string name="desc_div">Разделить</string>
-    <string name="desc_mul">Умножить</string>
-    <string name="desc_paren">Левая/Правая скобки</string>
-    <string name="desc_perc">Проценты</string>
-    <string name="desc_sub">Минус</string>
-    <string name="pref_title_debug">Отладка</string>
-    <string name="pref_title_device_id">ID устройства</string>
-    <string name="pref_title_presentation">Представление данных</string>
 </resources>

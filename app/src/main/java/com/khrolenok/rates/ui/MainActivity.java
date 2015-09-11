@@ -17,6 +17,7 @@
 package com.khrolenok.rates.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.khrolenok.rates.R;
+import com.khrolenok.rates.Settings;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -88,10 +90,15 @@ public class MainActivity extends AppCompatActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 
-		// noinspection SimplifiableIfStatement
-		if( id == R.id.action_preferences ){
-			startActivity(new Intent(this, SettingsActivity.class));
-			return true;
+		switch( id ){
+			case R.id.action_preferences:
+				startActivity(new Intent(this, SettingsActivity.class));
+				return true;
+			case R.id.action_opinions:
+				Intent i = new Intent(Intent.ACTION_VIEW);
+				i.setData(Uri.parse(Settings.FEEDBACK_URL));
+				startActivity(i);
+				break;
 		}
 
 		return super.onOptionsItemSelected(item);

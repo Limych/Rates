@@ -24,6 +24,7 @@ public class Settings {
     public static final String TAG = "ExRates";
 
     public static final String PREFS_NAME = APP_ID;
+    public static final String FEEDBACK_URL = "http://exrates.reformal.ru/";
 
     public interface Display {
         double changesThreshold = 0.1;    // Percents

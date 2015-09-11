@@ -54,6 +54,7 @@
 	<string name="desc_sub">Minus</string>
 	<string name="desc_perc">Percent</string>
 	<string name="error_in_expression">An error in the expression</string>
+	<string name="action_opinions">Feedback</string>
 
 
 	<!-- Currency names-->
