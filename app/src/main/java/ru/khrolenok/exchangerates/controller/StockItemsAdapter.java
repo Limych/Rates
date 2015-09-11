@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2015 Andrey “Limych” Khrolenok
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package ru.khrolenok.exchangerates.controller;
 
 import android.content.Context;
@@ -18,11 +34,12 @@ import ru.khrolenok.exchangerates.ExRate;
 import ru.khrolenok.exchangerates.R;
 import ru.khrolenok.exchangerates.Settings;
 import ru.khrolenok.exchangerates.model.StockItem;
+import ru.khrolenok.exchangerates.ui.MainActivity;
 import ru.khrolenok.exchangerates.ui.MainFragment;
 import ru.khrolenok.exchangerates.util.StockNames;
 
 /**
- * Created by Limych on 04.09.2015.
+ * Created by Limych on 04.09.2015
  */
 public class StockItemsAdapter extends ArrayAdapter<StockItem>
 		implements Swappable {
@@ -40,7 +57,7 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 	}
 
 	public void fillFromExRates(List<ExRate> exRates) {
-		final double mainValue = 1000;
+		final double mainValue = ( (MainActivity) mContext ).mainValue;
 
 		StockItem item = new StockItem();
 
@@ -73,6 +90,7 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 	}
 
 	public void fillValuesFromMainValue(double mainValue) {
+		( (MainActivity) mContext ).mainValue = mainValue;
 		for( StockItem si : mStockItems ) {
 			si.value = mainValue * si.faceValue / si.lastPrice;
 		}
@@ -103,6 +121,9 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 			viewHolder.priceChangeDirTV.setVisibility(View.GONE);
 			viewHolder.priceChangeTV.setVisibility(View.GONE);
 		} else {
+			viewHolder.priceTV.setVisibility(View.VISIBLE);
+			viewHolder.priceChangeDirTV.setVisibility(View.VISIBLE);
+			viewHolder.priceChangeTV.setVisibility(View.VISIBLE);
 			viewHolder.priceTV.setText(stockItem.getLastPriceFormatted());
 			viewHolder.priceChangeDirTV.setText(( !stockItem.hasPriceChange()
 					? R.string.change_direction_none
@@ -170,7 +191,7 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 	}
 
 	public void saveOrder() {
-		ArrayList<String> stocksList = new ArrayList<String>();
+		ArrayList<String> stocksList = new ArrayList<>();
 		for( StockItem item : mStockItems ) {
 			stocksList.add(item.symbol);
 		}

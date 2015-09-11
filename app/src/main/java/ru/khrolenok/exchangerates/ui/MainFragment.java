@@ -46,7 +46,7 @@ import ru.khrolenok.exchangerates.model.StockItem;
 import trikita.log.Log;
 
 /**
- * Created by Limych on 07.09.2015.
+ * Created by Limych on 07.09.2015
  */
 public class MainFragment extends Fragment {
 

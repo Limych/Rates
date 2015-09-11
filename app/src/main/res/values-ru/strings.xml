@@ -159,4 +159,14 @@
     <string name="error_in_expression">Ошибка в выражении</string>
     <string name="no_internet_connection">Нет соединения с интернет</string>
     <string name="text_loading">Загрузка данных…</string>
+    <string name="desc_add">Плюс</string>
+    <string name="desc_del">Удалить</string>
+    <string name="desc_div">Разделить</string>
+    <string name="desc_mul">Умножить</string>
+    <string name="desc_paren">Левая/Правая скобки</string>
+    <string name="desc_perc">Проценты</string>
+    <string name="desc_sub">Минус</string>
+    <string name="pref_title_debug">Отладка</string>
+    <string name="pref_title_device_id">ID устройства</string>
+    <string name="pref_title_presentation">Представление данных</string>
 </resources>

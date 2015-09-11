@@ -27,17 +27,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 
 import ru.khrolenok.exchangerates.R;
 import ru.khrolenok.exchangerates.util.EvaluateString;
 
 /**
- * Created by Limych on 05.09.2015.
+ * Created by Limych on 05.09.2015
  */
 public class CalculatorDialog extends DialogFragment implements View.OnClickListener, View.OnLongClickListener {
 
@@ -69,28 +69,15 @@ public class CalculatorDialog extends DialogFragment implements View.OnClickList
 		expressionTextView.setText(df.format(value));
 		setResult(value);
 
-		view.findViewById(R.id.button0).setOnClickListener(this);
-		view.findViewById(R.id.button00).setOnClickListener(this);
-		view.findViewById(R.id.button1).setOnClickListener(this);
-		view.findViewById(R.id.button2).setOnClickListener(this);
-		view.findViewById(R.id.button3).setOnClickListener(this);
-		view.findViewById(R.id.button4).setOnClickListener(this);
-		view.findViewById(R.id.button5).setOnClickListener(this);
-		view.findViewById(R.id.button6).setOnClickListener(this);
-		view.findViewById(R.id.button7).setOnClickListener(this);
-		view.findViewById(R.id.button8).setOnClickListener(this);
-		view.findViewById(R.id.button9).setOnClickListener(this);
-		view.findViewById(R.id.buttonBrk).setOnClickListener(this);
-		view.findViewById(R.id.buttonBS).setOnClickListener(this);
-		view.findViewById(R.id.buttonDiv).setOnClickListener(this);
-		view.findViewById(R.id.buttonDot).setOnClickListener(this);
-		view.findViewById(R.id.buttonMinus).setOnClickListener(this);
-		view.findViewById(R.id.buttonMult).setOnClickListener(this);
-		view.findViewById(R.id.buttonPerc).setOnClickListener(this);
-		view.findViewById(R.id.buttonPlus).setOnClickListener(this);
-		view.findViewById(R.id.buttonOk).setOnClickListener(this);
+		final ViewGroup pad = (ViewGroup) view.findViewById(R.id.pad);
+		for( int childIndex = pad.getChildCount() - 1; childIndex >= 0; --childIndex ) {
+			final View v = pad.getChildAt(childIndex);
+			if( v instanceof Button || v instanceof ImageButton ){
+				v.setOnClickListener(this);
+			}
+		}
 
-		view.findViewById(R.id.buttonBS).setOnLongClickListener(this);
+		view.findViewById(R.id.del).setOnLongClickListener(this);
 
 		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		return view;
@@ -111,84 +98,53 @@ public class CalculatorDialog extends DialogFragment implements View.OnClickList
 	public void onClick(View v) {
 		String expr = (String) expressionTextView.getText();
 		switch( v.getId() ){
-			case R.id.button0:
-				expr += "0";
-				break;
-			case R.id.button00:
-				expr += "00";
-				break;
-			case R.id.button1:
-				expr += "1";
-				break;
-			case R.id.button2:
-				expr += "2";
-				break;
-			case R.id.button3:
-				expr += "3";
-				break;
-			case R.id.button4:
-				expr += "4";
-				break;
-			case R.id.button5:
-				expr += "5";
-				break;
-			case R.id.button6:
-				expr += "6";
-				break;
-			case R.id.button7:
-				expr += "7";
-				break;
-			case R.id.button8:
-				expr += "8";
-				break;
-			case R.id.button9:
-				expr += "9";
-				break;
-
-			case R.id.buttonPlus:
-				expr += "+";
-				break;
-			case R.id.buttonMinus:
-				expr += "-";
-				break;
-			case R.id.buttonMult:
-				expr += "×";
-				break;
-			case R.id.buttonDiv:
-				expr += "/";
-				break;
-			case R.id.buttonPerc:
-				expr += "%";
-				break;
-
-			case R.id.buttonDot:
-				char decSeparator = '.';
-				final NumberFormat nf = NumberFormat.getInstance();
-				if( nf instanceof DecimalFormat ){
-					DecimalFormatSymbols sym = ( (DecimalFormat) nf ).getDecimalFormatSymbols();
-					decSeparator = sym.getDecimalSeparator();
+			case R.id.paren:
+				int cntLParen = 0;
+				int cntRParen = 0;
+				for( int i = 0; i < expr.length(); i++ ) {
+					if( expr.charAt(i) == '(' ) cntLParen++;
+					else if( expr.charAt(i) == ')' ) cntRParen++;
 				}
-				expr += decSeparator;
+				expr += ( cntLParen != cntRParen && expr.matches(".*[0-9.,%)]") ? ")"
+						: ( expr.matches(".*[+\\-*/−×÷(]") ? "(" : "×(" ) );
 				break;
-
-			case R.id.buttonBrk:
-				expr += ( expr.matches(".*[0-9.%)]") ? ")" : "(" );
-				break;
-
-			case R.id.buttonBS:
+			case R.id.del:
 				if( !expr.isEmpty() ){
 					expr = expr.substring(0, expr.length() - 1);
+					if( expr.isEmpty() ) expr = "0";
 				}
 				break;
-
-			case R.id.buttonOk:
+			case R.id.set:
 				dismiss();
 				Intent intent = new Intent();
 				intent.putExtra(TAG_LIST_ITEM_POSITION, this.listItemPosition);
 				intent.putExtra(TAG_VALUE, this.value);
 				getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
 				return;
+			case R.id.dec_point:
+				expr += ( expr.matches(".*[)%]") ? "×" : "" ) + ( expr.matches(".*\\.[0-9]*") ? ""
+						: ( expr.matches(".*[0-9]") ? "" : "0" ) + ( (Button) v ).getText() );
+				break;
+			case R.id.op_add:
+			case R.id.op_sub:
+			case R.id.op_mul:
+			case R.id.op_div:
+				if( expr.matches(".*[+\\-*/−×÷]") ){
+					expr = expr.substring(0, expr.length() - 1);
+				}
+				expr += (String) ( (Button) v ).getText();
+				break;
+			case R.id.op_perc:
+				if( expr.matches(".*[+\\-*/−×÷].*") && expr.matches(".*[0-9.,)]") ){
+					expr += (String) ( (Button) v ).getText();
+				}
+				break;
+
+			default:
+				expr += ( expr.matches(".*[)%]") ? "×" : "" ) + ( (Button) v ).getText();
+				break;
 		}
+		expr = expr.replaceFirst("(^|.*[+\\-*/−×÷(])0+([0-9])", "$1$2");
 		expressionTextView.setText(expr);
 		try{
 			setResult(EvaluateString.evaluate(expr, false));
@@ -199,8 +155,8 @@ public class CalculatorDialog extends DialogFragment implements View.OnClickList
 
 	@Override
 	public boolean onLongClick(View v) {
-		if( v.getId() == R.id.buttonBS ){
-			expressionTextView.setText("");
+		if( v.getId() == R.id.del ){
+			expressionTextView.setText("0");
 		}
 		return false;
 	}
@@ -212,7 +168,7 @@ public class CalculatorDialog extends DialogFragment implements View.OnClickList
 		final double fractionalPart = Math.abs(value - integerPart);
 
 		final String integerFormat = ( Math.abs(integerPart) <= 9999 ? "###0" : "#,##0" );
-		df.applyPattern(integerFormat + ";−"+integerFormat);
+		df.applyPattern(integerFormat + ";−" + integerFormat);
 		final String integerStr = df.format(integerPart);
 
 		final String fractionalFormat = "0.0000";

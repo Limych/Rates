@@ -28,6 +28,14 @@
     <color name="list_background_even">@color/material_gray_50</color>
 
 
+    
+    <!-- Calculator -->
+    <color name="calculator_background_color">@color/background_material_light</color>
+    <color name="calculator_button_ripple_color">@color/ripple_material_light</color>
+    <color name="calculator_button_text_color">@color/secondary_text</color>
+    <color name="calculator_button_operator_text_color">@color/accent</color>
+
+
 
     <!-- Widget colors -->
     <color name="widget_background">#66212121</color>
