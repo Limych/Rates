@@ -67,6 +67,8 @@ android {
         debug {
             buildConfigField BOOLEAN, "SHOW_ADS", TRUE
 //            buildConfigField BOOLEAN, "SHOW_ADS", FALSE
+            buildConfigField BOOLEAN, "STRICT_MODE", TRUE
+//            buildConfigField BOOLEAN, "STRICT_MODE", FALSE
         }
 
         release {

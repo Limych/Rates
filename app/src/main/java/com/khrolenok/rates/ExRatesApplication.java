@@ -23,6 +23,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.os.StrictMode;
 import android.provider.Settings;
 
 import com.khrolenok.rates.ui.WidgetProvider;
@@ -51,6 +52,17 @@ public class ExRatesApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		if( BuildConfig.DEBUG && BuildConfig.STRICT_MODE ){
+			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+					.detectAll()
+					.penaltyLog()
+					.penaltyDialog()
+					.build());
+			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll()
+					.penaltyLog()
+					.build());
+		}
 
 		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
 						.setDefaultFontPath(FONT_PATH)

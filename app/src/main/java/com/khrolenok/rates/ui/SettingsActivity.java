@@ -73,11 +73,12 @@ public class SettingsActivity extends AppCompatActivity {
 			// Load the preferences from an XML resource
 			addPreferencesFromResource(R.xml.preferences);
 
-			final Preference deviceIdPref = findPreference("device_id");
-			deviceIdPref.setSummary(ExRatesApplication.deviceId);
-
 			if( !ExRatesApplication.isTestDevice ){
 				getPreferenceScreen().removePreference(findPreference("category_debug"));
+
+			} else {
+				final Preference deviceIdPref = findPreference("device_id");
+				deviceIdPref.setSummary(ExRatesApplication.deviceId);
 			}
 		}
 
