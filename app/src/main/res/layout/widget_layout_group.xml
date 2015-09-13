@@ -38,6 +38,8 @@
 		android:layout_height="fill_parent"
 		android:orientation="vertical">
 
+		<!-- Place for items -->
+
 	</LinearLayout>
 
 </LinearLayout>

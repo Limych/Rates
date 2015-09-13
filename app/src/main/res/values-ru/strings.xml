@@ -27,7 +27,6 @@
     <string name="pref_desc_invert_colors">Красный для роста цен. Зелёный для падения цен</string>
     <string name="error_in_expression">Ошибка в выражении</string>
     <string name="no_internet_connection">Нет соединения с интернет</string>
-    <string name="text_loading">Загрузка данных…</string>
     <string name="desc_add">Плюс</string>
     <string name="desc_del">Удалить</string>
     <string name="desc_div">Разделить</string>

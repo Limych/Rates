@@ -34,5 +34,3 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
-
-apply from: 'versioning.gradle'

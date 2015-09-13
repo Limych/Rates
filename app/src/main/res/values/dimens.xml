@@ -29,14 +29,15 @@
 
     <!-- Widget -->
     <dimen name="widget_background_rounds">8dp</dimen>
-    <dimen name="widget_margin">6dp</dimen>
-    <dimen name="widget_horizontal_text_margin">3dp</dimen>
+    <dimen name="widget_margin">4dp</dimen>
     <dimen name="widget_group_title_margin">0dp</dimen>
     <dimen name="widget_group_divider_size">6dp</dimen>
+    <dimen name="widget_horizontal_text_margin">2dp</dimen>
 
 
 
     <!-- Calculator -->
     <dimen name="calculator_button_text_color">24sp</dimen>
     <dimen name="calculator_layout_padding">12dp</dimen>
+    <dimen name="calculator_horizontal_text_margin">3dp</dimen>
 </resources>

@@ -15,8 +15,7 @@
   ~ limitations under the License.
   -->
 
-<android.support.v4.widget.DrawerLayout
-	android:id="@+id/drawer_layout"
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
@@ -26,42 +25,23 @@
 	tools:context="com.khrolenok.rates.ui.MainActivity"
 	tools:ignore="MissingPrefix">
 
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+	<include
+		android:id="@+id/toolbar_actionbar"
+		style="@style/AppTheme.HeaderBar"
+		layout="@layout/toolbar_actionbar"/>
 
-		<include
-			android:id="@+id/toolbar_actionbar"
-			style="@style/AppTheme.HeaderBar"
-			layout="@layout/toolbar_actionbar"/>
+	<com.khrolenok.rates.ui.widget.DrawShadowFrameLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_below="@+id/toolbar_actionbar"
+		android:clipChildren="false"
+		app:shadowDrawable="@drawable/header_shadow">
 
-		<com.khrolenok.rates.ui.widget.DrawShadowFrameLayout
+		<FrameLayout
+			android:id="@+id/content_frame"
 			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:layout_below="@+id/toolbar_actionbar"
-			android:clipChildren="false"
-			app:shadowDrawable="@drawable/header_shadow">
+			android:layout_height="fill_parent"/>
 
-			<FrameLayout
-				android:id="@+id/content_frame"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"/>
+	</com.khrolenok.rates.ui.widget.DrawShadowFrameLayout>
 
-		</com.khrolenok.rates.ui.widget.DrawShadowFrameLayout>
-
-	</RelativeLayout>
-
-	<ListView
-		android:id="@+id/left_drawer"
-		android:layout_width="240dp"
-		android:layout_height="match_parent"
-		android:layout_gravity="start"
-		android:background="@color/primary_light"
-		android:choiceMode="singleChoice"
-		android:divider="@android:color/transparent"
-		android:dividerHeight="0dp"
-		android:drawSelectorOnTop="true"
-		android:paddingBottom="30dp"
-		android:stackFromBottom="true"/>
-
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

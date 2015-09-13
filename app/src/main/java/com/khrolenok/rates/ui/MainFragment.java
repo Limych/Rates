@@ -30,6 +30,8 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.khrolenok.rates.BuildConfig;
+import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.ExRatesGroup;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.Settings;
@@ -43,6 +45,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import trikita.log.Log;
 
 /**
  * Created by Limych on 07.09.2015
@@ -61,12 +65,18 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 		srQuotesRefresher = (SwipeRefreshLayout) rootView.findViewById(R.id.srQuotesRefresher);
 		srQuotesRefresher.setOnRefreshListener(this);
 
-		// AdMob
-		final AdRequest adRequest = new AdRequest.Builder()
-				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-				.build();
-		final AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
-		mAdView.loadAd(adRequest);
+		if( !ExRatesApplication.isShowAds ){
+			if( BuildConfig.DEBUG ) Log.v("Ads removed");
+			rootView.findViewById(R.id.adView).setVisibility(View.GONE);
+
+		} else {
+			// Start AdMob
+			final AdRequest adRequest = new AdRequest.Builder()
+					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+					.build();
+			final AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
+			mAdView.loadAd(adRequest);
+		}
 
 		return rootView;
 	}

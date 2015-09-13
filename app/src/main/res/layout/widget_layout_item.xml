@@ -15,20 +15,21 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="fill_parent"
-			  android:layout_height="wrap_content"
-			  android:orientation="horizontal"
-			  android:theme="@style/AppWidget">
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:theme="@style/AppWidget"
+	>
 
 	<TextView
 		android:id="@+id/itemSymbol"
 		style="@style/AppWidget.Body"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginEnd="@dimen/widget_horizontal_text_margin"
-		android:layout_marginRight="@dimen/widget_horizontal_text_margin"
 		android:layout_weight="0"
+		android:layout_marginEnd="@dimen/widget_horizontal_text_margin"
 		android:text="@string/currency_none"
 		android:textColor="@color/currency_title"/>
 

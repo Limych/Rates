@@ -30,10 +30,11 @@
 		android:id="@+id/rates"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:adjustViewBounds="true"
 		android:divider="@drawable/separator"
 		android:orientation="vertical"
 		android:showDividers="middle">
+
+		<!-- Place for items -->
 
 	</LinearLayout>
 

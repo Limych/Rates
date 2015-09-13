@@ -46,6 +46,8 @@ public class ExRatesApplication extends Application {
 	public static String deviceId;
 	public static boolean isTestDevice = false;
 
+	public static boolean isShowAds = BuildConfig.SHOW_ADS;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -58,12 +60,12 @@ public class ExRatesApplication extends Application {
 		StockNames.getInstance().init(getApplicationContext());
 
 		deviceId = getDeviceID();
-		Log.d("deviceId = " + deviceId);
+		if( BuildConfig.DEBUG ) Log.d("deviceId = " + deviceId);
 
 		isTestDevice = deviceId.equals(getMD5Hash("emulator"))          // SDK emulator
 				|| deviceId.equals("731E71558550B5248AD569E9A603BBA7"); // My test device
 //		isTestDevice = true;
-		if( isTestDevice ) Log.v("Test device detected");
+		if( BuildConfig.DEBUG && isTestDevice ) Log.v("Test device detected");
 	}
 
 	@Override

@@ -15,20 +15,18 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="@drawable/widget_background"
 	android:gravity="center"
-	android:orientation="horizontal"
 	android:padding="@dimen/widget_margin"
 	android:theme="@style/AppWidget">
 
-	<TextView
-		style="@style/AppWidget.Body"
+	<ProgressBar
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:text="@string/text_loading"/>
-</LinearLayout>
+		style="@style/Widget.AppCompat.ProgressBar"
+		android:id="@+id/progressBar"/>
+</RelativeLayout>
