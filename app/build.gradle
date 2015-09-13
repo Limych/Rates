@@ -73,6 +73,7 @@ android {
 
         release {
             buildConfigField BOOLEAN, "SHOW_ADS", TRUE
+            buildConfigField BOOLEAN, "STRICT_MODE", FALSE
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release as Object
