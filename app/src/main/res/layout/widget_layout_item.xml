@@ -28,8 +28,8 @@
 		style="@style/AppWidget.Body"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_weight="0"
 		android:layout_marginEnd="@dimen/widget_horizontal_text_margin"
+		android:layout_weight="0"
 		android:text="@string/currency_none"
 		android:textColor="@color/currency_title"/>
 
@@ -49,8 +49,8 @@
 		style="@style/AppWidget.Body"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center_horizontal"
 		android:layout_weight="0"
+		android:gravity="center"
 		android:text="@string/change_direction_none"
 		android:textAlignment="center"/>
 

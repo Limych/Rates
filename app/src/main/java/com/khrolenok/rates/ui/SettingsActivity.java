@@ -16,14 +16,11 @@
 
 package com.khrolenok.rates.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.R;
@@ -33,35 +30,19 @@ import com.khrolenok.rates.R;
  */
 public class SettingsActivity extends AppCompatActivity {
 
-	private Toolbar mToolbar;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 
-		mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-		setSupportActionBar(mToolbar);
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar_actionbar));
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		if( savedInstanceState == null ){
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new SettingsFragment())
 					.commit();
 		}
-	}
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-
-		mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_up, null));
-		mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				final Intent upIntent = NavUtils.getParentActivityIntent(SettingsActivity.this);
-				navigateUpTo(upIntent);
-			}
-		});
 	}
 
 	public static class SettingsFragment extends PreferenceFragment {

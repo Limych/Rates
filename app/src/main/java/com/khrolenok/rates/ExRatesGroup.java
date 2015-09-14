@@ -33,7 +33,7 @@ public class ExRatesGroup {
     public List<ExRate> exRates;
 
     public boolean isCompactTitleMode;
-    public boolean isShortFormat;
+    public boolean isLongFormat;
 
     public ExRateViewsBounds viewsBounds;
 
@@ -108,7 +108,7 @@ public class ExRatesGroup {
 
         for (ExRate exRate : exRates) {
             exRate.isCompactTitleMode = isCompactTitleMode;
-            exRate.isShortFormat = isShortFormat;
+            exRate.isLongFormat = isLongFormat;
 
             exRate.calcViewsBounds(mainFontSize, changeFontSize);
             viewsBounds.updateMaxBounds(exRate, mainFontSize, changeFontSize);
@@ -120,7 +120,7 @@ public class ExRatesGroup {
     public ExRateViewsBounds calcViewsBounds(Context context){
         int mainFontSize, changeFontSize;
         final int[] textSizeAttr = new int[] { android.R.attr.textSize };
-        TypedArray a = context.obtainStyledAttributes(R.style.AppWidget, textSizeAttr);
+        TypedArray a = context.obtainStyledAttributes(R.style.AppWidget_Body, textSizeAttr);
         mainFontSize = a.getDimensionPixelSize(0, -1);
         a.recycle();
         a = context.obtainStyledAttributes(R.style.AppWidget_Small, textSizeAttr);
@@ -146,7 +146,7 @@ public class ExRatesGroup {
 
         for (ExRate exRate : exRates) {
             exRate.isCompactTitleMode = isCompactTitleMode;
-            exRate.isShortFormat = isShortFormat;
+            exRate.isLongFormat = isLongFormat;
 
             ratesGroup.addView(R.id.table_rates,
                     exRate.buildWidgetViews(context, isShowChange, invertColors));

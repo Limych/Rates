@@ -49,12 +49,12 @@ public class StockItem implements Comparable<StockItem>, Serializable {
 	}
 
 	public boolean hasPriceChange() {
-		return Math.abs(getPriceChange() * 100 / initialPrice) >= Settings.Display.changesThreshold;
+		return Math.abs(getPriceChange() * 100 / initialPrice) >= Settings.Display.CHANGES_THRESHOLD;
 	}
 
-	public static Spanned formatValue(double value, boolean isShowSign, boolean isShortFormat,
+	public static Spanned formatValue(double value, boolean isShowSign, boolean isLongFormat,
 	                              boolean isFixDigits) {
-		int digits = ( isShortFormat ? 2 : 4 );
+		int digits = ( isLongFormat ? 4 : 2 );
 
 		if( isFixDigits ){
 			double tmp = value;
@@ -81,24 +81,16 @@ public class StockItem implements Comparable<StockItem>, Serializable {
 		return Html.fromHtml(integerStr + "<small>" + fractionalStr + "</small>");
 	}
 
-	public Spanned getLastPriceFormatted(boolean isShortFormat) {
-		return formatValue(lastPrice, false, isShortFormat, true);
-	}
-
-	public Spanned getLastPriceFormatted() {
-		return getLastPriceFormatted(false);
+	public Spanned getLastPriceFormatted(boolean isLongFormat) {
+		return formatValue(lastPrice, false, isLongFormat, true);
 	}
 
 	public Spanned getValueFormatted() {
-		return formatValue(value, false, true, false);
+		return formatValue(value, false, false, false);
 	}
 
-	public Spanned getPriceChangeFormatted(boolean isShortFormat) {
-		return formatValue(getPriceChange(), true, isShortFormat, false);
-	}
-
-	public Spanned getPriceChangeFormatted() {
-		return getPriceChangeFormatted(false);
+	public Spanned getPriceChangeFormatted(boolean isLongFormat) {
+		return formatValue(getPriceChange(), true, isLongFormat, false);
 	}
 
 	public int compareTo(@NonNull StockItem item) {

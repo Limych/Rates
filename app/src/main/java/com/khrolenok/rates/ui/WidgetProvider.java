@@ -43,8 +43,6 @@ import java.util.List;
  * Implementation of App Widget functionality.
  */
 public class WidgetProvider extends AppWidgetProvider {
-	protected static int sColorUp;
-	protected static int sColorDown;
 	protected static boolean sIsLongFormat;
 
 	@Override
@@ -117,17 +115,17 @@ public class WidgetProvider extends AppWidgetProvider {
 				? ( wCells <= 3 ) : ( wCells <= 1 ) );
 		final boolean isShowChange = ( widgetLayout == R.layout.widget_layout_v && wCells >= 2 );
 
-		SharedPreferences prefs = context.getSharedPreferences(Settings.PREFS_NAME,
+		sIsLongFormat = PreferenceManager.getDefaultSharedPreferences(context)
+				.getBoolean(Settings.Preferences.LONG_FORMAT, false)
+				|| widgetLayout == R.layout.widget_layout_h && wCells >= 4
+				|| widgetLayout == R.layout.widget_layout_v && wCells >= 2;
+
+		final SharedPreferences dataCache = context.getSharedPreferences(Settings.PREFS_NAME,
 				Context.MODE_PRIVATE);
-		sColorUp = prefs.getInt(Settings.Display.colorUp, R.color.change_green);
-		sColorDown = prefs.getInt(Settings.Display.colorDown, R.color.change_red);
-//        sIsLongFormat = prefs.getBoolean(Settings.Display.rateFormat, false);
-		sIsLongFormat = ( widgetLayout == R.layout.widget_layout_h && wCells >= 4 )
-				|| ( widgetLayout == R.layout.widget_layout_v && wCells >= 2 );
 
 		List<String> ratesList;
 		try{
-			ratesList = Arrays.asList(prefs.getString(Settings.Display.ratesList,
+			ratesList = Arrays.asList(dataCache.getString(Settings.Display.ratesList,
 					Settings.Display.ratesListDefault).split("\\s*,\\s*"));
 		} catch( Exception ignored ){
 			return new RemoteViews(context.getPackageName(), R.layout.widget_layout_loading);
@@ -135,7 +133,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
 		JSONObject ratesJson;
 		try{
-			ratesJson = new JSONObject(prefs.getString(Settings.Rates.ratesKey, null));
+			ratesJson = new JSONObject(dataCache.getString(Settings.Rates.ratesKey, null));
 		} catch( Exception ignored ){
 			return new RemoteViews(context.getPackageName(), R.layout.widget_layout_loading);
 		}
@@ -189,7 +187,7 @@ public class WidgetProvider extends AppWidgetProvider {
 		ExRatesGroup exRatesGroup = new ExRatesGroup(caption, ratesGroup, ratesList, ratesJson);
 
 		exRatesGroup.isCompactTitleMode = isUseCompactView;
-		exRatesGroup.isShortFormat = !sIsLongFormat;
+		exRatesGroup.isLongFormat = sIsLongFormat;
 
 		exRatesGroup.calcViewsBounds(context);
 
@@ -198,8 +196,8 @@ public class WidgetProvider extends AppWidgetProvider {
 			updateTS.setTime(groupTS.getTime());
 		}
 
-		final boolean invertColors = PreferenceManager.getDefaultSharedPreferences(context)
-				.getBoolean(Settings.Preferences.invertColors, false);
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		final boolean invertColors = prefs.getBoolean(Settings.Preferences.INVERT_COLORS, false);
 
 		return exRatesGroup.buildWidgetViews(context, isShowChange, invertColors);
 	}

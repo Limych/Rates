@@ -45,7 +45,7 @@ public class ExRate {
     public double value = 0;
 
     public boolean isCompactTitleMode;
-    public boolean isShortFormat;
+    public boolean isLongFormat;
 
     public ExRateViewsBounds viewsBounds;
 
@@ -75,7 +75,7 @@ public class ExRate {
     }
 
     public boolean hasBidChange(){
-        return hasBidChange(Settings.Display.changesThreshold);
+        return hasBidChange(Settings.Display.CHANGES_THRESHOLD);
     }
 
     public boolean hasBidChange(double changesThreshold){
@@ -105,8 +105,8 @@ public class ExRate {
         return updateTS;
     }
 
-    protected String formatValue(double value, boolean isShowSign, boolean isShortFormat) {
-        int digits = ( isShortFormat ? 2 : 4 );
+    protected String formatValue(double value, boolean isShowSign, boolean isLongFormat) {
+        int digits = ( isLongFormat ? 4 : 2 );
         double tmp = value;
 
         while( digits > 0  && Math.abs(tmp) > 99 ){
@@ -118,11 +118,11 @@ public class ExRate {
     }
 
     public String getLastBidFormatted() {
-        return formatValue(lastBid, false, isShortFormat);
+        return formatValue(lastBid, false, isLongFormat);
     }
 
     public String getChangeFormatted() {
-        return formatValue(bidChange(), true, isShortFormat);
+        return formatValue(bidChange(), true, isLongFormat);
     }
 
     protected void getTextBounds(String text, int fontSize, Rect bounds) {
@@ -180,7 +180,7 @@ public class ExRate {
         ratesItem.setInt(R.id.itemPrice, "setMinWidth", viewsBounds.bidWidth);
 
         int[] textSizeAttr = new int[] { android.R.attr.textSize };
-        TypedArray a = context.obtainStyledAttributes(R.style.AppWidget, textSizeAttr);
+        TypedArray a = context.obtainStyledAttributes(R.style.AppWidget_Body, textSizeAttr);
         final int textSize = a.getDimensionPixelSize(0, -1);
         a.recycle();
         if(textSize > 0) {

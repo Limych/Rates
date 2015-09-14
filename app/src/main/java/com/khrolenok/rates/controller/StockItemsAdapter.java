@@ -17,6 +17,7 @@
 package com.khrolenok.rates.controller;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,6 +100,8 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final StockItem stockItem = getItem(position);
 		final ViewHolder viewHolder;
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		final boolean isLongFormat = prefs.getBoolean(Settings.Preferences.LONG_FORMAT, false);
 
 		if( convertView != null ){
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -113,7 +116,7 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 		viewHolder.nameTV.setText(getStockExchangeName(stockItem.stockExchange)
 				+ StockNames.getInstance().getName(stockItem.symbol));
 		viewHolder.valueTV.setText(stockItem.getValueFormatted());
-		viewHolder.priceChangeTV.setText(stockItem.getPriceChangeFormatted());
+		viewHolder.priceChangeTV.setText(stockItem.getPriceChangeFormatted(isLongFormat));
 
 		if( stockItem.symbol.equals(stockItem.priceCurrency) ){
 			viewHolder.priceTV.setVisibility(View.GONE);
@@ -123,15 +126,14 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 			viewHolder.priceTV.setVisibility(View.VISIBLE);
 			viewHolder.priceChangeDirTV.setVisibility(View.VISIBLE);
 			viewHolder.priceChangeTV.setVisibility(View.VISIBLE);
-			viewHolder.priceTV.setText(stockItem.getLastPriceFormatted());
+			viewHolder.priceTV.setText(stockItem.getLastPriceFormatted(isLongFormat));
 			viewHolder.priceChangeDirTV.setText(( !stockItem.hasPriceChange()
 					? R.string.change_direction_none
 					: ( stockItem.getPriceChange() > 0 ? R.string.change_direction_up : R.string.change_direction_down ) ));
 		}
 
 		if( stockItem.hasPriceChange() ){
-			final boolean invertColors = PreferenceManager.getDefaultSharedPreferences(mContext)
-					.getBoolean(Settings.Preferences.invertColors, false);
+			final boolean invertColors = prefs.getBoolean(Settings.Preferences.INVERT_COLORS, false);
 			final int colorUp = ( !invertColors ? R.color.change_green : R.color.change_red );
 			final int colorDown = ( !invertColors ? R.color.change_red : R.color.change_green );
 			final int color = mContext.getResources().getColor(( stockItem.getPriceChange() > 0
@@ -141,7 +143,7 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 			viewHolder.priceChangeTV.setTextColor(color);
 		}
 
-		viewHolder.valueTV.setOnClickListener(new View.OnClickListener() {
+		viewHolder.valueContainer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mFragment.showCalculatorDialog(position, (String) viewHolder.nameTV.getText(), stockItem.value);
@@ -208,6 +210,7 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 		private TextView priceChangeDirTV;
 		private TextView priceChangeTV;
 		private TextView valueTV;
+		private ViewGroup valueContainer;
 
 		public ViewHolder(View itemView) {
 			symbolTV = (TextView) itemView.findViewById(R.id.itemSymbol);
@@ -216,6 +219,7 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 			priceChangeDirTV = (TextView) itemView.findViewById(R.id.itemChangeDirection);
 			priceChangeTV = (TextView) itemView.findViewById(R.id.itemChange);
 			valueTV = (TextView) itemView.findViewById(R.id.itemValue);
+			valueContainer = (ViewGroup) itemView.findViewById(R.id.itemValueContainer);
 		}
 	}
 }

@@ -39,7 +39,7 @@ android {
 
     defaultConfig {
         applicationId "com.khrolenok.rates"
-        minSdkVersion 17
+        minSdkVersion 16
         targetSdkVersion 22
         versionName VERSION
         versionCode getBuildVersion(1)
