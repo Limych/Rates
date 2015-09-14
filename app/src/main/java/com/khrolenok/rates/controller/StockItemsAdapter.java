@@ -196,6 +196,7 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 		for( StockItem item : mStockItems ) {
 			stocksList.add(item.symbol);
 		}
+		// TODO: 15.09.2015 Save order
 //        PreferencesManager.getInstance().saveStockList(stocksList);
 	}
 

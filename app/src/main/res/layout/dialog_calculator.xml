@@ -15,24 +15,24 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout style="@style/AppTheme.CalculatorLayout"
+				xmlns:android="http://schemas.android.com/apk/res/android"
 				xmlns:app="http://schemas.android.com/apk/res-auto"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:orientation="vertical"
-				android:theme="@style/AppTheme.Dialog.Base"
-				style="@style/AppTheme.CalculatorLayout">
+				android:theme="@style/AppTheme.Dialog.Base">
 
 	<TextView
 		android:id="@+id/title"
+		style="@style/AppTheme.Dialog.Caption"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentStart="true"
 		android:layout_marginLeft="@dimen/calculator_layout_padding"
 		android:layout_marginRight="@dimen/calculator_layout_padding"
 		android:layout_marginTop="@dimen/calculator_layout_padding"
-		android:text="Title"
-		style="@style/AppTheme.Dialog.Caption"/>
+		android:text="Title"/>
 
 	<android.support.v7.widget.CardView
 		android:id="@+id/expressionCardView"
@@ -41,7 +41,7 @@
 		android:layout_below="@+id/title"
 		android:layout_marginLeft="@dimen/calculator_layout_padding"
 		android:layout_marginRight="@dimen/calculator_layout_padding"
-		android:layout_marginTop="12dp"
+		android:layout_marginTop="4dp"
 		app:cardCornerRadius="4dp">
 
 		<TextView
@@ -169,7 +169,7 @@
 			android:id="@+id/set"
 			style="@style/AppTheme.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_del"
-			android:src="@drawable/ic_check"/>
+			android:src="@drawable/ic_done"/>
 
 	</com.khrolenok.rates.ui.layout.CalculatorNumericPadLayout>
 

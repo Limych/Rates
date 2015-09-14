@@ -98,7 +98,7 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
 					case R.id.del:
 					case R.id.set:
 						// TODO: 13.09.2015 Make correct images colorization
-						final int color = R.color.calculator_button_operator_text_color;
+						final int color = R.color.calculator_button_operator_text;
 						b.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 						break;
 				}

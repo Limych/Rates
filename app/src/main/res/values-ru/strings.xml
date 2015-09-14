@@ -184,4 +184,8 @@
     <string name="pref_desc_long_format">Четыре цифры после запятой</string>
     <string name="pref_desc_short_format">Две цифры после запятой</string>
     <string name="pref_title_long_format">Длинные числа</string>
+    <string name="action_about">Версия</string>
+    <string name="about_version">Версия</string>
+    <string name="about_copyright">© 2015, Андрей «Limych» Хроленок</string>
+    <string name="force_update_na">Принудительное обновление пока недоступно</string>
 </resources>

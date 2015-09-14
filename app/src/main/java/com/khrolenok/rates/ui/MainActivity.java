@@ -26,6 +26,7 @@ import android.view.MenuItem;
 
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.Settings;
+import com.khrolenok.rates.util.DialogsManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,11 +95,14 @@ public class MainActivity extends AppCompatActivity {
 			case R.id.action_preferences:
 				startActivity(new Intent(this, SettingsActivity.class));
 				return true;
-			case R.id.action_opinions:
+			case R.id.action_feedback:
 				Intent i = new Intent(Intent.ACTION_VIEW);
 				i.setData(Uri.parse(Settings.FEEDBACK_URL));
 				startActivity(i);
 				break;
+			case R.id.action_about:
+				DialogsManager.showAboutDialog(this);
+				return true;
 		}
 
 		return super.onOptionsItemSelected(item);

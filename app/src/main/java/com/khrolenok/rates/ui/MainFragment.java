@@ -27,6 +27,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -53,7 +54,7 @@ import trikita.log.Log;
  */
 public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-	private DynamicListView mMainListView;
+	private DynamicListView mRatesListView;
 
 	private StockItemsAdapter mStockItemsAdapter;
 	private SwipeRefreshLayout srQuotesRefresher;
@@ -85,15 +86,15 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 	public void onResume() {
 		super.onResume();
 
-		populateMainListView();
+		populateRatesListView();
 	}
 
-	private void populateMainListView() {
-		srQuotesRefresher.setRefreshing(false);
+	private void populateRatesListView() {
+//		srQuotesRefresher.setRefreshing(false);
 
-		if( mMainListView == null ){
-			mMainListView = (DynamicListView) getActivity().findViewById(R.id.mStockItemsList);
-//			mMainListView.enableDragAndDrop();
+		if( mRatesListView == null ){
+			mRatesListView = (DynamicListView) getActivity().findViewById(R.id.mStockItemsList);
+//			mRatesListView.enableDragAndDrop();
 
 			final SharedPreferences prefs = getActivity().getSharedPreferences(Settings.PREFS_NAME,
 					Context.MODE_PRIVATE);
@@ -124,7 +125,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 				mStockItemsAdapter.fillFromExRates(exRatesGroup.exRates);
 				mStockItemsAdapter.notifyDataSetChanged();
 			}
-			mMainListView.setAdapter(mStockItemsAdapter);
+			mRatesListView.setAdapter(mStockItemsAdapter);
 		}
 	}
 
@@ -157,6 +158,10 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
 	@Override
 	public void onRefresh() {
-		if( mMainListView != null ) populateMainListView();
+		// TODO: 15.09.2015 Make force update
+		srQuotesRefresher.setRefreshing(false);
+		Toast.makeText(getActivity(), R.string.force_update_na, Toast.LENGTH_SHORT).show();
+		
+		if( mRatesListView != null ) populateRatesListView();
 	}
 }

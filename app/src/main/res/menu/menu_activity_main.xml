@@ -15,19 +15,27 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.khrolenok.rates.ui.MainActivity">
+	  xmlns:app="http://schemas.android.com/apk/res-auto"
+	  xmlns:tools="http://schemas.android.com/tools"
+	  tools:context="com.khrolenok.rates.ui.MainActivity">
 
-    <item android:id="@+id/action_preferences"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:icon="@android:drawable/ic_menu_preferences" />
+	<item
+		android:id="@+id/action_preferences"
+		android:orderInCategory="100"
+		android:title="@string/action_settings"
+		app:showAsAction="never"/>
 
-    <item android:id="@+id/action_opinions"
-        android:title="@string/action_opinions"
-        android:orderInCategory="101"
-        android:icon="@drawable/ic_menu_opinions" />
+	<item
+		android:id="@+id/action_feedback"
+		android:icon="@drawable/ic_menu_feedback"
+		android:orderInCategory="101"
+		android:title="@string/action_opinions"
+		app:showAsAction="ifRoom"/>
+
+	<item
+		android:id="@+id/action_about"
+		android:orderInCategory="102"
+		android:title="@string/action_about"
+		app:showAsAction="never"/>
 
 </menu>
