@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package com.khrolenok.rates;
+package com.khrolenok.rates.util;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +26,8 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.khrolenok.rates.BuildConfig;
+import com.khrolenok.rates.Settings;
 import com.khrolenok.rates.ui.WidgetProvider;
 
 import java.io.BufferedInputStream;
@@ -40,7 +40,7 @@ import java.net.URL;
 /**
  * Created by Limych on 08.07.2015
  */
-public class ExRatesDownloadService extends Service {
+public class RatesDownloadService extends Service {
 
 	public Context context = this;
 
@@ -51,7 +51,7 @@ public class ExRatesDownloadService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.d(Settings.TAG, "Service started");
+		if( BuildConfig.DEBUG ) Log.d(Settings.TAG, "Rates download service started");
 
 		final DownloadRatesTask task = new DownloadRatesTask();
 		task.execute(Settings.Rates.sourceUrl);
@@ -62,7 +62,7 @@ public class ExRatesDownloadService extends Service {
 				AlarmManager.RTC_WAKEUP,
 				System.currentTimeMillis() + Settings.Rates.reloadDelay,
 				PendingIntent.getService(context, 0,
-						new Intent(context, ExRatesDownloadService.class), 0)
+						new Intent(context, RatesDownloadService.class), 0)
 		);
 
 		// Here you can return one of some different constants.
@@ -119,13 +119,9 @@ public class ExRatesDownloadService extends Service {
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 
-			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-			final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context,
-					WidgetProvider.class));
-			for( int appWidgetId : appWidgetIds ) {
-				appWidgetManager.updateAppWidget(appWidgetId,
-						WidgetProvider.buildLayout(context, appWidgetManager, appWidgetId));
-			}
+			WidgetProvider.notifyUpdateNeeded(context);
+
+			// TODO: 14.09.2015 Make activity direct updating
 		}
 	}
 }

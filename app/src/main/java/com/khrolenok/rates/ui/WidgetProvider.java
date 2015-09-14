@@ -20,6 +20,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,10 +28,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
-import com.khrolenok.rates.ExRatesDownloadService;
 import com.khrolenok.rates.ExRatesGroup;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.Settings;
+import com.khrolenok.rates.util.RatesDownloadService;
 
 import org.json.JSONObject;
 
@@ -45,6 +46,16 @@ import java.util.List;
 public class WidgetProvider extends AppWidgetProvider {
 	protected static boolean sIsLongFormat;
 
+	public static void notifyUpdateNeeded(Context context) {
+		final AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+		final ComponentName widgetComponent = new ComponentName(context, WidgetProvider.class);
+		final int[] widgetIds = widgetManager.getAppWidgetIds(widgetComponent);
+		final Intent update = new Intent();
+		update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
+		update.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		context.sendBroadcast(update);
+	}
+
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
@@ -54,7 +65,7 @@ public class WidgetProvider extends AppWidgetProvider {
 				AlarmManager.RTC_WAKEUP,
 				System.currentTimeMillis() + 10,
 				PendingIntent.getService(context, 0,
-						new Intent(context, ExRatesDownloadService.class), 0)
+						new Intent(context, RatesDownloadService.class), 0)
 		);
 
 	}
@@ -63,10 +74,9 @@ public class WidgetProvider extends AppWidgetProvider {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		// There may be multiple widgets active, so update all of them
 		for( int appWidgetId : appWidgetIds ) {
-			Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+			final Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
 
-			onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId,
-					options);
+			onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, options);
 		}
 	}
 
@@ -75,7 +85,7 @@ public class WidgetProvider extends AppWidgetProvider {
 	                                      int appWidgetId, Bundle newOptions) {
 		// Instruct the widget manager to update the widget
 		appWidgetManager.updateAppWidget(appWidgetId,
-				buildLayout(context, appWidgetManager, appWidgetId));
+				buildLayout(context, appWidgetManager, appWidgetId, newOptions));
 
 		super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
 	}
@@ -100,11 +110,11 @@ public class WidgetProvider extends AppWidgetProvider {
 	 * @param context          Application mContext
 	 * @param appWidgetManager Widget manager
 	 * @param appWidgetId      Widget ID
+	 * @param options          Widget options
 	 * @return Widget layout
 	 */
 	public static RemoteViews buildLayout(Context context, AppWidgetManager appWidgetManager,
-	                                      int appWidgetId) {
-		final Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+	                                      int appWidgetId, Bundle options) {
 		final int widgetMinWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
 		final int widgetMinHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
 		final int wCells = getCellsForSize(widgetMinWidth);
@@ -117,8 +127,8 @@ public class WidgetProvider extends AppWidgetProvider {
 
 		sIsLongFormat = PreferenceManager.getDefaultSharedPreferences(context)
 				.getBoolean(Settings.Preferences.LONG_FORMAT, false)
-				|| widgetLayout == R.layout.widget_layout_h && wCells >= 4
-				|| widgetLayout == R.layout.widget_layout_v && wCells >= 2;
+				&& ( widgetLayout == R.layout.widget_layout_h && wCells >= 4
+				|| widgetLayout == R.layout.widget_layout_v && wCells >= 2 );
 
 		final SharedPreferences dataCache = context.getSharedPreferences(Settings.PREFS_NAME,
 				Context.MODE_PRIVATE);

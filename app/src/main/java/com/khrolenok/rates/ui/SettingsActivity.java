@@ -16,6 +16,7 @@
 
 package com.khrolenok.rates.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -45,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
 		}
 	}
 
-	public static class SettingsFragment extends PreferenceFragment {
+	public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,26 @@ public class SettingsActivity extends AppCompatActivity {
 			}
 		}
 
+		@Override
+		public void onResume() {
+			super.onResume();
+
+			// Set up a listener whenever a key changes
+			getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+		}
+
+		@Override
+		public void onPause() {
+			super.onPause();
+
+			// Unregister the listener whenever a key changes
+			getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+		}
+
+		@Override
+		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+			WidgetProvider.notifyUpdateNeeded(getActivity());
+		}
 	}
 
 }

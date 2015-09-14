@@ -17,16 +17,11 @@
 package com.khrolenok.rates;
 
 import android.app.Application;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.ContentResolver;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.StrictMode;
 import android.provider.Settings;
 
-import com.khrolenok.rates.ui.WidgetProvider;
 import com.khrolenok.rates.util.StockNames;
 
 import java.math.BigInteger;
@@ -78,21 +73,6 @@ public class ExRatesApplication extends Application {
 				|| deviceId.equals("731E71558550B5248AD569E9A603BBA7"); // My test device
 //		isTestDevice = true;
 		if( BuildConfig.DEBUG && isTestDevice ) Log.v("Test device detected");
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-
-		StockNames.getInstance().init(getApplicationContext());
-
-		// TODO: 11.09.2015 Make correct widgets updating
-		Intent intent = new Intent(this, WidgetProvider.class);
-		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-		final int widgetIds[] = AppWidgetManager.getInstance(this)
-				.getAppWidgetIds(new ComponentName(this, WidgetProvider.class));
-		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
-		sendBroadcast(intent);
 	}
 
 	public String getDeviceID() {

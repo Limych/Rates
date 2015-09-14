@@ -104,7 +104,7 @@ public class ExRatesGroup {
     }
 
     public ExRateViewsBounds calcViewsBounds(int mainFontSize, int changeFontSize){
-//        Log.v(Settings.TAG, "ExRatesGroup.calcViewsBounds(" + mainFontSize + ", " + changeFontSize + ")");
+//        if( BuildConfig.DEBUG ) Log.v(Settings.TAG, "ExRatesGroup.calcViewsBounds(" + mainFontSize + ", " + changeFontSize + ")");
 
         for (ExRate exRate : exRates) {
             exRate.isCompactTitleMode = isCompactTitleMode;
@@ -138,7 +138,7 @@ public class ExRatesGroup {
     }
 
     public RemoteViews buildWidgetViews(Context context, boolean isShowChange, boolean invertColors){
-//        Log.v(Settings.TAG, "ExRatesGroup.buildWidgetViews(…)");
+//        if( BuildConfig.DEBUG ) Log.v(Settings.TAG, "ExRatesGroup.buildWidgetViews(…)");
 
         RemoteViews ratesGroup = new RemoteViews(context.getPackageName(), R.layout.widget_layout_group);
         ratesGroup.removeAllViews(R.id.table_rates);

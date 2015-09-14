@@ -28,6 +28,7 @@
 		style="@style/AppWidget.Body"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_marginRight="@dimen/widget_horizontal_text_margin"
 		android:layout_marginEnd="@dimen/widget_horizontal_text_margin"
 		android:layout_weight="0"
 		android:text="@string/currency_none"

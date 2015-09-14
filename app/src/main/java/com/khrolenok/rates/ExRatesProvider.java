@@ -186,13 +186,13 @@ public class ExRatesProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            Log.w(DATABASE_CREATE);
+            if( BuildConfig.DEBUG ) Log.w(DATABASE_CREATE);
             db.execSQL(DATABASE_CREATE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w("Upgrading database from version " + oldVersion + " to "
+            if( BuildConfig.DEBUG ) Log.w("Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXRATES);
             onCreate(db);
