@@ -98,9 +98,8 @@
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"
 			android:clickable="false"
-			app:cardBackgroundColor="@color/material_gray_200"
-			app:cardElevation="2dp"
-			>
+			app:cardBackgroundColor="@color/list_value_background"
+			app:cardElevation="2dp">
 
 			<LinearLayout
 				android:id="@+id/itemValueContainer"
@@ -108,8 +107,8 @@
 				android:layout_height="fill_parent"
 				android:background="?attr/selectableItemBackgroundBorderless"
 				android:clickable="true"
-				android:orientation="horizontal"
-				android:gravity="center_vertical">
+				android:gravity="center_vertical"
+				android:orientation="horizontal">
 
 				<TextView
 					android:id="@+id/itemValue"

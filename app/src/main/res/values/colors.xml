@@ -17,51 +17,42 @@
 
 <resources>
 
-	<!-- Material colors -->
-	<color name="material_gray_50">#FAFAFA</color>
-	<color name="material_gray_100">#F5F5F5</color>
-	<color name="material_gray_200">#EEEEEE</color>
-
-	<color name="material_red_500">#F44336</color>
-
-	<color name="material_green_100">#C8E6C9</color>
-	<color name="material_green_500">#4CAF50</color>
-
-
 	<!-- Application colors -->
-	<color name="primary">#3F51B5</color>
-	<color name="primary_dark">#303F9F</color>
-	<color name="primary_light">#C5CAE9</color>
-	<color name="accent">#607D8B</color>
-	<color name="primary_text">#212121</color>
-	<color name="secondary_text">#727272</color>
+	<color name="primary">@color/material_indigo_500</color>
+	<color name="primary_dark">@color/material_indigo_700</color>
+	<color name="primary_light">@color/material_indigo_100</color>
+	<color name="accent">@color/material_blue_gray_500</color>
+	<color name="primary_text">@color/material_gray_900</color>
+	<color name="secondary_text">@color/material_gray_600</color>
 	<color name="icons">@android:color/white</color>
-	<color name="divider">#B6B6B6</color>
+	<color name="divider">@color/material_gray_400</color>
 	<color name="background">@android:color/background_light</color>
-	<color name="text_shadow">#7F000000</color>
+	<color name="text_shadow">@color/material_black_disabled</color>
 
 	<color name="list_background_even">@color/material_gray_50</color>
-
-
-	<!-- Dialogs -->
-	<color name="dialog_background">@color/background_material_light</color>
-
-
-	<!-- Calculator -->
-	<color name="calculator_button_ripple">@color/ripple_material_light</color>
-	<color name="calculator_button_text">@color/secondary_text</color>
-	<color name="calculator_button_operator_text">@color/accent</color>
+	<color name="list_value_background">@color/material_gray_200</color>
 
 
 	<!-- Widget colors -->
 	<color name="widget_text">@android:color/primary_text_dark</color>
 	<color name="widget_background">#66212121</color>
 
-	<color name="group_caption">#FFCCCCFF</color>
-	<color name="currency_title">#FFBDBDBD</color>
-	<color name="update_timestamp">#FF9E9E9E</color>
+	<color name="group_caption">@color/material_indigo_100</color>
+	<color name="currency_title">@color/material_gray_400</color>
+	<color name="update_timestamp">@color/material_gray_500</color>
 
 	<color name="change_red">#FFF15B3F</color>
 	<color name="change_green">#FF69BD45</color>
-	<color name="change_none">#FFFFFFFF</color>
+	<color name="change_none">@color/material_white</color>
+
+
+	<!-- Dialogs colors -->
+	<color name="dialog_background">@android:color/background_material_light</color>
+
+
+	<!-- Calculator colors -->
+	<color name="calculator_button_ripple">@color/ripple_material_light</color>
+	<color name="calculator_button_text">@color/secondary_text</color>
+	<color name="calculator_button_operator_text">@color/accent</color>
+
 </resources>
