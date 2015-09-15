@@ -17,7 +17,6 @@
 package com.khrolenok.rates.ui.layout;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -96,10 +95,10 @@ public class CalculatorNumericPadLayout extends CalculatorPadLayout {
 				final ImageButton b = (ImageButton) v;
 				switch( b.getId() ){
 					case R.id.del:
+						b.setColorFilter(getResources().getColor(R.color.calc_button_operator));
+						break;
 					case R.id.set:
-						// TODO: 13.09.2015 Make correct images colorization
-						final int color = R.color.calculator_button_operator_text;
-						b.getDrawable().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+						b.setColorFilter(getResources().getColor(R.color.calc_button_done));
 						break;
 				}
 			}

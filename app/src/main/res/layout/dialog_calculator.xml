@@ -96,7 +96,7 @@
 			style="@style/AppTheme.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_del"
 			android:longClickable="true"
-			android:src="@drawable/ic_backspace"
+			android:src="@android:drawable/ic_input_delete"
 			/>
 
 		<Button

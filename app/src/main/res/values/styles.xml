@@ -80,12 +80,12 @@
 		<item name="android:minWidth">0dp</item>
 		<item name="android:minHeight">0dp</item>
 		<item name="android:textAllCaps">false</item>
-		<item name="android:textColor">@color/calculator_button_text</item>
+		<item name="android:textColor">@color/calc_button_text</item>
 		<item name="android:textSize">@dimen/calculator_button_text_color</item>
 	</style>
 
 	<style name="AppTheme.CalculatorPadButton.Operator" parent="AppTheme.CalculatorPadButton">
-		<item name="android:textColor">@color/calculator_button_operator_text</item>
+		<item name="android:textColor">@color/calc_button_operator</item>
 	</style>
 
 

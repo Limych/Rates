@@ -47,12 +47,13 @@
 
 
 	<!-- Dialogs colors -->
-	<color name="dialog_background">@android:color/background_material_light</color>
+	<color name="dialog_background">@color/background_material_light</color>
 
 
 	<!-- Calculator colors -->
-	<color name="calculator_button_ripple">@color/ripple_material_light</color>
-	<color name="calculator_button_text">@color/secondary_text</color>
-	<color name="calculator_button_operator_text">@color/accent</color>
+	<color name="calc_button_ripple">@color/ripple_material_light</color>
+	<color name="calc_button_text">@color/secondary_text</color>
+	<color name="calc_button_operator">@color/material_blue_gray_400</color>
+	<color name="calc_button_done">@color/material_green_500</color>
 
 </resources>
