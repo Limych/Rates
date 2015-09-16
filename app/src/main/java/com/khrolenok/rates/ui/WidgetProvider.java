@@ -16,7 +16,6 @@
 
 package com.khrolenok.rates.ui;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -60,14 +59,8 @@ public class WidgetProvider extends AppWidgetProvider {
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
 
-		AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		alarm.set(
-				AlarmManager.RTC_WAKEUP,
-				System.currentTimeMillis() + 10,
-				PendingIntent.getService(context, 0,
-						new Intent(context, RatesDownloadService.class), 0)
-		);
-
+		// Schedule to start rates update service
+		RatesDownloadService.scheduleRestart(context, 10);
 	}
 
 	@Override

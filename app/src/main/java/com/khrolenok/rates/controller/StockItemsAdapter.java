@@ -36,28 +36,49 @@ import com.nhaarman.listviewanimations.util.Swappable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Limych on 04.09.2015
  */
-public class StockItemsAdapter extends ArrayAdapter<StockItem>
-		implements Swappable {
+public class StockItemsAdapter extends ArrayAdapter<StockItem> implements Swappable {
 
-	final private Context mContext;
 	final private ArrayList<StockItem> mStockItems;
 	final private MainFragment mFragment;
+
+	private static final int VIEW_TYPE_RATE = 1;
+	private static final int VIEW_TYPE_FOOTER = 2;
+
+	private static class ViewHolder {
+		private TextView symbolTV;
+		private TextView nameTV;
+		private TextView priceTV;
+		private TextView priceChangeDirTV;
+		private TextView priceChangeTV;
+		private TextView valueTV;
+		private ViewGroup valueContainer;
+
+		public ViewHolder(View itemView) {
+			symbolTV = (TextView) itemView.findViewById(R.id.itemSymbol);
+			nameTV = (TextView) itemView.findViewById(R.id.itemName);
+			priceTV = (TextView) itemView.findViewById(R.id.itemPrice);
+			priceChangeDirTV = (TextView) itemView.findViewById(R.id.itemChangeDirection);
+			priceChangeTV = (TextView) itemView.findViewById(R.id.itemChange);
+			valueTV = (TextView) itemView.findViewById(R.id.itemValue);
+			valueContainer = (ViewGroup) itemView.findViewById(R.id.itemValueContainer);
+		}
+	}
 
 	public StockItemsAdapter(Context context, ArrayList<StockItem> stockItems,
 	                         MainFragment fragment) {
 		super(context, R.layout.fragment_main_item, stockItems);
-		mContext = context;
 		mStockItems = stockItems;
 		mFragment = fragment;
 	}
 
 	public void fillFromExRates(List<ExRate> exRates) {
-		final double mainValue = ( (MainActivity) mContext ).mainValue;
+		final double mainValue = ( (MainActivity) getContext() ).mainValue;
 
 		StockItem item = new StockItem();
 
@@ -90,17 +111,39 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 	}
 
 	public void fillValuesFromMainValue(double mainValue) {
-		( (MainActivity) mContext ).mainValue = mainValue;
+		( (MainActivity) getContext() ).mainValue = mainValue;
 		for( StockItem si : mStockItems ) {
 			si.value = mainValue * si.faceValue / si.lastPrice;
 		}
+	}
+
+	public View getFooterView() {
+		LayoutInflater inflater = LayoutInflater.from(getContext());
+		View view = inflater.inflate(R.layout.fragment_main_footer, null, false);
+
+		Date updateTS = new Date(0);
+
+		for( StockItem item : mStockItems ) {
+			if( item.lastUpdate != null && item.lastUpdate.after(updateTS) )
+				updateTS.setTime(item.lastUpdate.getTime());
+		}
+
+		TextView updateTV = (TextView) view.findViewById(R.id.updateTimestamp);
+		final int updateTextFormatFlags = android.text.format.DateUtils.FORMAT_SHOW_DATE
+				| android.text.format.DateUtils.FORMAT_SHOW_TIME
+				| android.text.format.DateUtils.FORMAT_ABBREV_ALL;
+		final String updateText = getContext().getString(R.string.text_updated) + " "
+				+ android.text.format.DateUtils.formatDateTime(getContext(), updateTS.getTime(),
+				updateTextFormatFlags);
+		updateTV.setText(updateText);
+		return view;
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final StockItem stockItem = getItem(position);
 		final ViewHolder viewHolder;
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 		final boolean isLongFormat = prefs.getBoolean(Settings.Preferences.LONG_FORMAT, false);
 
 		if( convertView != null ){
@@ -136,7 +179,7 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 			final boolean invertColors = prefs.getBoolean(Settings.Preferences.INVERT_COLORS, false);
 			final int colorUp = ( !invertColors ? R.color.change_green : R.color.change_red );
 			final int colorDown = ( !invertColors ? R.color.change_red : R.color.change_green );
-			final int color = mContext.getResources().getColor(( stockItem.getPriceChange() > 0
+			final int color = getContext().getResources().getColor(( stockItem.getPriceChange() > 0
 					? colorUp : colorDown ));
 			viewHolder.priceTV.setTextColor(color);
 			viewHolder.priceChangeDirTV.setTextColor(color);
@@ -160,13 +203,13 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 		String stockExchangeName;
 		switch( group ){
 			case Settings.Rates.Groups.OFFICIAL:
-				stockExchangeName = mContext.getString(R.string.title_official);
+				stockExchangeName = getContext().getString(R.string.title_official);
 				break;
 			case Settings.Rates.Groups.FOREX:
-				stockExchangeName = mContext.getString(R.string.title_forex);
+				stockExchangeName = getContext().getString(R.string.title_forex);
 				break;
 			case Settings.Rates.Groups.STOCK:
-				stockExchangeName = mContext.getString(R.string.title_stock);
+				stockExchangeName = getContext().getString(R.string.title_stock);
 				break;
 			default:
 				stockExchangeName = group;
@@ -202,25 +245,5 @@ public class StockItemsAdapter extends ArrayAdapter<StockItem>
 
 	public void orderByAlphabet() {
 		Collections.sort(mStockItems);
-	}
-
-	private static class ViewHolder {
-		private TextView symbolTV;
-		private TextView nameTV;
-		private TextView priceTV;
-		private TextView priceChangeDirTV;
-		private TextView priceChangeTV;
-		private TextView valueTV;
-		private ViewGroup valueContainer;
-
-		public ViewHolder(View itemView) {
-			symbolTV = (TextView) itemView.findViewById(R.id.itemSymbol);
-			nameTV = (TextView) itemView.findViewById(R.id.itemName);
-			priceTV = (TextView) itemView.findViewById(R.id.itemPrice);
-			priceChangeDirTV = (TextView) itemView.findViewById(R.id.itemChangeDirection);
-			priceChangeTV = (TextView) itemView.findViewById(R.id.itemChange);
-			valueTV = (TextView) itemView.findViewById(R.id.itemValue);
-			valueContainer = (ViewGroup) itemView.findViewById(R.id.itemValueContainer);
-		}
 	}
 }

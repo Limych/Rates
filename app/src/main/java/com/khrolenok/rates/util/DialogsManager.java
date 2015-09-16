@@ -51,8 +51,8 @@ public class DialogsManager {
 //		stringBuilder.append("<br><b>Free icons:</b><br>");
 //		stringBuilder.append("<a href='http://icons8.com/android-L/'" + ">icons8<a>");
 
-		final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		final View contentView = inflater.inflate(R.layout.dialog_about, null);
+		final LayoutInflater inflater = LayoutInflater.from(context);
+		final View contentView = inflater.inflate(R.layout.dialog_about, null, false);
 
 		// Set the application version
 		String versionName = "";

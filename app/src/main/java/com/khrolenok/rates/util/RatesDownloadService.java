@@ -42,13 +42,6 @@ import java.net.URL;
  */
 public class RatesDownloadService extends Service {
 
-	public Context context = this;
-
-	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
-	}
-
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		if( BuildConfig.DEBUG ) Log.d(Settings.TAG, "Rates download service started");
@@ -56,20 +49,37 @@ public class RatesDownloadService extends Service {
 		final DownloadRatesTask task = new DownloadRatesTask();
 		task.execute(Settings.Rates.sourceUrl);
 
-		// I want to restart this service again
-		AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-		alarm.set(
-				AlarmManager.RTC_WAKEUP,
-				System.currentTimeMillis() + Settings.Rates.reloadDelay,
-				PendingIntent.getService(context, 0,
-						new Intent(context, RatesDownloadService.class), 0)
-		);
+		// I don't want this service to stay in memory, so I stop it
+		// immediately after doing what I wanted it to do.
+		stopSelf();
 
 		// Here you can return one of some different constants.
 		// This one in particular means that if for some reason
 		// this service is killed, we don't want to start it
 		// again automatically
 		return START_NOT_STICKY;
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		return null;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+
+		// I want to restart this service again
+		scheduleRestart(this, Settings.Rates.reloadDelay);
+	}
+
+	public static void scheduleRestart(Context context, int timeLag){
+		AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+		alarm.set(
+				AlarmManager.RTC_WAKEUP,
+				System.currentTimeMillis() + timeLag,
+				PendingIntent.getService(context, 0, new Intent(context, RatesDownloadService.class), 0)
+		);
 	}
 
 	class DownloadRatesTask extends AsyncTask<String, Void, String> {
@@ -106,7 +116,7 @@ public class RatesDownloadService extends Service {
 			}
 
 			if( !json.isEmpty() ){
-				SharedPreferences.Editor prefs = context.getSharedPreferences(Settings.PREFS_NAME,
+				SharedPreferences.Editor prefs = ((Context) RatesDownloadService.this ).getSharedPreferences(Settings.PREFS_NAME,
 						Context.MODE_PRIVATE).edit();
 				prefs.putString(Settings.Rates.ratesKey, json);
 				prefs.apply();
@@ -119,7 +129,7 @@ public class RatesDownloadService extends Service {
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 
-			WidgetProvider.notifyUpdateNeeded(context);
+			WidgetProvider.notifyUpdateNeeded((Context) RatesDownloadService.this);
 
 			// TODO: 14.09.2015 Make activity direct updating
 		}

@@ -125,6 +125,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 				mStockItemsAdapter.fillFromExRates(exRatesGroup.exRates);
 				mStockItemsAdapter.notifyDataSetChanged();
 			}
+			mRatesListView.addFooterView(mStockItemsAdapter.getFooterView());
 			mRatesListView.setAdapter(mStockItemsAdapter);
 		}
 	}
