@@ -16,14 +16,30 @@
   -->
 
 <LinearLayout
-	android:id="@+id/container"
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context="com.khrolenok.rates.ui.SettingsActivity"
 	android:orientation="vertical">
 
-	<include
-		android:id="@+id/toolbar_actionbar"
-		layout="@layout/toolbar_actionbar"/>
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="?android:actionBarSize"
+		style="@style/AppTheme.HeaderBar"
+		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+		app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+	<com.khrolenok.rates.ui.widget.DrawShadowFrameLayout
+		android:id="@+id/contentFrame"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"
+		app:shadowDrawable="@drawable/header_shadow">
+
+	</com.khrolenok.rates.ui.widget.DrawShadowFrameLayout>
 
 </LinearLayout>

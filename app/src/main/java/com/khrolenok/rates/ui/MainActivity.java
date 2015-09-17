@@ -19,67 +19,63 @@ package com.khrolenok.rates.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.khrolenok.rates.BuildConfig;
+import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.Settings;
 import com.khrolenok.rates.util.DialogsManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import trikita.log.Log;
+
 public class MainActivity extends AppCompatActivity {
+
+	static final String STATE_MAIN_VALUE_KEY = "MainActivity$MainValue";
 
 	private static final String TOOLBAR_TEXTVIEW_FIELD_NAME = "mTitleTextView";
 	private static final String TOOLBAR_NAV_BTN_FIELD_NAME = "mNavButtonView";
 
-	private Toolbar mToolbar;
-//	private TextView mToolbarTitle;
-//	private ImageButton mToolbarButton;
-
 	public double mainValue = 1000;
+	public AppBarLayout appBarLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-		setSupportActionBar(mToolbar);
-//
-//		try{
-//			Field f = mToolbar.getClass().getDeclaredField(TOOLBAR_TEXTVIEW_FIELD_NAME);
-//			f.setAccessible(true);
-//			mToolbarTitle = (TextView) f.get(mToolbar);
-//
-//			f = mToolbar.getClass().getDeclaredField(TOOLBAR_NAV_BTN_FIELD_NAME);
-//			f.setAccessible(true);
-//			mToolbarButton = (ImageButton) f.get(mToolbar);
-//
-//		} catch( NoSuchFieldException e ){
-//			e.printStackTrace();
-//		} catch( IllegalAccessException e ){
-//			e.printStackTrace();
-//		}
-
-		// Init content frame by default
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content_frame, new MainFragment()).commit();
-
 		// Check whether we're recreating a previously destroyed instance
 		if( savedInstanceState != null ){
 			// Restore value of members from saved state
-			mainValue = savedInstanceState.getDouble(STATE_MAIN_VALUE);
+			mainValue = savedInstanceState.getDouble(STATE_MAIN_VALUE_KEY);
 		}
+
+		appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+
+		initToolbar();
+		initViewPagerAndTabs();
+		initAdView();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_activity_main, menu);
-
-		mToolbar.setLogo(null);
-		mToolbar.setTitle(getString(R.string.app_name));
 
 		return true;
 	}
@@ -108,14 +104,77 @@ public class MainActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	static final String STATE_MAIN_VALUE = "mainValue";
-
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		// Save the activity current state
-		outState.putDouble(STATE_MAIN_VALUE, mainValue);
+		outState.putDouble(STATE_MAIN_VALUE_KEY, mainValue);
 
 		// Always call the superclass so it can save the view hierarchy state
 		super.onSaveInstanceState(outState);
+	}
+
+	private void initToolbar() {
+		Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(mToolbar);
+		setTitle(getString(R.string.app_name));
+	}
+
+	private void initViewPagerAndTabs() {
+		ViewPager viewPager = (ViewPager) findViewById(R.id.contentFrame);
+		PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
+		pagerAdapter.addFragment(new RatesFragment(), getString(R.string.tab_rates));
+		viewPager.setAdapter(pagerAdapter);
+
+		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+		if( pagerAdapter.getCount() <= 1 ){
+			tabLayout.setVisibility(View.GONE);
+		} else {
+			tabLayout.setupWithViewPager(viewPager);
+		}
+	}
+
+	private void initAdView() {
+		if( !ExRatesApplication.isShowAds ){
+			if( BuildConfig.DEBUG ) Log.v("Ads removed");
+			findViewById(R.id.adView).setVisibility(View.GONE);
+
+		} else {
+			// Start AdMob
+			final AdRequest adRequest = new AdRequest.Builder()
+					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+					.build();
+			final AdView mAdView = (AdView) findViewById(R.id.adView);
+			mAdView.loadAd(adRequest);
+		}
+	}
+
+	static class PagerAdapter extends FragmentPagerAdapter {
+
+		private final List<Fragment> fragmentList = new ArrayList<>();
+		private final List<String> fragmentTitleList = new ArrayList<>();
+
+		public PagerAdapter(FragmentManager fragmentManager) {
+			super(fragmentManager);
+		}
+
+		public void addFragment(Fragment fragment, String title) {
+			fragmentList.add(fragment);
+			fragmentTitleList.add(title);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return fragmentList.get(position);
+		}
+
+		@Override
+		public int getCount() {
+			return fragmentList.size();
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return fragmentTitleList.get(position);
+		}
 	}
 }

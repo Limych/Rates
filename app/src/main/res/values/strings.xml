@@ -67,6 +67,7 @@
 	<string name="desc_sub">Minus</string>
 	<string name="desc_perc">Percent</string>
 	<string name="error_in_expression">An error in the expression</string>
+	<string name="tab_rates">Rates</string>
 
 
 	<!-- Currency names-->

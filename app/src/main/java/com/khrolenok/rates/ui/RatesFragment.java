@@ -21,24 +21,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.khrolenok.rates.BuildConfig;
-import com.khrolenok.rates.ExRatesApplication;
+import com.khrolenok.rates.ExRate;
 import com.khrolenok.rates.ExRatesGroup;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.Settings;
 import com.khrolenok.rates.controller.StockItemsAdapter;
 import com.khrolenok.rates.model.StockItem;
-import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,39 +46,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import trikita.log.Log;
-
 /**
  * Created by Limych on 07.09.2015
  */
-public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class RatesFragment extends Fragment
+		implements SwipeRefreshLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener {
 
-	private DynamicListView mRatesListView;
+	private RecyclerView mRatesListView;
 
 	private StockItemsAdapter mStockItemsAdapter;
 	private SwipeRefreshLayout srQuotesRefresher;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+		final View rootView = inflater.inflate(R.layout.fragment_rates, container, false);
 
 		srQuotesRefresher = (SwipeRefreshLayout) rootView.findViewById(R.id.srQuotesRefresher);
 		srQuotesRefresher.setOnRefreshListener(this);
 
-		if( !ExRatesApplication.isShowAds ){
-			if( BuildConfig.DEBUG ) Log.v("Ads removed");
-			rootView.findViewById(R.id.adView).setVisibility(View.GONE);
-
-		} else {
-			// Start AdMob
-			final AdRequest adRequest = new AdRequest.Builder()
-					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-					.build();
-			final AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
-			mAdView.loadAd(adRequest);
-		}
-
 		return rootView;
+	}
+
+	@Override
+	public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+		srQuotesRefresher.setEnabled(( i == 0 ));
 	}
 
 	@Override
@@ -87,14 +77,22 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 		super.onResume();
 
 		populateRatesListView();
+		( (MainActivity) getActivity() ).appBarLayout.addOnOffsetChangedListener(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+
+		( (MainActivity) getActivity() ).appBarLayout.removeOnOffsetChangedListener(this);
 	}
 
 	private void populateRatesListView() {
 //		srQuotesRefresher.setRefreshing(false);
 
 		if( mRatesListView == null ){
-			mRatesListView = (DynamicListView) getActivity().findViewById(R.id.mStockItemsList);
-//			mRatesListView.enableDragAndDrop();
+			mRatesListView = (RecyclerView) getActivity().findViewById(R.id.stockRatesList);
+			mRatesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 			final SharedPreferences prefs = getActivity().getSharedPreferences(Settings.PREFS_NAME,
 					Context.MODE_PRIVATE);
@@ -118,16 +116,49 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
 			if( mStockItemsAdapter == null ){
 				mStockItemsAdapter = new StockItemsAdapter(getActivity(),
-						new ArrayList<StockItem>(), this);
-				mStockItemsAdapter.fillFromExRates(exRatesGroup.exRates);
+						fromExRates(exRatesGroup.exRates), this);
 			} else {
-				mStockItemsAdapter.clear();
-				mStockItemsAdapter.fillFromExRates(exRatesGroup.exRates);
+				mStockItemsAdapter.setStockItems(fromExRates(exRatesGroup.exRates));
 				mStockItemsAdapter.notifyDataSetChanged();
 			}
-			mRatesListView.addFooterView(mStockItemsAdapter.getFooterView());
 			mRatesListView.setAdapter(mStockItemsAdapter);
 		}
+	}
+
+	public List<StockItem> fromExRates(List<ExRate> exRates) {
+		final ArrayList<StockItem> mStockItems = new ArrayList<>();
+		final double mainValue = ( (MainActivity) getActivity() ).mainValue;
+
+		StockItem item = new StockItem();
+
+		item.code = "RUR";
+		item.symbol = "RUR";
+		item.faceValue = 1;
+		item.priceCurrency = "RUR";
+		item.initialPrice = 1;
+		item.lastPrice = 1;
+		item.value = mainValue;
+
+		mStockItems.add(item);
+
+		for( int i = 0, cnt = exRates.size(); i < cnt; i++ ) {
+			final ExRate exRate = exRates.get(i);
+			item = new StockItem();
+
+			item.code = exRate.groupCode + "_" + exRate.goodCode + "_" + exRate.currencyCode;
+			item.stockExchange = exRate.groupCode;
+			item.symbol = exRate.goodCode;
+			item.faceValue = exRate.faceValue;
+			item.priceCurrency = exRate.currencyCode;
+			item.initialPrice = exRate.initialBid;
+			item.lastPrice = exRate.lastBid;
+			item.lastUpdate = exRate.updateTS;
+			item.value = mainValue * item.faceValue / item.lastPrice;
+
+			mStockItems.add(item);
+		}
+
+		return mStockItems;
 	}
 
 	public void showCalculatorDialog(int listItemPosition, String title, double value) {
@@ -162,7 +193,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 		// TODO: 15.09.2015 Make force update
 		srQuotesRefresher.setRefreshing(false);
 		Toast.makeText(getActivity(), R.string.force_update_na, Toast.LENGTH_SHORT).show();
-		
+
 		if( mRatesListView != null ) populateRatesListView();
 	}
 }

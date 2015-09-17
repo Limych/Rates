@@ -16,28 +16,29 @@
   -->
 
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_screen_horizontal_margin">16dp</dimen>
-    <dimen name="activity_screen_vertical_margin">16dp</dimen>
+	<!-- Default screen margins, per the Android Design guidelines. -->
+	<dimen name="app_screen_horizontal_margin">16dp</dimen>
+	<dimen name="app_screen_vertical_margin">16dp</dimen>
 
-    <dimen name="activity_list_horizontal_margin">6dp</dimen>
-    <dimen name="activity_list_vertical_margin">2dp</dimen>
+	<dimen name="app_list_items_margin_vertical">2dp</dimen>
 
-    <dimen name="headerbar_elevation">4dp</dimen>
+	<dimen name="app_list_data_margin_horizontal">6dp</dimen>
+	<dimen name="app_list_data_margin_vertical">2dp</dimen>
 
-
-
-    <!-- Widget -->
-    <dimen name="widget_background_rounds">8dp</dimen>
-    <dimen name="widget_margin">4dp</dimen>
-    <dimen name="widget_group_title_margin">0dp</dimen>
-    <dimen name="widget_group_divider_size">6dp</dimen>
-    <dimen name="widget_horizontal_text_margin">2dp</dimen>
+	<dimen name="headerbar_elevation">4dp</dimen>
+	<dimen name="ic_calc_left_margin">4dp</dimen>
 
 
+	<!-- Widget -->
+	<dimen name="widget_background_rounds">8dp</dimen>
+	<dimen name="widget_margin">4dp</dimen>
+	<dimen name="widget_group_title_margin">0dp</dimen>
+	<dimen name="widget_group_divider_size">6dp</dimen>
+	<dimen name="widget_horizontal_text_margin">2dp</dimen>
 
-    <!-- Calculator -->
-    <dimen name="calculator_button_text_color">24sp</dimen>
-    <dimen name="calculator_layout_padding">12dp</dimen>
-    <dimen name="calculator_horizontal_text_margin">3dp</dimen>
+
+	<!-- Calculator -->
+	<dimen name="calc_button_text_size">24sp</dimen>
+	<dimen name="calc_layout_padding">12dp</dimen>
+	<dimen name="calc_horizontal_text_margin">3dp</dimen>
 </resources>

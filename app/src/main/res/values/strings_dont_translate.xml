@@ -31,10 +31,10 @@
 
 
 	<!-- Calculator dialog -->
-	<string name="op_add" translatable="false">+</string>
-	<string name="op_sub" translatable="false">−</string>
-	<string name="op_mul" translatable="false">×</string>
-	<string name="op_div" translatable="false">/</string>
-	<string name="op_perc" translatable="false">%</string>
-	<string name="paren" translatable="false">()</string>
+	<string name="calc_op_add" translatable="false">+</string>
+	<string name="calc_op_sub" translatable="false">−</string>
+	<string name="calc_op_mul" translatable="false">×</string>
+	<string name="calc_op_div" translatable="false">/</string>
+	<string name="calc_op_perc" translatable="false">%</string>
+	<string name="calc_paren" translatable="false">()</string>
 </resources>

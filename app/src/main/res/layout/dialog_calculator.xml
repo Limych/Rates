@@ -29,9 +29,9 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentStart="true"
-		android:layout_marginLeft="@dimen/calculator_layout_padding"
-		android:layout_marginRight="@dimen/calculator_layout_padding"
-		android:layout_marginTop="@dimen/calculator_layout_padding"
+		android:layout_marginLeft="@dimen/calc_layout_padding"
+		android:layout_marginRight="@dimen/calc_layout_padding"
+		android:layout_marginTop="@dimen/calc_layout_padding"
 		android:text="Title"/>
 
 	<android.support.v7.widget.CardView
@@ -39,8 +39,8 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/title"
-		android:layout_marginLeft="@dimen/calculator_layout_padding"
-		android:layout_marginRight="@dimen/calculator_layout_padding"
+		android:layout_marginLeft="@dimen/calc_layout_padding"
+		android:layout_marginRight="@dimen/calc_layout_padding"
 		android:layout_marginTop="4dp"
 		app:cardCornerRadius="4dp">
 
@@ -48,10 +48,10 @@
 			android:id="@+id/expressionTextView"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginBottom="@dimen/calculator_horizontal_text_margin"
-			android:layout_marginLeft="@dimen/calculator_horizontal_text_margin"
-			android:layout_marginRight="@dimen/calculator_horizontal_text_margin"
-			android:layout_marginTop="@dimen/calculator_horizontal_text_margin"
+			android:layout_marginBottom="@dimen/calc_horizontal_text_margin"
+			android:layout_marginLeft="@dimen/calc_horizontal_text_margin"
+			android:layout_marginRight="@dimen/calc_horizontal_text_margin"
+			android:layout_marginTop="@dimen/calc_horizontal_text_margin"
 			android:background="@android:color/transparent"
 			android:gravity="bottom|right"
 			android:minLines="2"
@@ -65,11 +65,11 @@
 		android:layout_width="fill_parent"
 		android:layout_height="250dp"
 		android:layout_below="@+id/expressionCardView"
-		android:layout_marginTop="@dimen/calculator_horizontal_text_margin"
+		android:layout_marginTop="@dimen/calc_horizontal_text_margin"
 		android:columnCount="5"
-		android:paddingBottom="@dimen/calculator_layout_padding"
-		android:paddingLeft="@dimen/calculator_layout_padding"
-		android:paddingRight="@dimen/calculator_layout_padding"
+		android:paddingBottom="@dimen/calc_layout_padding"
+		android:paddingLeft="@dimen/calc_layout_padding"
+		android:paddingRight="@dimen/calc_layout_padding"
 		android:paddingTop="30dp"
 		android:rowCount="4">
 
@@ -89,7 +89,7 @@
 			android:id="@+id/paren"
 			style="@style/AppTheme.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_paren"
-			android:text="@string/paren"/>
+			android:text="@string/calc_paren"/>
 
 		<ImageButton
 			android:id="@+id/del"
@@ -115,13 +115,13 @@
 			android:id="@+id/op_mul"
 			style="@style/AppTheme.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_mul"
-			android:text="@string/op_mul"/>
+			android:text="@string/calc_op_mul"/>
 
 		<Button
 			android:id="@+id/op_div"
 			style="@style/AppTheme.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_div"
-			android:text="@string/op_div"/>
+			android:text="@string/calc_op_div"/>
 
 		<Button
 			android:id="@+id/digit_1"
@@ -139,13 +139,13 @@
 			android:id="@+id/op_add"
 			style="@style/AppTheme.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_add"
-			android:text="@string/op_add"/>
+			android:text="@string/calc_op_add"/>
 
 		<Button
 			android:id="@+id/op_sub"
 			style="@style/AppTheme.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_sub"
-			android:text="@string/op_sub"/>
+			android:text="@string/calc_op_sub"/>
 
 		<Button
 			android:id="@+id/digit_0"
@@ -163,7 +163,7 @@
 			android:id="@+id/op_perc"
 			style="@style/AppTheme.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_perc"
-			android:text="@string/op_perc"/>
+			android:text="@string/calc_op_perc"/>
 
 		<ImageButton
 			android:id="@+id/set"
@@ -178,9 +178,9 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/expressionCardView"
-		android:layout_marginLeft="@dimen/calculator_layout_padding"
-		android:layout_marginRight="@dimen/calculator_layout_padding"
-		android:layout_marginTop="@dimen/calculator_horizontal_text_margin"
+		android:layout_marginLeft="@dimen/calc_layout_padding"
+		android:layout_marginRight="@dimen/calc_layout_padding"
+		android:layout_marginTop="@dimen/calc_horizontal_text_margin"
 		android:background="@android:color/transparent"
 		android:gravity="bottom|right"
 		android:text="= 123.00"/>

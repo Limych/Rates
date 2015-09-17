@@ -15,3 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keepattributes *Annotation*
+-keep public class * extends android.support.design.widget.CoordinatorLayout.Behavior { *; }
+-keep public class * extends android.support.design.widget.ViewOffsetBehavior { *; }

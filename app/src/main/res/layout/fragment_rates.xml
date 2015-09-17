@@ -15,11 +15,22 @@
   ~ limitations under the License.
   -->
 
-<android.support.v7.widget.Toolbar
-	style="@style/AppTheme.HeaderBar"
+<android.support.v4.widget.SwipeRefreshLayout
+	android:id="@+id/srQuotesRefresher"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="?android:actionBarSize"
-	android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-	app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+	android:layout_height="match_parent"
+	android:layout_alignParentStart="true"
+	tools:context="com.khrolenok.rates.ui.RatesFragment">
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/stockRatesList"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@android:color/background_light"
+		android:divider="@android:color/transparent"
+		android:dividerHeight="3dp"
+		android:drawSelectorOnTop="true"/>
+
+</android.support.v4.widget.SwipeRefreshLayout>

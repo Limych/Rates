@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.khrolenok.rates.BuildConfig;
 import com.khrolenok.rates.R;
 
 import me.drakeet.materialdialog.MaterialDialog;
@@ -60,6 +61,7 @@ public class DialogsManager {
 			versionName = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
 		} catch( PackageManager.NameNotFoundException ignored ){
 		}
+		if( BuildConfig.DEBUG ) versionName += " (debug)";
 		final TextView text = (TextView) contentView.findViewById(R.id.app_version);
 		text.setText(text.getText() + " " + versionName);
 

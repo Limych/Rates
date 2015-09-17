@@ -36,12 +36,12 @@ public class SettingsActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 
-		setSupportActionBar((Toolbar) findViewById(R.id.toolbar_actionbar));
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		if( savedInstanceState == null ){
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new SettingsFragment())
+					.add(R.id.contentFrame, new SettingsFragment())
 					.commit();
 		}
 	}
