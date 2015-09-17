@@ -15,13 +15,14 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout style="@style/AppTheme.CalculatorLayout"
-				xmlns:android="http://schemas.android.com/apk/res/android"
-				xmlns:app="http://schemas.android.com/apk/res-auto"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:theme="@style/AppTheme.Dialog.Base">
+<RelativeLayout
+	style="@style/AppTheme.Dialog"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:theme="@style/AppTheme.Dialog.Base">
 
 	<TextView
 		android:id="@+id/title"

@@ -65,12 +65,6 @@
 
 
 	<!-- Calculator -->
-
-	<style name="AppTheme.CalculatorLayout" parent="AppTheme.Dialog.Base">
-		<item name="android:background">@color/dialog_background</item>
-		<item name="android:elevation">8dp</item>
-	</style>
-
 	<style name="AppTheme.CalculatorPadButton" parent="Widget.AppCompat.Button.Borderless">
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
