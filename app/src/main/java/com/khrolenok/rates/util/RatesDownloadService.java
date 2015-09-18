@@ -73,7 +73,7 @@ public class RatesDownloadService extends Service {
 		scheduleRestart(this, Settings.Rates.reloadDelay);
 	}
 
-	public static void scheduleRestart(Context context, int timeLag){
+	public static void scheduleRestart(Context context, int timeLag) {
 		AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 		alarm.set(
 				AlarmManager.RTC_WAKEUP,
@@ -116,7 +116,7 @@ public class RatesDownloadService extends Service {
 			}
 
 			if( !json.isEmpty() ){
-				SharedPreferences.Editor prefs = ((Context) RatesDownloadService.this ).getSharedPreferences(Settings.PREFS_NAME,
+				SharedPreferences.Editor prefs = ( (Context) RatesDownloadService.this ).getSharedPreferences(Settings.PREFS_NAME,
 						Context.MODE_PRIVATE).edit();
 				prefs.putString(Settings.Rates.ratesKey, json);
 				prefs.apply();

@@ -52,7 +52,7 @@ def safeLoad(String name, Object value, Boolean override = false) {
 }
 
 Integer getBuildVersion(defaultVersion, Boolean increment = false) {
-    File verFile = file('../version.properties')
+    File verFile = file('version.properties')
 
     if (!verFile.canRead())
         verFile.createNewFile()
@@ -63,11 +63,10 @@ Integer getBuildVersion(defaultVersion, Boolean increment = false) {
     String currentCodeVersion = props['VERSION_CODE']
 
     if (currentCodeVersion == null)
-        currentCodeVersion = defaultVersion ?: android.defaultConfig.versionCode
+        currentCodeVersion = defaultVersion ?: 1
 
     if (increment) {
         Integer bumpedCodeVersion = currentCodeVersion.toInteger() + 1
-//        android.defaultConfig.versionCode = bumpedCodeVersion
 
         props['VERSION_CODE'] = bumpedCodeVersion.toString()
 

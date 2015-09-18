@@ -59,14 +59,11 @@
 				android:resource="@xml/widget_info"/>
 		</receiver>
 
-		<!--
-		provider
-			android:name=".ExchangeRatesProvider"
-			android:authorities="com.khrolenok.rates.provider"
-			android:enabled="true"
-			android:exported="false" >
-		</provider
-		-->
+		<receiver android:name=".util.ConnectionMonitor" android:enabled="false">
+			<intent-filter>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+			</intent-filter>
+		</receiver>
 
 		<activity
 			android:name=".ui.SettingsActivity"
