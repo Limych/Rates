@@ -37,6 +37,18 @@
 	</PreferenceCategory>
 
 	<PreferenceCategory
+		android:title="@string/pref_title_updating">
+
+		<CheckBoxPreference
+			android:defaultValue="false"
+			android:key="wifi_only"
+			android:summaryOff="@string/pref_desc_wifi_only_off"
+			android:summaryOn="@string/pref_desc_wifi_only_on"
+			android:title="@string/pref_title_wifi_only"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
 		android:key="category_debug"
 		android:title="@string/pref_title_debug">
 

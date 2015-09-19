@@ -47,7 +47,7 @@
 			<!--</intent-filter>-->
 		</activity>
 
-		<service android:name=".util.RatesDownloadService"/>
+		<service android:name=".util.UpdateService"/>
 
 		<receiver android:name=".ui.WidgetProvider">
 			<intent-filter>

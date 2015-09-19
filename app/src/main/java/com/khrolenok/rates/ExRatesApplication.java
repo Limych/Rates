@@ -23,6 +23,7 @@ import android.os.StrictMode;
 import android.provider.Settings;
 
 import com.khrolenok.rates.util.StockNames;
+import com.khrolenok.rates.util.UpdateService;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -73,6 +74,9 @@ public class ExRatesApplication extends Application {
 				|| deviceId.equals("731E71558550B5248AD569E9A603BBA7"); // My test device
 //		isTestDevice = true;
 		if( BuildConfig.DEBUG && isTestDevice ) Log.v("Test device detected");
+
+		// Try to start update service
+		UpdateService.start(getApplicationContext());
 	}
 
 	public String getDeviceID() {

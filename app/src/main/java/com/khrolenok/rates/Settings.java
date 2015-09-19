@@ -64,5 +64,6 @@ public class Settings {
 	public interface Preferences {
 		String INVERT_COLORS = "invert_colors";
 		String LONG_FORMAT = "long_format";
+		String WIFI_ONLY = "wifi_only";
 	}
 }

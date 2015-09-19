@@ -11,7 +11,7 @@
   ~ Unless required by applicable law or agreed to in writing, software
   ~ distributed under the License is distributed on an "AS IS" BASIS,
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
+  ~ See the License for&#160;the specific language governing permissions and
   ~ limitations under the License.
   -->
 
@@ -38,24 +38,30 @@
 
 
 	<!-- Preferences -->
-	<!-- Preference and Categories titles -->
-	<string name="pref_title_widget">Widget</string>
-	<string name="pref_title_invert_colors">Invert price colors</string>
+	<!-- Preference categories titles -->
 	<string name="pref_title_debug">Debug</string>
-	<string name="pref_title_device_id">Device ID</string>
 	<string name="pref_title_presentation">Data presentation</string>
-	<string name="pref_title_long_format">Long numbers</string>
+	<string name="pref_title_updating">Data updating</string>
 
-	<!-- Preference descriptions -->
-	<string name="pref_desc_normal_colors">Green for price growth. Red for price fall</string>
-	<string name="pref_desc_invert_colors">Red for price growth. Green for price fall</string>
+	<!-- Preference titles and descriptions -->
+	<string name="pref_title_device_id">Device ID</string>
+
+	<string name="pref_title_invert_colors">Invert price colors</string>
+	<string name="pref_desc_normal_colors">Green for&#160;price growth. Red for&#160;price fall</string>
+	<string name="pref_desc_invert_colors">Red for&#160;price growth. Green for&#160;price fall</string>
+
+	<string name="pref_title_long_format">Long numbers</string>
 	<string name="pref_desc_long_format">Four decimal digits</string>
 	<string name="pref_desc_short_format">Two decimal digits</string>
+
+	<string name="pref_title_wifi_only">Update over WiFi only</string>
+	<string name="pref_desc_wifi_only_on">Suspend update until availability WiFI</string>
+	<string name="pref_desc_wifi_only_off">Update when connected to any network</string>
 
 
 	<!-- Dialogs -->
 	<string name="about_version">Version</string>
-	<string name="about_copyright">© 2015, Andrey “Limych” Khrolenok</string>
+	<string name="about_copyright">©&#160;2015, Andrey “Limych” Khrolenok</string>
 
 
 	<!-- Calculator dialog -->

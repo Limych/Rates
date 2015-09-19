@@ -94,8 +94,8 @@ public class RatesFragment extends Fragment
 			mRatesListView = (RecyclerView) getActivity().findViewById(R.id.stockRatesList);
 			mRatesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-			final SharedPreferences prefs = getActivity().getSharedPreferences(Settings.PREFS_NAME,
-					Context.MODE_PRIVATE);
+			final SharedPreferences prefs = getActivity().getApplicationContext()
+					.getSharedPreferences(Settings.PREFS_NAME, Context.MODE_PRIVATE);
 
 			List<String> ratesList;
 			try{

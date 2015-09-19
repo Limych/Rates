@@ -30,7 +30,7 @@ import android.widget.RemoteViews;
 import com.khrolenok.rates.ExRatesGroup;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.Settings;
-import com.khrolenok.rates.util.RatesDownloadService;
+import com.khrolenok.rates.util.UpdateService;
 
 import org.json.JSONObject;
 
@@ -61,8 +61,8 @@ public class WidgetProvider extends AppWidgetProvider {
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
 
-		// Schedule to start rates update service
-		RatesDownloadService.scheduleRestart(context, 10);
+		// Try to start update service
+		UpdateService.start(context);
 	}
 
 	@Override
@@ -125,8 +125,8 @@ public class WidgetProvider extends AppWidgetProvider {
 				&& ( widgetLayout == R.layout.widget_layout_h && wCells >= 4
 				|| widgetLayout == R.layout.widget_layout_v && wCells >= 2 );
 
-		final SharedPreferences dataCache = context.getSharedPreferences(Settings.PREFS_NAME,
-				Context.MODE_PRIVATE);
+		final SharedPreferences dataCache = context.getApplicationContext()
+				.getSharedPreferences(Settings.PREFS_NAME, Context.MODE_PRIVATE);
 
 		List<String> ratesList;
 		try{

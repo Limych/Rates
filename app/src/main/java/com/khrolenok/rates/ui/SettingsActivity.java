@@ -16,6 +16,7 @@
 
 package com.khrolenok.rates.ui;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -25,6 +26,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.R;
+import com.khrolenok.rates.util.UpdateService;
 
 /**
  * Created by Limych on 03.09.2015
@@ -82,7 +84,12 @@ public class SettingsActivity extends AppCompatActivity {
 
 		@Override
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-			WidgetProvider.notifyUpdateNeeded(getActivity());
+			final Context context = getActivity();
+
+			WidgetProvider.notifyUpdateNeeded(context);
+
+			// Try to restart update service
+			UpdateService.start(context);
 		}
 	}
 

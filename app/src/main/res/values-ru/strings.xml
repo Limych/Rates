@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2015 Andrey “Limych” Khrolenok
   ~
@@ -15,18 +16,17 @@
   -->
 
 <resources>
-    <string name="app_name">Курсы рубля</string>
+    <string name="app_name">Курсы валют</string>
     <string name="title_official">ЦБ РФ</string>
     <string name="title_stock">Биржа</string>
     <string name="title_forex">Форекс</string>
     <string name="action_settings">Настройки</string>
     <string name="text_updated">Обновлено:</string>
-    <string name="pref_title_widget">Виджет</string>
     <string name="pref_title_invert_colors">Цвета цен наоборот</string>
-    <string name="pref_desc_normal_colors">Зелёный для роста цен. Красный для падения цен</string>
-    <string name="pref_desc_invert_colors">Красный для роста цен. Зелёный для падения цен</string>
-    <string name="error_in_expression">Ошибка в выражении</string>
-    <string name="no_internet_connection">Нет соединения с интернет</string>
+    <string name="pref_desc_normal_colors">Зелёный для&#160;роста цен. Красный для&#160;падения цен</string>
+    <string name="pref_desc_invert_colors">Красный для&#160;роста цен. Зелёный для&#160;падения цен</string>
+    <string name="error_in_expression">Ошибка в&#160;выражении</string>
+    <string name="no_internet_connection">Нет соединения с&#160;интернет</string>
     <string name="desc_add">Плюс</string>
     <string name="desc_del">Удалить</string>
     <string name="desc_div">Разделить</string>
@@ -186,6 +186,11 @@
     <string name="pref_title_long_format">Длинные числа</string>
     <string name="action_about">Версия</string>
     <string name="about_version">Версия</string>
-    <string name="about_copyright">© 2015, Андрей «Limych» Хроленок</string>
+    <string name="about_copyright">©&#160;2015, Андрей «Limych» Хроленок</string>
     <string name="force_update_na">Принудительное обновление пока недоступно</string>
+    <string name="pref_desc_wifi_only_off">Обновлять при любом подключении к&#160;сети</string>
+    <string name="pref_desc_wifi_only_on">Приостановить обновление до&#160;подключения к&#160;WiFi</string>
+    <string name="pref_title_updating">Обновление данных</string>
+    <string name="pref_title_wifi_only">Обновлять только через WiFi</string>
+    <string name="tab_rates">Курсы</string>
 </resources>

@@ -20,9 +20,16 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
+
+import com.khrolenok.rates.BuildConfig;
+import com.khrolenok.rates.Settings;
+
+import trikita.log.Log;
 
 /**
  * Created by Limych on 18.09.2015
@@ -32,30 +39,45 @@ public class ConnectionMonitor extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		final String action = intent.getAction();
-		if (!action.equals(ConnectivityManager.CONNECTIVITY_ACTION))
+		if( !action.equals(ConnectivityManager.CONNECTIVITY_ACTION) )
 			return;
 
 		boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
-		if (!noConnectivity && isNetworkAvailable(context)) {
+		if( !noConnectivity && isNetworkAvailable(context) ){
+			if( BuildConfig.DEBUG ) Log.d("Network connection detected");
 
+			// Restart update service
+			UpdateService.start(context);
 		}
 	}
 
-	public static void setEnabledSetting(Context context, int setting){
+	public static void setEnabledSetting(Context context, int setting) {
+		if( BuildConfig.DEBUG ) Log.d("Connection monitor status changed to " + setting);
+
 		final ComponentName receiver = new ComponentName(context, ConnectionMonitor.class);
 		final PackageManager pm = context.getPackageManager();
 
 		pm.setComponentEnabledSetting(receiver, setting, 0);
 	}
 
-	private static boolean isNetworkAvailable(Context context) {
-		return isNetworkAvailable(context, false);
+	public static boolean isNetworkAvailable(Context context) {
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		return isNetworkAvailable(context, prefs.getBoolean(Settings.Preferences.WIFI_ONLY, false));
 	}
 
-	private static boolean isNetworkAvailable(Context context, boolean testForWiFi) {
+	public static boolean isNetworkAvailable(Context context, boolean testForWiFi) {
 		final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-		return activeNetwork != null && activeNetwork.isConnectedOrConnecting()
-				&& ( !testForWiFi || activeNetwork.getType() == ConnectivityManager.TYPE_WIFI );
+
+		final boolean isWiFi = ( activeNetwork.getType() == ConnectivityManager.TYPE_WIFI );
+
+		if( BuildConfig.DEBUG ) Log.v("testForWiFi = " + testForWiFi + ", isWiFi = " + isWiFi);
+
+		final boolean isNetworkAvailable = ( activeNetwork.isConnectedOrConnecting()
+				&& ( !testForWiFi || isWiFi ) );
+
+		if( BuildConfig.DEBUG ) Log.v("isNetworkAvailable = " + isNetworkAvailable);
+
+		return isNetworkAvailable;
 	}
 }
