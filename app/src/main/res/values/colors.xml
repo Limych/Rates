@@ -29,6 +29,8 @@
 	<color name="background">@android:color/background_light</color>
 	<color name="text_shadow">@color/material_black_disabled</color>
 
+	<color name="actionbar_text">@android:color/primary_text_dark</color>
+
 	<color name="list_background_even">@color/material_gray_50</color>
 	<color name="list_value_background">@color/material_gray_200</color>
 

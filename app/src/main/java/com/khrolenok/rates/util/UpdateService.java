@@ -21,7 +21,6 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import com.khrolenok.rates.BuildConfig;
@@ -88,7 +87,7 @@ public class UpdateService extends IntentService {
 		InputStream inputStream = null;
 		String json = null;
 		try{
-			URL url = new URL(Settings.Rates.sourceUrl);
+			URL url = new URL(BuildConfig.HOST_SERVICE_URL);
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 			urlConnection.setRequestProperty("Accept", "application/json");
 			try{
@@ -120,10 +119,8 @@ public class UpdateService extends IntentService {
 		if( json != null && !json.isEmpty() ){
 			if( BuildConfig.DEBUG ) Log.v("Update loaded");
 
-			SharedPreferences.Editor prefs = getApplicationContext()
-					.getSharedPreferences(Settings.PREFS_NAME, Context.MODE_PRIVATE).edit();
-			prefs.putString(Settings.Rates.ratesKey, json);
-			prefs.apply();
+			final PreferencesManager prefs = PreferencesManager.getInstance();
+			prefs.setStockData(json);
 
 			WidgetProvider.notifyUpdateNeeded(this);
 			// TODO: 14.09.2015 Make activity direct updating

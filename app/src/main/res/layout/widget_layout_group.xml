@@ -18,12 +18,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			  android:layout_width="wrap_content"
 			  android:layout_height="wrap_content"
-			  android:orientation="vertical"
-			  android:theme="@style/AppWidget">
+			  android:orientation="vertical">
 
 	<TextView
 		android:id="@+id/group_caption"
-		style="@style/AppWidget.Base"
+		style="@style/Theme.Rates.Widget.Base"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/widget_group_title_margin"

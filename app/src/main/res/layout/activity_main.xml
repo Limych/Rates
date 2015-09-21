@@ -21,7 +21,6 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:theme="@style/AppTheme"
 	tools:context="com.khrolenok.rates.ui.MainActivity">
 
 	<android.support.design.widget.CoordinatorLayout
@@ -29,30 +28,7 @@
 		android:layout_height="match_parent"
 		android:layout_above="@+id/adView">
 
-		<android.support.design.widget.AppBarLayout
-			android:id="@+id/appBarLayout"
-			style="@style/AppTheme.HeaderBar"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
-
-			<android.support.v7.widget.Toolbar
-				android:id="@+id/toolbar"
-				android:layout_width="match_parent"
-				android:layout_height="?android:actionBarSize"
-				android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-				app:layout_scrollFlags="scroll|enterAlways"
-				app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-			<android.support.design.widget.TabLayout
-				android:id="@+id/tabLayout"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				app:tabIndicatorColor="@android:color/white"
-				app:tabIndicatorHeight="6dp"
-				app:tabSelectedTextColor="@android:color/white"
-				app:tabTextColor="@android:color/white"/>
-
-		</android.support.design.widget.AppBarLayout>
+		<include layout="@layout/headerbar" />
 
 		<com.khrolenok.rates.ui.widget.DrawShadowFrameLayout
 			android:layout_width="fill_parent"

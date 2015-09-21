@@ -17,8 +17,6 @@
 package com.khrolenok.rates.controller;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +28,7 @@ import com.khrolenok.rates.Settings;
 import com.khrolenok.rates.model.StockItem;
 import com.khrolenok.rates.ui.MainActivity;
 import com.khrolenok.rates.ui.RatesFragment;
+import com.khrolenok.rates.util.PreferencesManager;
 import com.khrolenok.rates.util.StockNames;
 
 import java.util.Date;
@@ -155,8 +154,9 @@ public class StockItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 		public void setItemData(final int position, final StockItem stockItem) {
 			final Context context = itemView.getContext();
-			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-			final boolean isLongFormat = prefs.getBoolean(Settings.Preferences.LONG_FORMAT, false);
+			final PreferencesManager prefs = PreferencesManager.getInstance();
+			final boolean isLongFormat = prefs.getBoolean(PreferencesManager.PREF_LONG_FORMAT, false);
+
 
 			symbolTV.setText(stockItem.symbol);
 			nameTV.setText(getStockExchangeName(context, stockItem.stockExchange)
@@ -179,7 +179,7 @@ public class StockItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 			}
 
 			if( stockItem.hasPriceChange() ){
-				final boolean invertColors = prefs.getBoolean(Settings.Preferences.INVERT_COLORS, false);
+				final boolean invertColors = prefs.getBoolean(PreferencesManager.PREF_INVERT_COLORS, false);
 				final int colorUp = ( !invertColors ? R.color.change_green : R.color.change_red );
 				final int colorDown = ( !invertColors ? R.color.change_red : R.color.change_green );
 				final int color = context.getResources().getColor(( stockItem.getPriceChange() > 0

@@ -27,6 +27,7 @@
 
 	<dimen name="headerbar_elevation">4dp</dimen>
 	<dimen name="ic_calc_left_margin">4dp</dimen>
+	<dimen name="abc_text_paragraph_space">12dp</dimen>
 
 
 	<!-- Widget -->

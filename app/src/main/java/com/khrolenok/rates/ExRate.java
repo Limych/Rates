@@ -180,7 +180,7 @@ public class ExRate {
         ratesItem.setInt(R.id.itemPrice, "setMinWidth", viewsBounds.bidWidth);
 
         int[] textSizeAttr = new int[] { android.R.attr.textSize };
-        TypedArray a = context.obtainStyledAttributes(R.style.AppWidget_Body, textSizeAttr);
+        TypedArray a = context.obtainStyledAttributes(R.style.Theme_Rates_Widget_Body, textSizeAttr);
         final int textSize = a.getDimensionPixelSize(0, -1);
         a.recycle();
         if(textSize > 0) {

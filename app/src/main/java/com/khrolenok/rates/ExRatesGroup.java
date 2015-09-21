@@ -120,10 +120,10 @@ public class ExRatesGroup {
     public ExRateViewsBounds calcViewsBounds(Context context){
         int mainFontSize, changeFontSize;
         final int[] textSizeAttr = new int[] { android.R.attr.textSize };
-        TypedArray a = context.obtainStyledAttributes(R.style.AppWidget_Body, textSizeAttr);
+        TypedArray a = context.obtainStyledAttributes(R.style.Theme_Rates_Widget_Body, textSizeAttr);
         mainFontSize = a.getDimensionPixelSize(0, -1);
         a.recycle();
-        a = context.obtainStyledAttributes(R.style.AppWidget_Small, textSizeAttr);
+        a = context.obtainStyledAttributes(R.style.Theme_Rates_Widget_Small, textSizeAttr);
         changeFontSize = a.getDimensionPixelSize(0, -1);
         a.recycle();
         final float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;

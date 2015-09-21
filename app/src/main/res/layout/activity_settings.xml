@@ -21,17 +21,10 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:theme="@style/AppTheme"
-	tools:context="com.khrolenok.rates.ui.SettingsActivity"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	tools:context="com.khrolenok.rates.ui.SettingsActivity">
 
-	<android.support.v7.widget.Toolbar
-		android:id="@+id/toolbar"
-		android:layout_width="match_parent"
-		android:layout_height="?android:actionBarSize"
-		style="@style/AppTheme.HeaderBar"
-		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-		app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+	<include layout="@layout/headerbar" />
 
 	<com.khrolenok.rates.ui.widget.DrawShadowFrameLayout
 		android:id="@+id/contentFrame"

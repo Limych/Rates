@@ -17,9 +17,7 @@
 package com.khrolenok.rates.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -35,15 +33,14 @@ import android.widget.Toast;
 import com.khrolenok.rates.ExRate;
 import com.khrolenok.rates.ExRatesGroup;
 import com.khrolenok.rates.R;
-import com.khrolenok.rates.Settings;
 import com.khrolenok.rates.controller.StockItemsAdapter;
 import com.khrolenok.rates.model.StockItem;
+import com.khrolenok.rates.util.PreferencesManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -94,20 +91,13 @@ public class RatesFragment extends Fragment
 			mRatesListView = (RecyclerView) getActivity().findViewById(R.id.stockRatesList);
 			mRatesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-			final SharedPreferences prefs = getActivity().getApplicationContext()
-					.getSharedPreferences(Settings.PREFS_NAME, Context.MODE_PRIVATE);
-
-			List<String> ratesList;
-			try{
-				ratesList = Arrays.asList(prefs.getString(Settings.Display.ratesList,
-						Settings.Display.ratesListDefault).split("\\s*,\\s*"));
-			} catch( NullPointerException ignored ){
-				return;
-			}
+			final PreferencesManager prefs = PreferencesManager.getInstance();
+			List<String> ratesList = prefs.getStocksList();
+			if( ratesList.isEmpty() ) return;
 
 			JSONObject ratesJson;
 			try{
-				ratesJson = new JSONObject(prefs.getString(Settings.Rates.ratesKey, ""));
+				ratesJson = new JSONObject(prefs.getStockData());
 			} catch( JSONException ignored ){
 				return;
 			}

@@ -16,56 +16,71 @@
   -->
 
 <resources>
+	<!-- Root styles that vary by API level -->
+	<!-- Disable RTL support on older devices -->
+	<!-- Prevents crash on certain devices to namespace conflict -->
+	<style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light.DarkActionBar"/>
 
-	<style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-		<item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
-		<item name="colorPrimaryDark">@color/primary_dark</item>
+	<style name="FrameworkRoot.Widget" parent="Theme.AppCompat"/>
+
+	<!-- Immediate parent theme to specify base values for custom attributes -->
+	<style name="Theme" parent="FrameworkRoot.Theme">
+		<!-- Only needed for pre-L -->
+		<item name="android:editTextBackground">@drawable/edit_text</item>
+		<item name="android:editTextStyle">@style/Widget.Rates.EditText</item>
+	</style>
+
+	<style name="Theme.Rates.Base" parent="Theme">
 		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primary_dark</item>
 		<item name="colorAccent">@color/accent</item>
 		<item name="actionMenuTextColor">@color/icons</item>
 		<item name="colorButtonNormal">@color/background</item>
-	</style>
+		<item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
+		<item name="android:textColorPrimary">@color/primary_text</item>
 
-	<style name="AppTheme" parent="AppTheme.Base">
-		<item name="android:divider">@drawable/separator</item>
-		<item name="android:textColor">@color/primary_dark_material_light</item>
-	</style>
-
-	<style name="AppTheme.NoTitleBar">
 		<item name="windowActionBar">false</item>
-		<item name="android:windowNoTitle">true</item>
+		<item name="windowNoTitle">true</item>
+
+
+		<item name="actionBarIconColor">@color/actionbar_text</item>
+		<!--<item name="actionBarInsetStart">@dimen/keyline_2</item>-->
+		<!--<item name="spinnerBarInsetStart">@dimen/keyline_2_minus_16dp</item>-->
+		<item name="popupItemBackground">?android:selectableItemBackground</item>
+
+		<item name="homeAsUpIndicator">@drawable/ic_up</item>
+		<item name="android:homeAsUpIndicator">@drawable/ic_up</item>
+
+		<item name="android:textColorLink">@color/accent</item>
+
+		<item name="android:windowContentOverlay">@null</item>
+		<item name="android:windowBackground">@android:color/white</item>
+
+		<!--<item name="android:popupMenuStyle">@style/Widget.Rates.PopupMenu</item>-->
+		<!--<item name="android:listPopupWindowStyle">@style/Widget.Rates.PopupMenu</item>-->
+		<!--<item name="android:dropDownListViewStyle">@style/Widget.Rates.ListView.DropDown</item>-->
+		<!--<item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.LargePopupMenu</item>-->
+
+		<!--<item name="searchViewStyle">@style/Widget.Rates.SearchView</item>-->
 	</style>
 
-	<style name="AppTheme.Widget.ListItem" parent="AppTheme">
-	</style>
+	<style name="Theme.Rates" parent="Theme.Rates.Base"/>
 
-	<style name="AppTheme.Widget.ListItem.Small" parent="AppTheme.Widget.ListItem">
+	<style name="Widget.Rates.ListItem.Small" parent="Theme.Rates">
 		<item name="android:textSize">11sp</item>
 	</style>
 
-	<style name="AppTheme.HeaderBar" parent="AppTheme.Base">
-		<item name="android:background">?colorPrimary</item>
-		<item name="android:elevation">@dimen/headerbar_elevation</item>
-	</style>
+	<style name="Theme.Rates.Dialog" parent="Theme.AppCompat.Light.Dialog"/>
 
-	<style name="AppTheme.Dialog.Base" parent="Theme.AppCompat.Light.Dialog">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:textColor">@color/primary_text</item>
+	<style name="ThemeOverlay.Rates.ActionBar" parent="">
+		<item name="android:textColorPrimary">@color/actionbar_text</item>
+		<item name="colorControlNormal">?actionBarIconColor</item>
+		<item name="colorControlHighlight">@color/material_white_highlight</item>
 	</style>
-
-	<style name="AppTheme.Dialog" parent="AppTheme.Dialog.Base">
-		<item name="android:background">@color/dialog_background</item>
-		<item name="android:elevation">8dp</item>
-	</style>
-
-	<style name="AppTheme.Dialog.Caption" parent="TextAppearance.AppCompat.Caption">
-	</style>
-
 
 
 	<!-- Calculator -->
-	<style name="AppTheme.CalculatorPadButton" parent="Widget.AppCompat.Button.Borderless">
+	<style name="Widget.Rates.CalculatorPadButton" parent="Widget.AppCompat.Button.Borderless">
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:gravity">center</item>
@@ -78,23 +93,32 @@
 		<item name="android:textSize">@dimen/calc_button_text_size</item>
 	</style>
 
-	<style name="AppTheme.CalculatorPadButton.Operator" parent="AppTheme.CalculatorPadButton">
+	<style name="Widget.Rates.CalculatorPadButton.Operator"
+		   parent="Widget.Rates.CalculatorPadButton">
 		<item name="android:textColor">@color/calc_button_operator</item>
 	</style>
 
+	<style name="Widget.Rates.EditText" parent="Widget.AppCompat.EditText">
+		<item name="android:background">@drawable/edit_text</item>
+	</style>
 
 
 	<!-- Widget styles -->
 
-	<style name="AppWidget.Base" parent="AppTheme.Base">
+	<style name="Theme.Rates.Widget.Base" parent="FrameworkRoot.Widget">
 		<item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
+
+		<!--<item name="android:popupMenuStyle">@style/Widget.Rates.PopupMenu</item>-->
+		<!--<item name="android:listPopupWindowStyle">@style/Widget.Rates.PopupMenu</item>-->
+		<!--<item name="android:dropDownListViewStyle">@style/Widget.Rates.ListView.DropDown</item>-->
+		<!--<item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.LargePopupMenu</item>-->
 	</style>
 
-	<style name="AppWidget" parent="AppWidget.Base">
+	<style name="Theme.Rates.Widget" parent="Theme.Rates.Widget.Base">
 		<item name="android:colorBackground">@color/widget_background</item>
 	</style>
 
-	<style name="AppWidget.Body" parent="AppWidget.Base">
+	<style name="Theme.Rates.Widget.Body" parent="Theme.Rates.Widget.Base">
 		<item name="android:textColor">@color/widget_text</item>
 		<item name="android:textSize">13sp</item>
 		<item name="android:shadowColor">@color/text_shadow</item>
@@ -103,7 +127,7 @@
 		<item name="android:shadowRadius">2</item>
 	</style>
 
-	<style name="AppWidget.Small" parent="AppWidget.Body">
+	<style name="Theme.Rates.Widget.Small" parent="Theme.Rates.Widget.Body">
 		<item name="android:textSize">10sp</item>
 	</style>
 

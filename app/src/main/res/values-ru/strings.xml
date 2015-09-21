@@ -37,7 +37,7 @@
     <string name="pref_title_debug">Отладка</string>
     <string name="pref_title_device_id">ID устройства</string>
     <string name="pref_title_presentation">Представление данных</string>
-    <string name="action_opinions">Обратная связь</string>
+    <string name="action_idea_suggest">Предложить идею</string>
 
 
 
@@ -191,6 +191,17 @@
     <string name="pref_desc_wifi_only_off">Обновлять при любом подключении к&#160;сети</string>
     <string name="pref_desc_wifi_only_on">Приостановить обновление до&#160;подключения к&#160;WiFi</string>
     <string name="pref_title_updating">Обновление данных</string>
-    <string name="pref_title_wifi_only">Обновлять только через WiFi</string>
+    <string name="pref_title_wifi_only">Только через WiFi</string>
     <string name="tab_rates">Курсы</string>
+    <string name="feedback_like">Пожалуйста, помогите нам улушить это приложение. Это займёт не&#160;более минуты.\n\nВам нравится это приложение?</string>
+    <string name="about_desc_app_logo">Логотип приложения</string>
+    <string name="feedback_like_no">Нет</string>
+    <string name="feedback_like_yes">Да, нравится!</string>
+    <string name="feedback_later">Не сейчас</string>
+    <string name="feedback_support">Вам нужна поддержка? Хотите рассказать, что не так? Нажмите OK для отправки нам сообщения.</string>
+    <string name="feedback_recommendation">Пожалуйста, оставьте в&#160;App Store вашу рекомендацию, чтобы другие люди смогли также оценить это приложение.</string>
+    <string name="feedback_ok">OK</string>
+    <string name="feedback_cancel">Отмена</string>
+    <string name="feedback_submit">Да, конечно!</string>
+    <string name="feedback_chooser_title">Отправить сообщение…</string>
 </resources>

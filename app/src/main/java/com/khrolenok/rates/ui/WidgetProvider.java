@@ -22,19 +22,18 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
+import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.ExRatesGroup;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.Settings;
+import com.khrolenok.rates.util.PreferencesManager;
 import com.khrolenok.rates.util.UpdateService;
 
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -60,6 +59,8 @@ public class WidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
+
+		ExRatesApplication.initPreferences(context);
 
 		// Try to start update service
 		UpdateService.start(context);
@@ -120,25 +121,19 @@ public class WidgetProvider extends AppWidgetProvider {
 				? ( wCells <= 3 ) : ( wCells <= 1 ) );
 		final boolean isShowChange = ( widgetLayout == R.layout.widget_layout_v && wCells >= 2 );
 
-		sIsLongFormat = PreferenceManager.getDefaultSharedPreferences(context)
-				.getBoolean(Settings.Preferences.LONG_FORMAT, false)
+		final PreferencesManager prefs = PreferencesManager.getInstance();
+		sIsLongFormat = prefs.getBoolean(PreferencesManager.PREF_LONG_FORMAT, false)
 				&& ( widgetLayout == R.layout.widget_layout_h && wCells >= 4
 				|| widgetLayout == R.layout.widget_layout_v && wCells >= 2 );
 
-		final SharedPreferences dataCache = context.getApplicationContext()
-				.getSharedPreferences(Settings.PREFS_NAME, Context.MODE_PRIVATE);
-
-		List<String> ratesList;
-		try{
-			ratesList = Arrays.asList(dataCache.getString(Settings.Display.ratesList,
-					Settings.Display.ratesListDefault).split("\\s*,\\s*"));
-		} catch( Exception ignored ){
+		List<String> ratesList = prefs.getStocksList();
+		if( ratesList.isEmpty() ){
 			return new RemoteViews(context.getPackageName(), R.layout.widget_layout_loading);
 		}
 
 		JSONObject ratesJson;
 		try{
-			ratesJson = new JSONObject(dataCache.getString(Settings.Rates.ratesKey, null));
+			ratesJson = new JSONObject(prefs.getStockData());
 		} catch( Exception ignored ){
 			return new RemoteViews(context.getPackageName(), R.layout.widget_layout_loading);
 		}
@@ -201,8 +196,8 @@ public class WidgetProvider extends AppWidgetProvider {
 			updateTS.setTime(groupTS.getTime());
 		}
 
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		final boolean invertColors = prefs.getBoolean(Settings.Preferences.INVERT_COLORS, false);
+		final PreferencesManager prefs = PreferencesManager.getInstance();
+		final boolean invertColors = prefs.getBoolean(PreferencesManager.PREF_INVERT_COLORS, false);
 
 		return exRatesGroup.buildWidgetViews(context, isShowChange, invertColors);
 	}

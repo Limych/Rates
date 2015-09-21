@@ -46,13 +46,11 @@ import trikita.log.Log;
 
 public class MainActivity extends AppCompatActivity {
 
-	static final String STATE_MAIN_VALUE_KEY = "MainActivity$MainValue";
+	private static final String STATE_MAIN_VALUE_KEY = "MainActivity$MainValue";
 
-	private static final String TOOLBAR_TEXTVIEW_FIELD_NAME = "mTitleTextView";
-	private static final String TOOLBAR_NAV_BTN_FIELD_NAME = "mNavButtonView";
+	public AppBarLayout appBarLayout;
 
 	public double mainValue = 1000;
-	public AppBarLayout appBarLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
 		initToolbar();
 		initViewPagerAndTabs();
 		initAdView();
+
+		switch( ExRatesApplication.mode ){
+			case ExRatesApplication.MODE_ABOUT:
+				DialogsManager.showAboutDialog(this);
+				break;
+		}
 	}
 
 	@Override
@@ -91,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
 			case R.id.action_preferences:
 				startActivity(new Intent(this, SettingsActivity.class));
 				return true;
-			case R.id.action_feedback:
+			case R.id.action_idea_suggest:
 				Intent i = new Intent(Intent.ACTION_VIEW);
-				i.setData(Uri.parse(Settings.FEEDBACK_URL));
+				i.setData(Uri.parse(Settings.IDEA_SUGGEST_URL));
 				startActivity(i);
 				break;
 			case R.id.action_about:

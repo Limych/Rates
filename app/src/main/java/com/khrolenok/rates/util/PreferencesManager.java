@@ -22,9 +22,14 @@ import java.util.ArrayList;
 
 public class PreferencesManager {
 
-	public static final String PREF_RATES_LIST = "rates_list";
+	// Public preferences
+	public static final String PREF_STOCKS_LIST = "stocksList";
 	public static final String PREF_INVERT_COLORS = "invert_colors";
 	public static final String PREF_LONG_FORMAT = "long_format";
+	public static final String PREF_WIFI_ONLY = "wifi_only";
+
+	// Private preferences
+	public static final String PREF_STOCKS_DATA = "_stocksData";
 
 	private static PreferencesManager prefsManager;
 	private TinyDB tinyDB;
@@ -41,28 +46,32 @@ public class PreferencesManager {
 		tinyDB = new TinyDB(context);
 	}
 
-	public void addStockSymbolToPrefs(String stockSymbol) {
-		ArrayList<String> stocksList = tinyDB.getListString(PREF_RATES_LIST);
+	public void addStockSymbol(String stockSymbol) {
+		ArrayList<String> stocksList = tinyDB.getListString(PREF_STOCKS_LIST);
 		stocksList.add(stockSymbol);
-		tinyDB.putListString(PREF_RATES_LIST, stocksList);
+		tinyDB.putListString(PREF_STOCKS_LIST, stocksList);
 	}
 
-	public void removeStockSymbolFromPrefs(String stockSymbol) {
-		ArrayList<String> stocksList = tinyDB.getListString(PREF_RATES_LIST);
+	public void removeStockSymbol(String stockSymbol) {
+		ArrayList<String> stocksList = tinyDB.getListString(PREF_STOCKS_LIST);
 		stocksList.remove(stockSymbol);
-		tinyDB.putListString(PREF_RATES_LIST, stocksList);
+		tinyDB.putListString(PREF_STOCKS_LIST, stocksList);
 	}
 
-	public boolean stocksSetContains(String stockSymbol) {
-		ArrayList<String> stocksList = tinyDB.getListString(PREF_RATES_LIST);
+	public boolean stocksListContains(String stockSymbol) {
+		ArrayList<String> stocksList = tinyDB.getListString(PREF_STOCKS_LIST);
 		return stocksList.contains(stockSymbol);
 	}
 
-	public void saveStockList(ArrayList<String> stocksList) {
-		tinyDB.putListString(PREF_RATES_LIST, stocksList);
+	public ArrayList<String> getStocksList() {
+		return tinyDB.getListString(PREF_STOCKS_LIST);
 	}
 
-	public void saveBoolean(String key, boolean value) {
+	public void setStocksList(ArrayList<String> stocksList) {
+		tinyDB.putListString(PREF_STOCKS_LIST, stocksList);
+	}
+
+	public void setBoolean(String key, boolean value) {
 		tinyDB.putBoolean(key, value);
 	}
 
@@ -70,12 +79,12 @@ public class PreferencesManager {
 		return tinyDB.getBoolean(key, defaultValue);
 	}
 
-	public boolean hasBoolean(String key) {
-		return tinyDB.contains(key);
+	public void setStockData(String stocksData) {
+		tinyDB.putString(PREF_STOCKS_DATA, stocksData);
 	}
 
-	public ArrayList<String> getStockList() {
-		return tinyDB.getListString(PREF_RATES_LIST);
+	public String getStockData() {
+		return tinyDB.getString(PREF_STOCKS_DATA);
 	}
 
 	public boolean contains(String key) {

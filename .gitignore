@@ -31,6 +31,7 @@ proguard/
 # Idea workspace
 /.idea/workspace.xml
 /.idea/libraries
+/.idea/shelf
 
 .DS_Store
 /captures

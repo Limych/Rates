@@ -22,7 +22,7 @@
 	android:background="@drawable/widget_background"
 	android:gravity="center"
 	android:padding="@dimen/widget_margin"
-	android:theme="@style/AppWidget">
+    android:theme="@style/Theme.Rates.Widget">
 
 	<ProgressBar
 		android:layout_width="wrap_content"

@@ -20,27 +20,15 @@ package com.khrolenok.rates;
  * Created by Limych on 07.07.2015
  */
 public class Settings {
-	public static final String APP_ID = "com.khrolenok.rates";
-	public static final String TAG = "ExRates";
-
-	public static final String PREFS_NAME = APP_ID;
-	public static final String FEEDBACK_URL = "http://exrates.reformal.ru/";
+	public static final String IDEA_SUGGEST_URL = "http://exrates.reformal.ru/";
 
 	public interface Display {
 		double CHANGES_THRESHOLD = 0.1;    // Percents
-
-		String ratesList = "ratesList";
-
-		String ratesListDefault =
-				"CBR_USD_RUB, CBR_EUR_RUB, STK_USD_RUB, STK_EUR_RUB, FRX_USD_RUB, FRX_EUR_RUB";
 	}
 
 	public interface Rates {
-		String ratesKey = "Rates";
 
 		int reloadDelay = 3 * 60 * 60 * 1000;  // every 3 hours
-
-		String sourceUrl = "http://khrolenok.ru/tools/exchange_rates.php";
 
 		interface Groups {
 			String OFFICIAL = "CBR";
@@ -59,11 +47,5 @@ public class Settings {
 			int HIGH_BID = 7;
 			int LOW_BID = 8;
 		}
-	}
-
-	public interface Preferences {
-		String INVERT_COLORS = "invert_colors";
-		String LONG_FORMAT = "long_format";
-		String WIFI_ONLY = "wifi_only";
 	}
 }

@@ -18,16 +18,19 @@ package com.khrolenok.rates;
 
 import android.app.Application;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
 import android.provider.Settings;
 
+import com.khrolenok.rates.util.PreferencesManager;
 import com.khrolenok.rates.util.StockNames;
 import com.khrolenok.rates.util.UpdateService;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import trikita.log.Log;
@@ -44,6 +47,11 @@ public class ExRatesApplication extends Application {
 	public static boolean isTestDevice = false;
 
 	public static boolean isShowAds = BuildConfig.SHOW_ADS;
+
+	public static final int MODE_RATES = 0;
+	public static final int MODE_ABOUT = 1;
+
+	public static int mode = MODE_RATES;
 
 	@Override
 	public void onCreate() {
@@ -65,6 +73,9 @@ public class ExRatesApplication extends Application {
 						.setFontAttrId(R.attr.fontPath)
 						.build()
 		);
+
+		initPreferences(getApplicationContext());
+
 		StockNames.getInstance().init(getApplicationContext());
 
 		deviceId = getDeviceID();
@@ -77,6 +88,20 @@ public class ExRatesApplication extends Application {
 
 		// Try to start update service
 		UpdateService.start(getApplicationContext());
+	}
+
+	public static void initPreferences(Context context) {
+		PreferencesManager.getInstance().init(context);
+		if (!PreferencesManager.getInstance().contains(PreferencesManager.PREF_STOCKS_LIST)) {
+			ArrayList<String> stocksList = new ArrayList<String>();
+			stocksList.add("CBR_USD_RUB");
+			stocksList.add("CBR_EUR_RUB");
+			stocksList.add("STK_USD_RUB");
+			stocksList.add("STK_EUR_RUB");
+			stocksList.add("FRX_USD_RUB");
+			stocksList.add("FRX_EUR_RUB");
+			PreferencesManager.getInstance().setStocksList(stocksList);
+		}
 	}
 
 	public String getDeviceID() {

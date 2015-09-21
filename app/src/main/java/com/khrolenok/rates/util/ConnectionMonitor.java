@@ -20,14 +20,11 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
 
 import com.khrolenok.rates.BuildConfig;
-import com.khrolenok.rates.Settings;
 
 import trikita.log.Log;
 
@@ -61,8 +58,8 @@ public class ConnectionMonitor extends BroadcastReceiver {
 	}
 
 	public static boolean isNetworkAvailable(Context context) {
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		return isNetworkAvailable(context, prefs.getBoolean(Settings.Preferences.WIFI_ONLY, false));
+		final PreferencesManager prefs = PreferencesManager.getInstance();
+		return isNetworkAvailable(context, prefs.getBoolean(PreferencesManager.PREF_WIFI_ONLY, false));
 	}
 
 	public static boolean isNetworkAvailable(Context context, boolean testForWiFi) {

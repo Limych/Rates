@@ -21,12 +21,11 @@
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:gravity="end"
-	android:theme="@style/AppTheme.Widget.ListItem"
 	tools:context="com.khrolenok.rates.ui.MainActivity">
 
 	<TextView
 		android:id="@+id/updateTimestamp"
-		style="@style/AppTheme.Widget.ListItem.Small"
+		style="@style/Widget.Rates.ListItem.Small"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="end"

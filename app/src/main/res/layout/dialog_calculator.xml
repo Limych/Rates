@@ -16,24 +16,24 @@
   -->
 
 <RelativeLayout
-	style="@style/AppTheme.Dialog"
+	style="@style/Theme.Rates.Dialog"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:orientation="vertical"
-	android:theme="@style/AppTheme.Dialog.Base">
+	android:theme="@style/Theme.Rates.Dialog">
 
 	<TextView
 		android:id="@+id/title"
-		style="@style/AppTheme.Dialog.Caption"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentStart="true"
 		android:layout_marginLeft="@dimen/calc_layout_padding"
 		android:layout_marginRight="@dimen/calc_layout_padding"
 		android:layout_marginTop="@dimen/calc_layout_padding"
-		android:text="Title"/>
+		android:text="Title"
+		android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
 
 	<android.support.v7.widget.CardView
 		android:id="@+id/expressionCardView"
@@ -76,25 +76,25 @@
 
 		<Button
 			android:id="@+id/digit_7"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/digit_8"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/digit_9"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/paren"
-			style="@style/AppTheme.CalculatorPadButton.Operator"
+			style="@style/Widget.Rates.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_paren"
 			android:text="@string/calc_paren"/>
 
 		<ImageButton
 			android:id="@+id/del"
-			style="@style/AppTheme.CalculatorPadButton.Operator"
+			style="@style/Widget.Rates.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_del"
 			android:longClickable="true"
 			android:src="@android:drawable/ic_input_delete"
@@ -102,73 +102,73 @@
 
 		<Button
 			android:id="@+id/digit_4"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/digit_5"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/digit_6"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/op_mul"
-			style="@style/AppTheme.CalculatorPadButton.Operator"
+			style="@style/Widget.Rates.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_mul"
 			android:text="@string/calc_op_mul"/>
 
 		<Button
 			android:id="@+id/op_div"
-			style="@style/AppTheme.CalculatorPadButton.Operator"
+			style="@style/Widget.Rates.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_div"
 			android:text="@string/calc_op_div"/>
 
 		<Button
 			android:id="@+id/digit_1"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/digit_2"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/digit_3"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/op_add"
-			style="@style/AppTheme.CalculatorPadButton.Operator"
+			style="@style/Widget.Rates.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_add"
 			android:text="@string/calc_op_add"/>
 
 		<Button
 			android:id="@+id/op_sub"
-			style="@style/AppTheme.CalculatorPadButton.Operator"
+			style="@style/Widget.Rates.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_sub"
 			android:text="@string/calc_op_sub"/>
 
 		<Button
 			android:id="@+id/digit_0"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/digit_00"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/dec_point"
-			style="@style/AppTheme.CalculatorPadButton"/>
+			style="@style/Widget.Rates.CalculatorPadButton"/>
 
 		<Button
 			android:id="@+id/op_perc"
-			style="@style/AppTheme.CalculatorPadButton.Operator"
+			style="@style/Widget.Rates.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_perc"
 			android:text="@string/calc_op_perc"/>
 
 		<ImageButton
 			android:id="@+id/set"
-			style="@style/AppTheme.CalculatorPadButton.Operator"
+			style="@style/Widget.Rates.CalculatorPadButton.Operator"
 			android:contentDescription="@string/desc_del"
 			android:src="@drawable/ic_done"/>
 

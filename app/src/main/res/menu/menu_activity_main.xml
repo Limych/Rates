@@ -26,10 +26,10 @@
 		app:showAsAction="never"/>
 
 	<item
-		android:id="@+id/action_feedback"
-		android:icon="@drawable/ic_menu_feedback"
+		android:id="@+id/action_idea_suggest"
+		android:icon="@drawable/ic_action_idea_suggest"
 		android:orderInCategory="101"
-		android:title="@string/action_opinions"
+		android:title="@string/action_idea_suggest"
 		app:showAsAction="ifRoom"/>
 
 	<item

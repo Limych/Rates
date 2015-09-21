@@ -299,5 +299,6 @@
 	<color name="material_black">#FF000000</color>
 	<color name="material_white">#FFFFFFFF</color>
 	<color name="material_black_disabled">#80000000</color>
+	<color name="material_white_highlight">#33FFFFFF</color>
 
 </resources>
