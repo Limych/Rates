@@ -44,7 +44,7 @@ public class ConnectionMonitor extends BroadcastReceiver {
 			if( BuildConfig.DEBUG ) Log.d("Network connection detected");
 
 			// Restart update service
-			UpdateService.start(context);
+			UpdateService.notifyUpdateNeeded(context);
 		}
 	}
 

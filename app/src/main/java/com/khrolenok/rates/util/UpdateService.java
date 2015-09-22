@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 import trikita.log.Log;
 
@@ -41,23 +42,26 @@ import trikita.log.Log;
  */
 public class UpdateService extends IntentService {
 
-	protected static long restartTime;
-
 	public UpdateService() {
 		super(UpdateService.class.getName());
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		if( System.currentTimeMillis() < restartTime ) return;
+		final PreferencesManager prefs = PreferencesManager.getInstance();
+		final long restartTime = prefs.getUpdateTime();
+		if( System.currentTimeMillis() < restartTime ){
+			if( BuildConfig.DEBUG ){
+				Log.v("Update suspended until " + new Date(restartTime).toString());
+			}
+			return;
+		}
 
 		if( BuildConfig.DEBUG ) Log.v("Update service started");
 
 		if( !ConnectionMonitor.isNetworkAvailable(getBaseContext()) ){
 			if( BuildConfig.DEBUG ) Log.v("Update suspended until network available");
-
 			ConnectionMonitor.setEnabledSetting(this, PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
-
 			return;
 		}
 
@@ -69,12 +73,16 @@ public class UpdateService extends IntentService {
 		scheduleRestart(this, Settings.Rates.reloadDelay);
 	}
 
-	public static void start(Context context) {
+	public static void notifyUpdateNeeded(Context context) {
 		context.startService(new Intent(context, UpdateService.class));
 	}
 
-	public static void scheduleRestart(Context context, int timeLag) {
-		restartTime = System.currentTimeMillis() + timeLag;
+	private static void scheduleRestart(Context context, int timeLag) {
+		final long restartTime = System.currentTimeMillis() + timeLag;
+
+		final PreferencesManager prefs = PreferencesManager.getInstance();
+		prefs.setUpdateTime(restartTime);
+
 		final AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 		alarm.set(
 				AlarmManager.RTC_WAKEUP,
@@ -87,7 +95,7 @@ public class UpdateService extends IntentService {
 		InputStream inputStream = null;
 		String json = null;
 		try{
-			URL url = new URL(BuildConfig.HOST_SERVICE_URL);
+			URL url = new URL(BuildConfig.API_ENDPOINT);
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 			urlConnection.setRequestProperty("Accept", "application/json");
 			try{

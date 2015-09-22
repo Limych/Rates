@@ -30,6 +30,7 @@ public class PreferencesManager {
 
 	// Private preferences
 	public static final String PREF_STOCKS_DATA = "_stocksData";
+	public static final String PREF_UPDATE_TIME = "_updateTime";
 
 	private static PreferencesManager prefsManager;
 	private TinyDB tinyDB;
@@ -44,6 +45,10 @@ public class PreferencesManager {
 
 	public void init(Context context) {
 		tinyDB = new TinyDB(context);
+	}
+
+	public boolean contains(String key) {
+		return tinyDB.contains(key);
 	}
 
 	public void addStockSymbol(String stockSymbol) {
@@ -87,7 +92,11 @@ public class PreferencesManager {
 		return tinyDB.getString(PREF_STOCKS_DATA);
 	}
 
-	public boolean contains(String key) {
-		return tinyDB.contains(key);
+	public void setUpdateTime(long value) {
+		tinyDB.putLong(PREF_UPDATE_TIME, value);
+	}
+
+	public long getUpdateTime() {
+		return tinyDB.getLong(PREF_UPDATE_TIME, 0);
 	}
 }

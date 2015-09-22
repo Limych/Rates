@@ -63,7 +63,7 @@ public class WidgetProvider extends AppWidgetProvider {
 		ExRatesApplication.initPreferences(context);
 
 		// Try to start update service
-		UpdateService.start(context);
+		UpdateService.notifyUpdateNeeded(context);
 	}
 
 	@Override

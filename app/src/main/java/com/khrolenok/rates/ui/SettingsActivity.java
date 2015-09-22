@@ -21,7 +21,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -42,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		((TabLayout) findViewById(R.id.tabLayout)).setVisibility(View.GONE);
+		findViewById(R.id.tabLayout).setVisibility(View.GONE);
 
 		if( savedInstanceState == null ){
 			getFragmentManager().beginTransaction()
@@ -92,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
 			WidgetProvider.notifyUpdateNeeded(context);
 
 			// Try to restart update service
-			UpdateService.start(context);
+			UpdateService.notifyUpdateNeeded(context);
 		}
 	}
 

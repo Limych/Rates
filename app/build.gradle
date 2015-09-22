@@ -66,7 +66,7 @@ android {
         def FALSE = "false"
 
         all {
-            buildConfigField "String", "HOST_SERVICE_URL", project["HOST_SERVICE_URL"]
+            buildConfigField "String", "API_ENDPOINT", project["API_ENDPOINT"]
             buildConfigField "String", "SUPPORT_EMAIL", project["SUPPORT_EMAIL"]
         }
 
@@ -151,9 +151,6 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'     // Required for com.nhaarman.listviewanimations
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
     compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0@aar'
-    compile 'com.squareup.retrofit:retrofit:2.+'
-    compile 'com.squareup.retrofit:converter-gson:2.+'
-    compile 'com.squareup.okhttp:okhttp:2.+'
 //    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
 //    compile 'com.github.PhilJay:MPAndroidChart:v2.1.3'
 //    compile 'com.daimajia.easing:library:1.0.1@aar'

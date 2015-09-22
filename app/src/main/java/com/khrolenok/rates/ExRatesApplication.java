@@ -87,13 +87,13 @@ public class ExRatesApplication extends Application {
 		if( BuildConfig.DEBUG && isTestDevice ) Log.v("Test device detected");
 
 		// Try to start update service
-		UpdateService.start(getApplicationContext());
+		UpdateService.notifyUpdateNeeded(getApplicationContext());
 	}
 
 	public static void initPreferences(Context context) {
 		PreferencesManager.getInstance().init(context);
 		if (!PreferencesManager.getInstance().contains(PreferencesManager.PREF_STOCKS_LIST)) {
-			ArrayList<String> stocksList = new ArrayList<String>();
+			ArrayList<String> stocksList = new ArrayList<>();
 			stocksList.add("CBR_USD_RUB");
 			stocksList.add("CBR_EUR_RUB");
 			stocksList.add("STK_USD_RUB");
