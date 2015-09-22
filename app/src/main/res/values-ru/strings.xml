@@ -26,7 +26,7 @@
     <string name="pref_desc_normal_colors">Зелёный для&#160;роста цен. Красный для&#160;падения цен</string>
     <string name="pref_desc_invert_colors">Красный для&#160;роста цен. Зелёный для&#160;падения цен</string>
     <string name="error_in_expression">Ошибка в&#160;выражении</string>
-    <string name="no_internet_connection">Нет соединения с&#160;интернет</string>
+    <string name="no_internet_connection">Нет соединения с&#160;интернетом</string>
     <string name="desc_add">Плюс</string>
     <string name="desc_del">Удалить</string>
     <string name="desc_div">Разделить</string>
@@ -204,4 +204,5 @@
     <string name="feedback_cancel">Отмена</string>
     <string name="feedback_submit">Да, конечно!</string>
     <string name="feedback_chooser_title">Отправить сообщение…</string>
+    <string name="update_loaded">Данные обновлены</string>
 </resources>

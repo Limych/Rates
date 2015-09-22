@@ -17,6 +17,7 @@
 package com.khrolenok.rates.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -88,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 			final Context context = getActivity();
 
-			WidgetProvider.notifyUpdateNeeded(context);
+			context.sendBroadcast(new Intent(ExRatesApplication.ACTION_STOCKS_UPDATE));
 
 			// Try to restart update service
 			UpdateService.notifyUpdateNeeded(context);

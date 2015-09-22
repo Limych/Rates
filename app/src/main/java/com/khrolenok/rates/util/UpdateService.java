@@ -24,8 +24,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import com.khrolenok.rates.BuildConfig;
+import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.Settings;
-import com.khrolenok.rates.ui.WidgetProvider;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -42,6 +42,8 @@ import trikita.log.Log;
  */
 public class UpdateService extends IntentService {
 
+	private static final String FORCE_UPDATE = "com.khrolenok.rates.util.UpdateService.FORCE_UPDATE";
+
 	public UpdateService() {
 		super(UpdateService.class.getName());
 	}
@@ -50,7 +52,8 @@ public class UpdateService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		final PreferencesManager prefs = PreferencesManager.getInstance();
 		final long restartTime = prefs.getUpdateTime();
-		if( System.currentTimeMillis() < restartTime ){
+		if( System.currentTimeMillis() < restartTime
+				&& !intent.getBooleanExtra(FORCE_UPDATE, false) ){
 			if( BuildConfig.DEBUG ){
 				Log.v("Update suspended until " + new Date(restartTime).toString());
 			}
@@ -62,6 +65,7 @@ public class UpdateService extends IntentService {
 		if( !ConnectionMonitor.isNetworkAvailable(getBaseContext()) ){
 			if( BuildConfig.DEBUG ) Log.v("Update suspended until network available");
 			ConnectionMonitor.setEnabledSetting(this, PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+			sendBroadcast(new Intent(ExRatesApplication.ERROR_NO_CONNECTION));
 			return;
 		}
 
@@ -75,6 +79,10 @@ public class UpdateService extends IntentService {
 
 	public static void notifyUpdateNeeded(Context context) {
 		context.startService(new Intent(context, UpdateService.class));
+	}
+
+	public static void forceUpdate(Context context) {
+		context.startService(new Intent(context, UpdateService.class).putExtra(FORCE_UPDATE, true));
 	}
 
 	private static void scheduleRestart(Context context, int timeLag) {
@@ -130,8 +138,7 @@ public class UpdateService extends IntentService {
 			final PreferencesManager prefs = PreferencesManager.getInstance();
 			prefs.setStockData(json);
 
-			WidgetProvider.notifyUpdateNeeded(this);
-			// TODO: 14.09.2015 Make activity direct updating
+			sendBroadcast(new Intent(ExRatesApplication.ACTION_STOCKS_UPDATE));
 		}
 	}
 }

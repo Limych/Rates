@@ -17,7 +17,10 @@
 package com.khrolenok.rates.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -30,12 +33,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.khrolenok.rates.BuildConfig;
 import com.khrolenok.rates.ExRate;
+import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.ExRatesGroup;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.controller.StockItemsAdapter;
 import com.khrolenok.rates.model.StockItem;
 import com.khrolenok.rates.util.PreferencesManager;
+import com.khrolenok.rates.util.UpdateService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,24 +55,40 @@ import java.util.List;
 public class RatesFragment extends Fragment
 		implements SwipeRefreshLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener {
 
+	private BroadcastReceiver mBroadcastReceiver;
+
 	private RecyclerView mRatesListView;
 
 	private StockItemsAdapter mStockItemsAdapter;
-	private SwipeRefreshLayout srQuotesRefresher;
+	private SwipeRefreshLayout mQuotesRefresher;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View rootView = inflater.inflate(R.layout.fragment_rates, container, false);
 
-		srQuotesRefresher = (SwipeRefreshLayout) rootView.findViewById(R.id.srQuotesRefresher);
-		srQuotesRefresher.setOnRefreshListener(this);
+		mQuotesRefresher = (SwipeRefreshLayout) rootView.findViewById(R.id.srQuotesRefresher);
+		mQuotesRefresher.setOnRefreshListener(this);
+
+		mBroadcastReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				mQuotesRefresher.setRefreshing(false);
+				if( intent.getAction().equals(ExRatesApplication.ACTION_STOCKS_UPDATE) ){
+					Toast.makeText(context, R.string.update_loaded, Toast.LENGTH_SHORT).show();
+					populateRatesListView();
+
+				} else if( intent.getAction().equals(ExRatesApplication.ERROR_NO_CONNECTION) ){
+					Toast.makeText(context, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+				}
+			}
+		};
 
 		return rootView;
 	}
 
 	@Override
 	public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-		srQuotesRefresher.setEnabled(( i == 0 ));
+		mQuotesRefresher.setEnabled(( i == 0 ));
 	}
 
 	@Override
@@ -74,7 +96,13 @@ public class RatesFragment extends Fragment
 		super.onResume();
 
 		populateRatesListView();
+
 		( (MainActivity) getActivity() ).appBarLayout.addOnOffsetChangedListener(this);
+
+		final IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(ExRatesApplication.ACTION_STOCKS_UPDATE);
+		intentFilter.addAction(ExRatesApplication.ERROR_NO_CONNECTION);
+		getActivity().registerReceiver(mBroadcastReceiver, intentFilter);
 	}
 
 	@Override
@@ -82,37 +110,36 @@ public class RatesFragment extends Fragment
 		super.onPause();
 
 		( (MainActivity) getActivity() ).appBarLayout.removeOnOffsetChangedListener(this);
+		getActivity().unregisterReceiver(mBroadcastReceiver);
 	}
 
 	private void populateRatesListView() {
-//		srQuotesRefresher.setRefreshing(false);
-
 		if( mRatesListView == null ){
 			mRatesListView = (RecyclerView) getActivity().findViewById(R.id.stockRatesList);
 			mRatesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-			final PreferencesManager prefs = PreferencesManager.getInstance();
-			List<String> ratesList = prefs.getStocksList();
-			if( ratesList.isEmpty() ) return;
-
-			JSONObject ratesJson;
-			try{
-				ratesJson = new JSONObject(prefs.getStockData());
-			} catch( JSONException ignored ){
-				return;
-			}
-
-			final ExRatesGroup exRatesGroup = new ExRatesGroup("", ratesList, ratesJson);
-
-			if( mStockItemsAdapter == null ){
-				mStockItemsAdapter = new StockItemsAdapter(getActivity(),
-						fromExRates(exRatesGroup.exRates), this);
-			} else {
-				mStockItemsAdapter.setStockItems(fromExRates(exRatesGroup.exRates));
-				mStockItemsAdapter.notifyDataSetChanged();
-			}
-			mRatesListView.setAdapter(mStockItemsAdapter);
 		}
+
+		final PreferencesManager prefs = PreferencesManager.getInstance();
+		List<String> ratesList = prefs.getStocksList();
+		if( ratesList.isEmpty() ) return;
+
+		JSONObject ratesJson;
+		try{
+			ratesJson = new JSONObject(prefs.getStockData());
+		} catch( JSONException ignored ){
+			return;
+		}
+
+		final ExRatesGroup exRatesGroup = new ExRatesGroup("", ratesList, ratesJson);
+
+		if( mStockItemsAdapter == null ){
+			mStockItemsAdapter = new StockItemsAdapter(getActivity(),
+					fromExRates(exRatesGroup.exRates), this);
+		} else {
+			mStockItemsAdapter.setStockItems(fromExRates(exRatesGroup.exRates));
+			mStockItemsAdapter.notifyDataSetChanged();
+		}
+		mRatesListView.setAdapter(mStockItemsAdapter);
 	}
 
 	public List<StockItem> fromExRates(List<ExRate> exRates) {
@@ -180,10 +207,12 @@ public class RatesFragment extends Fragment
 
 	@Override
 	public void onRefresh() {
-		// TODO: 15.09.2015 Make force update
-		srQuotesRefresher.setRefreshing(false);
-		Toast.makeText(getActivity(), R.string.force_update_na, Toast.LENGTH_SHORT).show();
+		if( BuildConfig.DEBUG ){
+			UpdateService.forceUpdate(getActivity());
 
-		if( mRatesListView != null ) populateRatesListView();
+		} else {
+			mQuotesRefresher.setRefreshing(false);
+			Toast.makeText(getActivity(), R.string.force_update_na, Toast.LENGTH_SHORT).show();
+		}
 	}
 }

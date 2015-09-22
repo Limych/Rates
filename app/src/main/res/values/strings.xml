@@ -24,11 +24,12 @@
 	<string name="title_stock">Stock</string>
 
 	<string name="text_updated">Updated:</string>
-	<string name="no_internet_connection">No internet connection</string>
 
 	<string name="desc_calculator">Calculator</string>
 
 	<string name="force_update_na">Force update is not yet available</string>
+	<string name="update_loaded">The data are updated</string>
+	<string name="no_internet_connection">No internet connection</string>
 
 
 	<!-- Toolbar actions -->

@@ -23,6 +23,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
 import com.khrolenok.rates.ExRatesApplication;
@@ -42,19 +43,20 @@ import java.util.List;
  * Implementation of App Widget functionality.
  */
 public class WidgetProvider extends AppWidgetProvider {
+
 	protected static boolean sIsLongFormat;
-
-	public static void notifyUpdateNeeded(Context context) {
-		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		final int[] widgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
-
-		appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, android.R.id.list);
-
-		final Intent update = new Intent(context.getApplicationContext(), WidgetProvider.class);
-		update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
-		update.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-		context.sendBroadcast(update);
-	}
+//
+//	public static void notifyUpdateNeeded(Context context) {
+//		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+//		final int[] widgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
+//
+//		appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, android.R.id.list);
+//
+//		final Intent update = new Intent(context.getApplicationContext(), WidgetProvider.class);
+//		update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
+//		update.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+//		context.sendBroadcast(update);
+//	}
 
 	@Override
 	public void onEnabled(Context context) {
@@ -81,9 +83,21 @@ public class WidgetProvider extends AppWidgetProvider {
 	                                      int appWidgetId, Bundle newOptions) {
 		// Instruct the widget manager to update the widget
 		appWidgetManager.updateAppWidget(appWidgetId,
-				buildLayout(context, appWidgetManager, appWidgetId, newOptions));
+				buildLayout(context, newOptions));
 
 		super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+	}
+
+	@Override
+	public void onReceive(@NonNull Context context, @NonNull Intent intent) {
+		if( intent.getAction().equals(ExRatesApplication.ACTION_STOCKS_UPDATE) ){
+			final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+			final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
+
+			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, android.R.id.list);
+			return;
+		}
+		super.onReceive(context, intent);
 	}
 
 	/**
@@ -104,13 +118,10 @@ public class WidgetProvider extends AppWidgetProvider {
 	 * Returns layout for widget.
 	 *
 	 * @param context          Application mContext
-	 * @param appWidgetManager Widget manager
-	 * @param appWidgetId      Widget ID
 	 * @param options          Widget options
 	 * @return Widget layout
 	 */
-	public static RemoteViews buildLayout(Context context, AppWidgetManager appWidgetManager,
-	                                      int appWidgetId, Bundle options) {
+	public static RemoteViews buildLayout(Context context, Bundle options) {
 		final int widgetMinWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
 		final int widgetMinHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
 		final int wCells = getCellsForSize(widgetMinWidth);

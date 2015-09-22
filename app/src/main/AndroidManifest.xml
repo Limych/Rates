@@ -50,8 +50,12 @@
 		<service android:name=".util.UpdateService"/>
 
 		<receiver android:name=".ui.WidgetProvider">
+
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+			</intent-filter>
+			<intent-filter>
+				<action android:name="com.khrolenok.rates.action.STOCKS_UPDATE"/>
 			</intent-filter>
 
 			<meta-data
@@ -59,7 +63,9 @@
 				android:resource="@xml/widget_info"/>
 		</receiver>
 
-		<receiver android:name=".util.ConnectionMonitor" android:enabled="false">
+		<receiver
+			android:name=".util.ConnectionMonitor"
+			android:enabled="false">
 			<intent-filter>
 				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
 			</intent-filter>

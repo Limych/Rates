@@ -53,6 +53,9 @@ public class ExRatesApplication extends Application {
 
 	public static int mode = MODE_RATES;
 
+	static final public String ACTION_STOCKS_UPDATE = "com.khrolenok.rates.action.STOCKS_UPDATE";
+	static final public String ERROR_NO_CONNECTION = "com.khrolenok.rates.conn.NO_CONNECTION";
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
