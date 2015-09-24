@@ -47,13 +47,13 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/about_version"
-			android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+			style="@style/Theme.Rates.Dialog.Small"/>
 
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="8dp"
 			android:text="@string/about_copyright"
-			android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+			style="@style/Theme.Rates.Dialog.Small"/>
 	</LinearLayout>
 </LinearLayout>

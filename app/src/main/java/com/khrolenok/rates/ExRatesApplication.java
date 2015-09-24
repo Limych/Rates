@@ -23,6 +23,12 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.provider.Settings;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.StandardExceptionParser;
+import com.google.android.gms.analytics.Tracker;
+import com.khrolenok.rates.util.AnalyticsTrackers;
+import com.khrolenok.rates.util.ConnectionMonitor;
 import com.khrolenok.rates.util.PreferencesManager;
 import com.khrolenok.rates.util.StockNames;
 import com.khrolenok.rates.util.UpdateService;
@@ -40,6 +46,8 @@ import trikita.log.Log;
  */
 public class ExRatesApplication extends Application {
 
+	private static ExRatesApplication mInstance;
+
 	public static String deviceId;
 	public static boolean isTestDevice = false;
 
@@ -53,9 +61,14 @@ public class ExRatesApplication extends Application {
 	static final public String ACTION_STOCKS_UPDATE = "com.khrolenok.rates.action.STOCKS_UPDATE";
 	static final public String ERROR_NO_CONNECTION = "com.khrolenok.rates.conn.NO_CONNECTION";
 
+	public static synchronized ExRatesApplication getInstance() {
+		return mInstance;
+	}
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		mInstance = this;
 
 		if( BuildConfig.DEBUG && BuildConfig.STRICT_MODE ){
 			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -66,6 +79,11 @@ public class ExRatesApplication extends Application {
 			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll()
 					.penaltyLog()
 					.build());
+		}
+
+		if( BuildConfig.GOOGLE_ANALYTICS ){
+			AnalyticsTrackers.initialize(this);
+			AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
 		}
 
 		initPreferences(getApplicationContext());
@@ -86,7 +104,7 @@ public class ExRatesApplication extends Application {
 
 	public static void initPreferences(Context context) {
 		PreferencesManager.getInstance().init(context);
-		if (!PreferencesManager.getInstance().contains(PreferencesManager.PREF_STOCKS_LIST)) {
+		if( !PreferencesManager.getInstance().contains(PreferencesManager.PREF_STOCKS_LIST) ){
 			ArrayList<String> stocksList = new ArrayList<>();
 			stocksList.add("CBR_USD_RUB");
 			stocksList.add("CBR_EUR_RUB");
@@ -120,5 +138,126 @@ public class ExRatesApplication extends Application {
 		}
 
 		return null;
+	}
+
+	public synchronized Tracker getAnalyticsTracker() {
+		return AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
+	}
+
+	/***
+	 * Tracking screen view
+	 *
+	 * @param screenName screen name to be displayed on GA dashboard
+	 */
+	public void trackScreenView(String screenName) {
+		if( !BuildConfig.GOOGLE_ANALYTICS ) return;
+
+		final Tracker t = getAnalyticsTracker();
+
+		// Set screen name.
+		t.setScreenName(screenName);
+
+		// Send a screen view.
+		t.send(new HitBuilders.ScreenViewBuilder().build());
+
+		if( ConnectionMonitor.isNetworkAvailable(this) ){
+			GoogleAnalytics.getInstance(this).dispatchLocalHits();
+		}
+	}
+
+	/***
+	 * Tracking exception
+	 *
+	 * @param e exception to be tracked
+	 */
+	public void trackException(Exception e) {
+		if( !BuildConfig.GOOGLE_ANALYTICS ) return;
+
+		if( e != null ){
+			final Tracker t = getAnalyticsTracker();
+
+			t.send(new HitBuilders.ExceptionBuilder()
+							.setDescription(
+									new StandardExceptionParser(this, null)
+											.getDescription(Thread.currentThread().getName(), e))
+							.setFatal(false)
+							.build()
+			);
+		}
+	}
+
+	/***
+	 * Tracking event
+	 *
+	 * @param category event category
+	 * @param action   action of the event
+	 */
+	public void trackEvent(String category, String action) {
+		trackEvent(category, action, null);
+	}
+
+	/***
+	 * Tracking event
+	 *
+	 * @param category event category
+	 * @param action   action of the event
+	 * @param label    label
+	 */
+	public void trackEvent(String category, String action, String label) {
+		if( !BuildConfig.GOOGLE_ANALYTICS ) return;
+
+		final Tracker t = getAnalyticsTracker();
+
+		// Build an Event
+		final HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
+				.setCategory(category).setAction(action);
+		if( label != null ) eventBuilder.setLabel(label);
+
+		// Send an Event
+		t.send(eventBuilder.build());
+	}
+
+	/***
+	 * Tracking timing
+	 *
+	 * @param category category of the timed event
+	 * @param timing   timing measurement (ms)
+	 */
+	public void trackTiming(String category, long timing) {
+		trackTiming(category, timing, null, null);
+	}
+
+	/***
+	 * Tracking timing
+	 *
+	 * @param category category of the timed event
+	 * @param timing   timing measurement (ms)
+	 * @param name     name of the timed event
+	 */
+	public void trackTiming(String category, long timing, String name) {
+		trackTiming(category, timing, name, null);
+	}
+
+	/***
+	 * Tracking timing
+	 *
+	 * @param category category of the timed event
+	 * @param timing   timing measurement (ms)
+	 * @param name     name of the timed event
+	 * @param label    label of the timed event
+	 */
+	public void trackTiming(String category, long timing, String name, String label) {
+		if( !BuildConfig.GOOGLE_ANALYTICS ) return;
+
+		final Tracker t = getAnalyticsTracker();
+
+		// Build an Event
+		final HitBuilders.TimingBuilder timingBuilder = new HitBuilders.TimingBuilder()
+				.setCategory(category).setValue(timing);
+		if( name != null ) timingBuilder.setVariable(name);
+		if( label != null ) timingBuilder.setLabel(label);
+
+		// Send an Event
+		t.send(timingBuilder.build());
 	}
 }

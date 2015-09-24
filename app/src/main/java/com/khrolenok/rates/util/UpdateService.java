@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.khrolenok.rates.BuildConfig;
 import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.Settings;
@@ -72,6 +73,9 @@ public class UpdateService extends IntentService {
 		ConnectionMonitor.setEnabledSetting(this, PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
 
 		downloadUpdate();
+		if( BuildConfig.GOOGLE_ANALYTICS ){
+			GoogleAnalytics.getInstance(getApplicationContext()).dispatchLocalHits();
+		}
 
 		// I want to restart this service again
 		scheduleRestart(this, Settings.Rates.reloadDelay);
@@ -103,6 +107,7 @@ public class UpdateService extends IntentService {
 		InputStream inputStream = null;
 		String json = null;
 		try{
+			final long startTime = System.currentTimeMillis();
 			URL url = new URL(BuildConfig.API_ENDPOINT);
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 			urlConnection.setRequestProperty("Accept", "application/json");
@@ -122,7 +127,13 @@ public class UpdateService extends IntentService {
 				urlConnection.disconnect();
 			}
 
+			// Track update timing
+			ExRatesApplication.getInstance().trackTiming("Update", System.currentTimeMillis() - startTime);
+
 		} catch( Exception e ){
+			// Tracking exception
+			ExRatesApplication.getInstance().trackException(e);
+
 			if( BuildConfig.DEBUG ) Log.d(e.getStackTrace());
 
 		} finally {

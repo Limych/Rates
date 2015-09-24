@@ -61,7 +61,7 @@ public class AppStore {
 		return OTHER;
 	}
 
-	public static void openMarket(Context context, int market) {
+	public static void openStore(Context context, int market) {
 		switch( market ){
 			case GOOGLE_PLAY:
 				final String packageName = context.getPackageName();

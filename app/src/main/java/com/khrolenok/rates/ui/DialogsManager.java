@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.khrolenok.rates.util;
+package com.khrolenok.rates.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;

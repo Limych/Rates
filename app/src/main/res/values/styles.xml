@@ -72,6 +72,8 @@
 
 	<style name="Theme.Rates.Dialog" parent="Theme.AppCompat.Light.Dialog"/>
 
+	<style name="Theme.Rates.Dialog.Small" parent="TextAppearance.AppCompat.Caption"/>
+
 	<style name="ThemeOverlay.Rates.ActionBar" parent="">
 		<item name="android:textColorPrimary">@color/actionbar_text</item>
 		<item name="colorControlNormal">?actionBarIconColor</item>

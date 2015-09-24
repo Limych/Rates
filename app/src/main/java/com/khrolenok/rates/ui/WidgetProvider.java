@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
+import com.khrolenok.rates.BuildConfig;
 import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.ExRatesGroup;
 import com.khrolenok.rates.R;
@@ -37,6 +38,8 @@ import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.List;
+
+import trikita.log.Log;
 
 
 /**
@@ -58,6 +61,9 @@ public class WidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+		// Track widgets count
+		ExRatesApplication.getInstance().trackEvent("Widget", "Count", "" + appWidgetIds.length);
+
 		// There may be multiple widgets active, so update all of them
 		for( int appWidgetId : appWidgetIds ) {
 			final Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
@@ -71,7 +77,7 @@ public class WidgetProvider extends AppWidgetProvider {
 	                                      int appWidgetId, Bundle newOptions) {
 		// Instruct the widget manager to update the widget
 		appWidgetManager.updateAppWidget(appWidgetId,
-				buildLayout(context, newOptions));
+				buildLayout(context, appWidgetId, newOptions));
 
 		super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
 	}
@@ -82,7 +88,7 @@ public class WidgetProvider extends AppWidgetProvider {
 			final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 			final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
 
-			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, android.R.id.list);
+			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget);
 			return;
 		}
 		super.onReceive(context, intent);
@@ -109,7 +115,9 @@ public class WidgetProvider extends AppWidgetProvider {
 	 * @param options          Widget options
 	 * @return Widget layout
 	 */
-	public static RemoteViews buildLayout(Context context, Bundle options) {
+	public static RemoteViews buildLayout(Context context, int appWidgetId, Bundle options) {
+		if( BuildConfig.DEBUG ) Log.v("Rebuilding widget #" + appWidgetId + " layout");
+
 		final int widgetMinWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
 		final int widgetMinHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
 		final int wCells = getCellsForSize(widgetMinWidth);
@@ -121,9 +129,16 @@ public class WidgetProvider extends AppWidgetProvider {
 		final boolean isShowChange = ( widgetLayout == R.layout.widget_layout_v && wCells >= 2 );
 
 		final PreferencesManager prefs = PreferencesManager.getInstance();
-		sIsLongFormat = prefs.getBoolean(PreferencesManager.PREF_LONG_FORMAT, false)
+		final boolean prefsLong = prefs.getBoolean(PreferencesManager.PREF_LONG_FORMAT, false);
+		sIsLongFormat = prefsLong
 				&& ( widgetLayout == R.layout.widget_layout_h && wCells >= 4
 				|| widgetLayout == R.layout.widget_layout_v && wCells >= 2 );
+
+		// Track widget settings
+		ExRatesApplication.getInstance().trackEvent("Widget", "Size", "Width_" + wCells);
+		ExRatesApplication.getInstance().trackEvent("Widget", "Size", "Height_" + hCells);
+		ExRatesApplication.getInstance().trackEvent("Widget", "Size", wCells + "×" + hCells);
+		ExRatesApplication.getInstance().trackEvent("Widget", "NumFormat", (prefsLong ? "Long" : "Short"));
 
 		List<String> ratesList = prefs.getStocksList();
 		if( ratesList.isEmpty() ){

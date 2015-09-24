@@ -33,7 +33,7 @@
 		android:layout_marginRight="@dimen/calc_layout_padding"
 		android:layout_marginTop="@dimen/calc_layout_padding"
 		android:text="Title"
-		android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+		style="@style/Theme.Rates.Dialog.Small"/>
 
 	<android.support.v7.widget.CardView
 		android:id="@+id/expressionCardView"

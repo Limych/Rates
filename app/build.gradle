@@ -73,13 +73,16 @@ android {
         debug {
             buildConfigField BOOLEAN, "SHOW_ADS", TRUE
 //            buildConfigField BOOLEAN, "SHOW_ADS", FALSE
-//            buildConfigField BOOLEAN, "STRICT_MODE", TRUE
-            buildConfigField BOOLEAN, "STRICT_MODE", FALSE
+            buildConfigField BOOLEAN, "STRICT_MODE", TRUE
+//            buildConfigField BOOLEAN, "STRICT_MODE", FALSE
+            buildConfigField BOOLEAN, "GOOGLE_ANALYTICS", FALSE
+//            buildConfigField BOOLEAN, "GOOGLE_ANALYTICS", TRUE
         }
 
         release {
             buildConfigField BOOLEAN, "SHOW_ADS", TRUE
             buildConfigField BOOLEAN, "STRICT_MODE", FALSE
+            buildConfigField BOOLEAN, "GOOGLE_ANALYTICS", TRUE
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release as Object
@@ -140,19 +143,19 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
     compile 'com.google.android.gms:play-services-ads:7.8.0'
-//    compile 'com.android.support:support-v4:21.0.+'
-    compile 'com.android.support:appcompat-v7:22.+'
-    compile 'com.android.support:cardview-v7:22.+'
-    compile 'com.android.support:recyclerview-v7:22.+'
-    compile 'com.android.support:design:22.+'
+    compile 'com.google.android.gms:play-services-analytics:7.8.0'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:design:22.2.1'
     compile 'co.trikita:log:1.1.5'
-    compile 'uk.co.chrisjenx:calligraphy:2.0.2'
-    compile 'com.nineoldandroids:library:2.4.0'     // Required for com.nhaarman.listviewanimations
+    compile 'com.nineoldandroids:library:2.4.0' // Required for com.nhaarman.listviewanimations
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
     compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0@aar'
-//    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
-//    compile 'com.github.PhilJay:MPAndroidChart:v2.1.3'
-//    compile 'com.daimajia.easing:library:1.0.1@aar'
-//    compile 'com.daimajia.androidanimations:library:1.1.3@aar'
+    //    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
+    //    compile 'com.github.PhilJay:MPAndroidChart:v2.1.3'
+    //    compile 'com.daimajia.easing:library:1.0.1@aar'
+    //    compile 'com.daimajia.androidanimations:library:1.1.3@aar'
 }

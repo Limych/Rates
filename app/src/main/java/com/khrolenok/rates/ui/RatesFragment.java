@@ -33,7 +33,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.khrolenok.rates.BuildConfig;
 import com.khrolenok.rates.ExRate;
 import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.ExRatesGroup;
@@ -94,6 +93,9 @@ public class RatesFragment extends Fragment
 	@Override
 	public void onResume() {
 		super.onResume();
+
+		// Tracking the screen view
+		ExRatesApplication.getInstance().trackScreenView("Rates Fragment");
 
 		populateRatesListView();
 
@@ -208,12 +210,15 @@ public class RatesFragment extends Fragment
 
 	@Override
 	public void onRefresh() {
-		if( BuildConfig.DEBUG ){
+//		if( BuildConfig.DEBUG ){
+			// Track refreshing event
+			ExRatesApplication.getInstance().trackEvent("Rates", "Forced Refresh");
+
 			UpdateService.forceUpdate(getActivity());
 
-		} else {
-			mQuotesRefresher.setRefreshing(false);
-			Toast.makeText(getActivity(), R.string.force_update_na, Toast.LENGTH_SHORT).show();
-		}
+//		} else {
+//			mQuotesRefresher.setRefreshing(false);
+//			Toast.makeText(getActivity(), R.string.force_update_na, Toast.LENGTH_SHORT).show();
+//		}
 	}
 }

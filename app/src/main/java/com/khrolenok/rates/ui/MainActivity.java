@@ -38,7 +38,6 @@ import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.Settings;
 import com.khrolenok.rates.util.AppStore;
-import com.khrolenok.rates.util.DialogsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_activity_main, menu);
 
-		if( AppStore.detect(this) == AppStore.GOOGLE_PLAY ){
+		if( AppStore.detect(this) != AppStore.UNKNOWN ){
 			menu.findItem(R.id.action_appstore).setVisible(false);
 		}
 
@@ -98,12 +97,18 @@ public class MainActivity extends AppCompatActivity {
 
 		switch( id ){
 			case R.id.action_appstore:
-				AppStore.openMarket(this, AppStore.GOOGLE_PLAY);
+				// Track event
+				ExRatesApplication.getInstance().trackEvent("AppStore", "Open");
+
+				AppStore.openStore(this, AppStore.GOOGLE_PLAY);
 				return true;
 			case R.id.action_preferences:
 				startActivity(new Intent(this, SettingsActivity.class));
 				return true;
 			case R.id.action_idea_suggest:
+				// Track event
+				ExRatesApplication.getInstance().trackEvent("IdeaSuggest", "Open");
+
 				Intent i = new Intent(Intent.ACTION_VIEW);
 				i.setData(Uri.parse(Settings.IDEA_SUGGEST_URL));
 				startActivity(i);

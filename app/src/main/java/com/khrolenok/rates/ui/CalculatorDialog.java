@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.util.EvaluateString;
 import com.khrolenok.rates.util.StockNames;
@@ -191,5 +192,14 @@ public class CalculatorDialog extends DialogFragment implements View.OnClickList
 		}
 
 		return Html.fromHtml(prefix + dest.toString());
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		// Tracking the screen view
+		ExRatesApplication.getInstance().trackScreenView("Calculator Dialog");
+		ExRatesApplication.getInstance().trackEvent("Calculator", "Currency", currency);
 	}
 }
