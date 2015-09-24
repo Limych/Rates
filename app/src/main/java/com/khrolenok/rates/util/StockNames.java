@@ -28,6 +28,7 @@ import java.util.HashMap;
 public class StockNames {
 
 	private HashMap<String,String> mNamesMap;
+	private HashMap<String,String> mShortCodes;
 
 	private static StockNames stockNames;
 
@@ -39,20 +40,34 @@ public class StockNames {
 	}
 
 	public void init(Context context) {
+		String[] stockNames;
+
 		mNamesMap = new HashMap<>();
-
-		final String[] stockNames = context.getResources().getStringArray(R.array.stockNames);
-
+		stockNames = context.getResources().getStringArray(R.array.stockNames);
 		for( String item : stockNames ) {
-			final String[] parts = item.split("\\s+[-—]\\s+", 2);
+			final String[] parts = item.split("\\s*[-—=]\\s*", 2);
 			final String[] symbols = parts[0].split(",\\s*");
 			for( String symbol : symbols ) {
 				mNamesMap.put(symbol, parts[1]);
 			}
 		}
+
+		mShortCodes = new HashMap<>();
+		stockNames = context.getResources().getStringArray(R.array.stockShortCodes);
+		for( String item : stockNames ) {
+			final String[] parts = item.split("\\s*[-—=]\\s*", 2);
+			final String[] symbols = parts[0].split(",\\s*");
+			for( String symbol : symbols ) {
+				mShortCodes.put(symbol, parts[1]);
+			}
+		}
 	}
 
-	public String getName(String symbol){
-		return mNamesMap.get(symbol);
+	public String getName(String code){
+		return mNamesMap.get(code);
+	}
+
+	public String getShortCode(String code){
+		return mShortCodes.get(code);
 	}
 }

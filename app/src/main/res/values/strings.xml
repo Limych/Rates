@@ -91,6 +91,44 @@
 
 
 	<!-- Currency names-->
+	<string-array name="stockShortCodes">
+		<item>ARS=$</item>
+		<item>AUD=$</item>
+		<item>AZN=&#x20BC;</item>
+		<item>BBD=$</item>
+		<item>BGN=лв</item>
+		<item>BSD=$</item>
+		<item>BWP=P</item>
+		<item>BYR=Br</item>
+		<item>CAD=$</item>
+		<item>CNY=¥</item>
+		<item>CUP=&#x20B1;</item>
+		<item>CZK=Kč</item>
+		<item>EGP=£</item>
+		<item>EUR=€</item>
+		<item>GBP=£</item>
+		<item>HUF=Ft</item>
+		<item>ILS=₪</item>
+		<item>INR=&#x20B9;</item>
+		<item>JPY=¥</item>
+		<item>KGS=лв</item>
+		<item>KPW=₩</item>
+		<item>KRW=₩</item>
+		<item>KZT=лв</item>
+		<item>MNT=₮</item>
+		<item>MYR=RM</item>
+		<item>NOK=kr</item>
+		<item>NPR=₨</item>
+		<item>OMR=﷼</item>
+		<item>PKR=₨</item>
+		<item>RUB,RUR=&#x20BD;</item>
+		<item>TRY=&#x20BA;</item>
+		<item>UAH=₴</item>
+		<item>USD=$</item>
+		<item>UZS=лв</item>
+		<item>VEF=Bs</item>
+		<item>VND=₫</item>
+	</string-array>
 	<string-array name="stockNames">
 		<item>AED — UAE Dirham</item>
 		<item>AFN — Afghani</item>
