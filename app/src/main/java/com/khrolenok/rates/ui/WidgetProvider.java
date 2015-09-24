@@ -45,18 +45,6 @@ import java.util.List;
 public class WidgetProvider extends AppWidgetProvider {
 
 	protected static boolean sIsLongFormat;
-//
-//	public static void notifyUpdateNeeded(Context context) {
-//		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-//		final int[] widgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
-//
-//		appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, android.R.id.list);
-//
-//		final Intent update = new Intent(context.getApplicationContext(), WidgetProvider.class);
-//		update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
-//		update.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//		context.sendBroadcast(update);
-//	}
 
 	@Override
 	public void onEnabled(Context context) {

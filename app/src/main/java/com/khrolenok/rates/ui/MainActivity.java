@@ -37,6 +37,7 @@ import com.khrolenok.rates.BuildConfig;
 import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.Settings;
+import com.khrolenok.rates.util.AppStore;
 import com.khrolenok.rates.util.DialogsManager;
 
 import java.util.ArrayList;
@@ -81,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_activity_main, menu);
 
+		if( AppStore.detect(this) == AppStore.GOOGLE_PLAY ){
+			menu.findItem(R.id.action_appstore).setVisible(false);
+		}
+
 		return true;
 	}
 
@@ -92,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
 		int id = item.getItemId();
 
 		switch( id ){
+			case R.id.action_appstore:
+				AppStore.openMarket(this, AppStore.GOOGLE_PLAY);
+				return true;
 			case R.id.action_preferences:
 				startActivity(new Intent(this, SettingsActivity.class));
 				return true;

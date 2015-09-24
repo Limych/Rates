@@ -33,6 +33,7 @@
 
 
 	<!-- Toolbar actions -->
+	<string name="action_appstore">App on Google Play</string>
 	<string name="action_settings">Settings</string>
 	<string name="action_idea_suggest">Suggest an idea</string>
 	<string name="action_about">Version</string>
@@ -121,7 +122,8 @@
 		<item>NPR=₨</item>
 		<item>OMR=﷼</item>
 		<item>PKR=₨</item>
-		<item>RUB,RUR=&#x20BD;</item>
+		<!--<item>RUB,RUR=₽</item>-->
+		<item>RUB,RUR=р.</item>
 		<item>TRY=&#x20BA;</item>
 		<item>UAH=₴</item>
 		<item>USD=$</item>

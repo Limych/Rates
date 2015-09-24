@@ -86,7 +86,7 @@ public class ExRate {
 
 	public String getTitle() {
 		return ( isCompactTitleMode
-				? StockNames.getInstance().getShortCode(this.goodCode)
+				? StockNames.getInstance().getSymbol(this.goodCode)
 				: this.goodCode );
 	}
 

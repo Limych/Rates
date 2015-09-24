@@ -34,14 +34,11 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import trikita.log.Log;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by Limych on 05.09.2015
  */
 public class ExRatesApplication extends Application {
-
-	private static final String FONT_PATH = "fonts/Roboto-Regular.ttf";
 
 	public static String deviceId;
 	public static boolean isTestDevice = false;
@@ -70,12 +67,6 @@ public class ExRatesApplication extends Application {
 					.penaltyLog()
 					.build());
 		}
-
-		CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-						.setDefaultFontPath(FONT_PATH)
-						.setFontAttrId(R.attr.fontPath)
-						.build()
-		);
 
 		initPreferences(getApplicationContext());
 

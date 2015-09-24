@@ -178,7 +178,7 @@ public class RatesFragment extends Fragment
 		return mStockItems;
 	}
 
-	public void showCalculatorDialog(int listItemPosition, String title, double value) {
+	public void showCalculatorDialog(int listItemPosition, String title, double value, String currency) {
 		FragmentManager fm = getActivity().getSupportFragmentManager();
 
 		CalculatorDialog calculatorDialog = new CalculatorDialog();
@@ -186,6 +186,7 @@ public class RatesFragment extends Fragment
 
 		calculatorDialog.title = title;
 		calculatorDialog.value = value;
+		calculatorDialog.currency = currency;
 		calculatorDialog.listItemPosition = listItemPosition;
 		calculatorDialog.show(fm, CalculatorDialog.TAG_DIALOG);
 	}

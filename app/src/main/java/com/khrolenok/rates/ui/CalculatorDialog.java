@@ -33,8 +33,12 @@ import android.widget.TextView;
 
 import com.khrolenok.rates.R;
 import com.khrolenok.rates.util.EvaluateString;
+import com.khrolenok.rates.util.StockNames;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.FieldPosition;
+import java.text.NumberFormat;
 
 /**
  * Created by Limych on 05.09.2015
@@ -49,6 +53,7 @@ public class CalculatorDialog extends DialogFragment implements View.OnClickList
 	public double value = 0;
 	public int listItemPosition = -1;
 	public String title;
+	public String currency;
 
 	private Context mContext;
 	public TextView resultTextView;
@@ -87,7 +92,7 @@ public class CalculatorDialog extends DialogFragment implements View.OnClickList
 
 	private void setResult(double value) {
 		this.value = value;
-		resultTextView.setText("= " + formatValue(value));
+		resultTextView.setText(formatValue("= ", value, currency));
 		resultTextView.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
 	}
 
@@ -163,20 +168,28 @@ public class CalculatorDialog extends DialogFragment implements View.OnClickList
 		return false;
 	}
 
-	public static Spanned formatValue(double value) {
-		final DecimalFormat df = new DecimalFormat();
+	public static Spanned formatValue(String prefix, double value, String currency) {
+		final NumberFormat nf = NumberFormat.getCurrencyInstance();
+
+		StringBuffer dest = new StringBuffer(100);
+		FieldPosition pos = new FieldPosition(NumberFormat.FRACTION_FIELD);
 
 		final long integerPart = (long) value;
-		final double fractionalPart = Math.abs(value - integerPart);
 
-		final String integerFormat = ( Math.abs(integerPart) <= 9999 ? "###0" : "#,##0" );
-		df.applyPattern(integerFormat + ";−" + integerFormat);
-		final String integerStr = df.format(integerPart);
+		nf.setGroupingUsed(( Math.abs(integerPart) > 9999 ));
+		nf.setMaximumFractionDigits(2);
 
-		final String fractionalFormat = "0.0000";
-		df.applyPattern(fractionalFormat.substring(0, 2 + 2));
-		final String fractionalStr = df.format(fractionalPart).substring(1);
+		DecimalFormatSymbols symbols = ((DecimalFormat) nf).getDecimalFormatSymbols();
+		symbols.setCurrencySymbol(StockNames.getInstance().getSymbol(currency));
+		( (DecimalFormat) nf ).setDecimalFormatSymbols(symbols);
 
-		return Html.fromHtml(integerStr + "<small>" + fractionalStr + "</small>");
+		dest = nf.format(value, dest, pos);
+
+		if( pos.getBeginIndex() != pos.getEndIndex() ){
+			dest.insert(pos.getEndIndex(), "</small>");
+			dest.insert(pos.getBeginIndex(), "<small>");
+		}
+
+		return Html.fromHtml(prefix + dest.toString());
 	}
 }

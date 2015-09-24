@@ -66,7 +66,7 @@ public class StockItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 		return super.getItemViewType(position);
 	}
 
-	public StockItem getItem(int position){
+	public StockItem getItem(int position) {
 		if( position < getItemCount() - 1 ) return mStockItems.get(position);
 		return null;
 	}
@@ -160,7 +160,7 @@ public class StockItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 			symbolTV.setText(stockItem.symbol);
 			nameTV.setText(getStockExchangeName(context, stockItem.stockExchange)
-					+ StockNames.getInstance().getName(stockItem.symbol));
+					+ StockNames.getInstance().getTitle(stockItem.symbol));
 			valueTV.setText(stockItem.getValueFormatted());
 			priceChangeTV.setText(stockItem.getPriceChangeFormatted(isLongFormat));
 
@@ -192,7 +192,8 @@ public class StockItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 			valueContainer.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mFragment.showCalculatorDialog(position, (String) nameTV.getText(), stockItem.value);
+					mFragment.showCalculatorDialog(position, (String) nameTV.getText(),
+							stockItem.value, stockItem.symbol);
 				}
 			});
 		}

@@ -20,6 +20,13 @@
 	  tools:context="com.khrolenok.rates.ui.MainActivity">
 
 	<item
+		android:id="@+id/action_appstore"
+		android:orderInCategory="90"
+		android:title="@string/action_appstore"
+		android:icon="@drawable/ic_action_google_play"
+		app:showAsAction="never"/>
+
+	<item
 		android:id="@+id/action_preferences"
 		android:orderInCategory="100"
 		android:title="@string/action_settings"

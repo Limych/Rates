@@ -46,9 +46,9 @@ public class StockNames {
 		stockNames = context.getResources().getStringArray(R.array.stockNames);
 		for( String item : stockNames ) {
 			final String[] parts = item.split("\\s*[-—=]\\s*", 2);
-			final String[] symbols = parts[0].split(",\\s*");
-			for( String symbol : symbols ) {
-				mNamesMap.put(symbol, parts[1]);
+			final String[] codes = parts[0].split(",\\s*");
+			for( String code : codes ) {
+				mNamesMap.put(code, parts[1]);
 			}
 		}
 
@@ -56,18 +56,18 @@ public class StockNames {
 		stockNames = context.getResources().getStringArray(R.array.stockShortCodes);
 		for( String item : stockNames ) {
 			final String[] parts = item.split("\\s*[-—=]\\s*", 2);
-			final String[] symbols = parts[0].split(",\\s*");
-			for( String symbol : symbols ) {
-				mShortCodes.put(symbol, parts[1]);
+			final String[] codes = parts[0].split(",\\s*");
+			for( String code : codes ) {
+				mShortCodes.put(code, parts[1]);
 			}
 		}
 	}
 
-	public String getName(String code){
+	public String getTitle(String code){
 		return mNamesMap.get(code);
 	}
 
-	public String getShortCode(String code){
-		return mShortCodes.get(code);
+	public String getSymbol(String code){
+		return ( mShortCodes.containsKey(code) ? mShortCodes.get(code) : code );
 	}
 }

@@ -205,4 +205,5 @@
     <string name="feedback_submit">Да, конечно!</string>
     <string name="feedback_chooser_title">Отправить сообщение…</string>
     <string name="update_loaded">Данные обновлены</string>
+    <string name="action_appstore">Приложение в Google Play</string>
 </resources>
