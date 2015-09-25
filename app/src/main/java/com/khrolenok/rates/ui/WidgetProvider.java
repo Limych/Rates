@@ -68,7 +68,7 @@ public class WidgetProvider extends AppWidgetProvider {
 		for( int appWidgetId : appWidgetIds ) {
 			final Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
 
-			onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, options);
+			appWidgetManager.updateAppWidget(appWidgetId, buildLayout(context, appWidgetId, options));
 		}
 	}
 
@@ -85,12 +85,13 @@ public class WidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onReceive(@NonNull Context context, @NonNull Intent intent) {
 		if( intent.getAction().equals(ExRatesApplication.ACTION_STOCKS_UPDATE) ){
-			final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-			final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
+			final AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
+			final int[] widgetIds = widgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
 
-			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget);
+			onUpdate(context, widgetManager, widgetIds);
 			return;
 		}
+
 		super.onReceive(context, intent);
 	}
 
