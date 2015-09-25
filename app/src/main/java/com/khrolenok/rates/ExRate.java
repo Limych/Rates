@@ -86,8 +86,8 @@ public class ExRate {
 
 	public String getTitle() {
 		return ( isCompactTitleMode
-				? StockNames.getInstance().getSymbol(this.goodCode)
-				: this.goodCode );
+				? StockNames.getInstance().getSymbol(goodCode)
+				: goodCode );
 	}
 
 	public Date getUpdateTS() {
@@ -225,6 +225,7 @@ class ExRateViewsBounds {
 	public int height;
 
 	public ExRateViewsBounds() {
+		// Empty
 	}
 
 	public ExRateViewsBounds(int titleWidth, int bidWidth, int changeWidth, int height) {

@@ -18,9 +18,6 @@
 		  xmlns:android="http://schemas.android.com/apk/res/android"
 		  android:installLocation="internalOnly">
 
-	<uses-feature android:name="android.hardware.FAKETOUCH"/>
-	<uses-feature android:name="android.hardware.TOUCHSCREEN" android:required="false"/>
-
 	<uses-feature android:name="android.software.APP_WIDGETS" android:required="false"/>
 
 	<uses-permission android:name="android.permission.INTERNET"/>

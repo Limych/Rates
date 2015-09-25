@@ -36,7 +36,7 @@ public class PreferencesManager {
 	private TinyDB tinyDB;
 
 
-	public static PreferencesManager getInstance() {
+	public static synchronized PreferencesManager getInstance() {
 		if( prefsManager == null ){
 			prefsManager = new PreferencesManager();
 		}

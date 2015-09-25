@@ -53,33 +53,33 @@ public class WidgetProvider extends AppWidgetProvider {
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
 
-		ExRatesApplication.initPreferences(context);
+		ExRatesApplication.initApplication(context);
 
 		// Try to start update service
 		UpdateService.notifyUpdateNeeded(context);
 	}
 
 	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+	public void onUpdate(Context context, AppWidgetManager widgetManager, int[] widgetIds) {
 		// Track widgets count
-		ExRatesApplication.getInstance().trackEvent("Widget", "Count", "" + appWidgetIds.length);
+		ExRatesApplication.getInstance().trackEvent("Widget", "Count", "" + widgetIds.length);
 
 		// There may be multiple widgets active, so update all of them
-		for( int appWidgetId : appWidgetIds ) {
-			final Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+		for( int widgetId : widgetIds ) {
+			final Bundle options = widgetManager.getAppWidgetOptions(widgetId);
 
-			appWidgetManager.updateAppWidget(appWidgetId, buildLayout(context, appWidgetId, options));
+			widgetManager.updateAppWidget(widgetId, buildLayout(context, widgetId, options));
 		}
 	}
 
 	@Override
-	public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
-	                                      int appWidgetId, Bundle newOptions) {
+	public void onAppWidgetOptionsChanged(Context context, AppWidgetManager widgetManager,
+	                                      int widgetId, Bundle newOptions) {
 		// Instruct the widget manager to update the widget
-		appWidgetManager.updateAppWidget(appWidgetId,
-				buildLayout(context, appWidgetId, newOptions));
+		widgetManager.updateAppWidget(widgetId,
+				buildLayout(context, widgetId, newOptions));
 
-		super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+		super.onAppWidgetOptionsChanged(context, widgetManager, widgetId, newOptions);
 	}
 
 	@Override
@@ -112,12 +112,13 @@ public class WidgetProvider extends AppWidgetProvider {
 	/**
 	 * Returns layout for widget.
 	 *
-	 * @param context          Application mContext
-	 * @param options          Widget options
+	 * @param context  Application mContext
+	 * @param widgetId Widget ID
+	 * @param options  Widget options
 	 * @return Widget layout
 	 */
-	public static RemoteViews buildLayout(Context context, int appWidgetId, Bundle options) {
-		if( BuildConfig.DEBUG ) Log.v("Rebuilding widget #" + appWidgetId + " layout");
+	public static RemoteViews buildLayout(Context context, int widgetId, Bundle options) {
+		if( BuildConfig.DEBUG ) Log.v("Rebuilding widget #" + widgetId + " layout");
 
 		final int widgetMinWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
 		final int widgetMinHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);

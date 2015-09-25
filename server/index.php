@@ -23,3 +23,4 @@ RestService\Server::create('/api', new RestApi\Rates)
 	->run();
 
 # http://4map.ru/service/get_rates_to_map.aspx?country=RU&latsw=55.56080032284363&lngsw=37.261019780273514&latne=55.77997579045521&lngne=37.933932377929764&zoom=12&curr1=RUB&curr2=USD&amount=1000&rate_left=-1&rate_right=-1&ww=1280&wh=616&src=1
+# http://www.bmsk.ru/

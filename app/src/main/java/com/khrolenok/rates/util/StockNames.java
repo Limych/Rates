@@ -32,7 +32,7 @@ public class StockNames {
 
 	private static StockNames stockNames;
 
-	public static StockNames getInstance() {
+	public static synchronized StockNames getInstance() {
 		if (stockNames == null) {
 			stockNames = new StockNames();
 		}

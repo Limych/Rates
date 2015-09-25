@@ -86,9 +86,7 @@ public class ExRatesApplication extends Application {
 			AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
 		}
 
-		initPreferences(getApplicationContext());
-
-		StockNames.getInstance().init(getApplicationContext());
+		initApplication(getApplicationContext());
 
 		deviceId = getDeviceID();
 		if( BuildConfig.DEBUG ) Log.d("deviceId = " + deviceId);
@@ -100,6 +98,11 @@ public class ExRatesApplication extends Application {
 
 		// Try to start update service
 		UpdateService.notifyUpdateNeeded(getApplicationContext());
+	}
+
+	public static void initApplication(Context context){
+		initPreferences(context);
+		StockNames.getInstance().init(context);
 	}
 
 	public static void initPreferences(Context context) {
