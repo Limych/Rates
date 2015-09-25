@@ -54,7 +54,11 @@
 
 		<Preference
 			android:key="device_id"
-			android:title="@string/pref_title_device_id"/>
+			android:title="@string/pref_title_debug_device_id"/>
+
+		<Preference
+			android:key="installer"
+			android:title="@string/pref_title_debug_installer"/>
 
 	</PreferenceCategory>
 

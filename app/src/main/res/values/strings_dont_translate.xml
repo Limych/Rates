@@ -25,6 +25,13 @@
 	<string name="change_direction_down" translatable="false">▼</string>
 
 
+	<!-- Preference categories titles -->
+	<string name="pref_title_debug" translatable="false">Debug</string>
+	<!-- Preference titles and descriptions -->
+	<string name="pref_title_debug_device_id" translatable="false">Device ID</string>
+	<string name="pref_title_debug_installer" translatable="false">Installer</string>
+
+
 	<!-- AdMob configuration -->
 	<string name="banner_ad_unit_id"
 			translatable="false">ca-app-pub-7764169370455068/1759520118</string>

@@ -18,12 +18,8 @@ package com.khrolenok.rates.util;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
-
-import java.util.List;
 
 /**
  * Created by Limych on 24.09.2015
@@ -43,16 +39,12 @@ public class AppStore {
 		installer = pm.getInstallerPackageName(context.getPackageName());
 
 		if( installer == null ){
-			List<PackageInfo> installedPackages = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES);
-			for( PackageInfo p : installedPackages ) {
-				if( p.packageName.contains("samsungapps") ) return SAMSUNG;
-			}
 			return UNKNOWN;
 
 		} else if( installer.equalsIgnoreCase("com.android.vending") )
 			return GOOGLE_PLAY;
 
-		else if( Build.MANUFACTURER.equalsIgnoreCase("amazon") || installer.equalsIgnoreCase("com.amazon.venezia") )
+		else if( installer.equalsIgnoreCase("com.amazon.venezia") )
 			return AMAZON;
 
 		else if( installer.equalsIgnoreCase("com.sec.android.app.samsungapps") )

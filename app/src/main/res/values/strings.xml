@@ -43,16 +43,15 @@
 
 	<!-- Preferences -->
 	<!-- Preference categories titles -->
-	<string name="pref_title_debug">Debug</string>
 	<string name="pref_title_presentation">Data presentation</string>
 	<string name="pref_title_updating">Data updating</string>
 
 	<!-- Preference titles and descriptions -->
-	<string name="pref_title_device_id">Device ID</string>
-
 	<string name="pref_title_invert_colors">Invert price colors</string>
-	<string name="pref_desc_normal_colors">Green for&#160;price growth. Red for&#160;price fall</string>
-	<string name="pref_desc_invert_colors">Red for&#160;price growth. Green for&#160;price fall</string>
+	<string
+		name="pref_desc_normal_colors">Green for&#160;price growth. Red for&#160;price fall</string>
+	<string
+		name="pref_desc_invert_colors">Red for&#160;price growth. Green for&#160;price fall</string>
 
 	<string name="pref_title_long_format">Long numbers</string>
 	<string name="pref_desc_long_format">Four decimal digits</string>

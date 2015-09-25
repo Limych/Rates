@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +27,7 @@ import android.view.View;
 
 import com.khrolenok.rates.ExRatesApplication;
 import com.khrolenok.rates.R;
+import com.khrolenok.rates.util.AppStore;
 import com.khrolenok.rates.util.UpdateService;
 
 /**
@@ -64,8 +64,8 @@ public class SettingsActivity extends AppCompatActivity {
 				getPreferenceScreen().removePreference(findPreference("category_debug"));
 
 			} else {
-				final Preference deviceIdPref = findPreference("device_id");
-				deviceIdPref.setSummary(ExRatesApplication.deviceId);
+				findPreference("device_id").setSummary(ExRatesApplication.deviceId);
+				findPreference("installer").setSummary(AppStore.installer);
 			}
 		}
 

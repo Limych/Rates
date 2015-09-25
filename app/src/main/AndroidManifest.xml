@@ -16,7 +16,7 @@
 -->
 <manifest package="com.khrolenok.rates"
 		  xmlns:android="http://schemas.android.com/apk/res/android"
-		  android:installLocation="auto">
+		  android:installLocation="internalOnly">
 
 	<uses-feature android:name="android.software.app_widgets"/>
 
