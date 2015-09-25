@@ -17,5 +17,9 @@
 #}
 
 -keepattributes *Annotation*
+
 -keep public class * extends android.support.design.widget.CoordinatorLayout.Behavior { *; }
 -keep public class * extends android.support.design.widget.ViewOffsetBehavior { *; }
+
+-keep public class com.google.android.gms.** { *; }
+-dontwarn com.google.android.gms.**

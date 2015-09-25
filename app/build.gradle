@@ -28,8 +28,10 @@ if (secretPropsFile.exists()) {
 }
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion '22.0.1'
+
+    useLibrary 'org.apache.http.legacy'
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
@@ -40,7 +42,7 @@ android {
     defaultConfig {
         applicationId "com.khrolenok.rates"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionName VERSION
         versionCode getBuildVersion(1)
     }
@@ -146,10 +148,10 @@ dependencies {
 
     compile 'com.google.android.gms:play-services-ads:7.8.0'
     compile 'com.google.android.gms:play-services-analytics:7.8.0'
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:cardview-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:cardview-v7:23.0.1'
+    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
     compile 'co.trikita:log:1.1.5'
     compile 'com.nineoldandroids:library:2.4.0' // Required for com.nhaarman.listviewanimations
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
